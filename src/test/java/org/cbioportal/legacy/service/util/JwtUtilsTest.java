@@ -52,9 +52,9 @@ package org.cbioportal.legacy.service.util;
 
 import java.util.*;
 import org.cbioportal.legacy.service.exception.InvalidDataAccessTokenException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -67,7 +67,7 @@ import org.springframework.test.context.junit4.SpringRunner;
     },
     inheritLocations = false)
 @ContextConfiguration(classes = JwtUtilsTestConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class JwtUtilsTest {
 
   /* Several tests in this class rely on proper singing of tokens using the key embedded in the TestPropertySource annotation above. If that value is changed, the expected values should also be recomputed.

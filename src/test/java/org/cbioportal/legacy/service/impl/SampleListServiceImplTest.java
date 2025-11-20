@@ -10,17 +10,17 @@ import org.cbioportal.legacy.persistence.SampleListRepository;
 import org.cbioportal.legacy.service.StudyService;
 import org.cbioportal.legacy.service.exception.SampleListNotFoundException;
 import org.cbioportal.legacy.service.exception.StudyNotFoundException;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class SampleListServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private SampleListServiceImpl sampleListService;
@@ -34,7 +34,7 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
   }
 
   @Test
-  public void getAllSampleLists() throws Exception {
+  public void getAllSampleLists()  {
 
     List<SampleList> expectedSampleLists = new ArrayList<>();
     SampleList sampleList = new SampleList();
@@ -58,12 +58,12 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
     List<SampleList> result =
         sampleListService.getAllSampleLists("DETAILED", PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedSampleLists, result);
-    Assert.assertEquals((Integer) 1, expectedSampleLists.get(0).getSampleCount());
+    Assertions.assertEquals(expectedSampleLists, result);
+    Assertions.assertEquals((Integer) 1, expectedSampleLists.get(0).getSampleCount());
   }
 
   @Test
-  public void getMetaSampleLists() throws Exception {
+  public void getMetaSampleLists()  {
 
     BaseMeta expectedBaseMeta = new BaseMeta();
 
@@ -71,7 +71,7 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = sampleListService.getMetaSampleLists();
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = SampleListNotFoundException.class)
@@ -101,8 +101,8 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
 
     SampleList result = sampleListService.getSampleList(SAMPLE_LIST_ID);
 
-    Assert.assertEquals(expectedSampleList, result);
-    Assert.assertEquals((Integer) 1, result.getSampleCount());
+    Assertions.assertEquals(expectedSampleList, result);
+    Assertions.assertEquals((Integer) 1, result.getSampleCount());
   }
 
   @Test
@@ -131,8 +131,8 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
         sampleListService.getAllSampleListsInStudy(
             STUDY_ID, "DETAILED", PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedSampleLists, result);
-    Assert.assertEquals((Integer) 1, expectedSampleLists.get(0).getSampleCount());
+    Assertions.assertEquals(expectedSampleLists, result);
+    Assertions.assertEquals((Integer) 1, expectedSampleLists.get(0).getSampleCount());
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -153,7 +153,7 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = sampleListService.getMetaSampleListsInStudy(STUDY_ID);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -186,7 +186,7 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
         .thenReturn(expectedSampleIds);
     List<String> result = sampleListService.getAllSampleIdsInSampleList(SAMPLE_LIST_ID);
 
-    Assert.assertEquals(expectedSampleIds, result);
+    Assertions.assertEquals(expectedSampleIds, result);
   }
 
   @Test(expected = SampleListNotFoundException.class)
@@ -197,7 +197,7 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
   }
 
   @Test
-  public void fetchSampleLists() throws Exception {
+  public void fetchSampleLists()  {
 
     List<SampleList> expectedSampleLists = new ArrayList<>();
     SampleList sampleList = new SampleList();
@@ -219,7 +219,7 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
     List<SampleList> result =
         sampleListService.fetchSampleLists(Arrays.asList(SAMPLE_LIST_ID), "DETAILED");
 
-    Assert.assertEquals(expectedSampleLists, result);
-    Assert.assertEquals((Integer) 1, expectedSampleLists.get(0).getSampleCount());
+    Assertions.assertEquals(expectedSampleLists, result);
+    Assertions.assertEquals((Integer) 1, expectedSampleLists.get(0).getSampleCount());
   }
 }

@@ -8,15 +8,15 @@ import org.cbioportal.legacy.model.meta.BaseMeta;
 import org.cbioportal.legacy.persistence.CopyNumberSegmentRepository;
 import org.cbioportal.legacy.service.SampleService;
 import org.cbioportal.legacy.service.exception.SampleNotFoundException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private CopyNumberSegmentServiceImpl copyNumberSegmentService;
@@ -40,7 +40,7 @@ public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
         copyNumberSegmentService.getCopyNumberSegmentsInSampleInStudy(
             STUDY_ID, SAMPLE_ID1, null, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedCopyNumberSegList, result);
+    Assertions.assertEquals(expectedCopyNumberSegList, result);
   }
 
   @Test(expected = SampleNotFoundException.class)
@@ -66,7 +66,7 @@ public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
         copyNumberSegmentService.getMetaCopyNumberSegmentsInSampleInStudy(
             STUDY_ID, SAMPLE_ID1, null);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = SampleNotFoundException.class)
@@ -93,7 +93,7 @@ public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
         copyNumberSegmentService.fetchCopyNumberSegments(
             Arrays.asList(STUDY_ID), Arrays.asList(PATIENT_ID_1), null, PROJECTION);
 
-    Assert.assertEquals(expectedCopyNumberSegList, result);
+    Assertions.assertEquals(expectedCopyNumberSegList, result);
   }
 
   @Test
@@ -108,7 +108,7 @@ public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
         copyNumberSegmentService.fetchMetaCopyNumberSegments(
             Arrays.asList(STUDY_ID), Arrays.asList(PATIENT_ID_1), null);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
@@ -127,6 +127,6 @@ public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
         copyNumberSegmentService.getCopyNumberSegmentsBySampleListId(
             STUDY_ID, SAMPLE_LIST_ID, null, PROJECTION);
 
-    Assert.assertEquals(expectedCopyNumberSegList, result);
+    Assertions.assertEquals(expectedCopyNumberSegList, result);
   }
 }

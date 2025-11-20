@@ -6,15 +6,15 @@ import java.util.List;
 import org.cbioportal.legacy.model.Mutation;
 import org.cbioportal.legacy.model.MutationSpectrum;
 import org.cbioportal.legacy.service.MutationService;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MutationSpectrumServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private MutationSpectrumServiceImpl mutationSpectrumService;
@@ -42,25 +42,25 @@ public class MutationSpectrumServiceImplTest extends BaseServiceImplTest {
     List<MutationSpectrum> result =
         mutationSpectrumService.getMutationSpectrums(MOLECULAR_PROFILE_ID, SAMPLE_LIST_ID);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     MutationSpectrum mutationSpectrum1 = result.get(0);
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, mutationSpectrum1.getMolecularProfileId());
-    Assert.assertEquals(SAMPLE_ID1, mutationSpectrum1.getSampleId());
-    Assert.assertEquals((Integer) 2, mutationSpectrum1.getCtoA());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getCtoG());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getCtoT());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getTtoA());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getTtoC());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getTtoG());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, mutationSpectrum1.getMolecularProfileId());
+    Assertions.assertEquals(SAMPLE_ID1, mutationSpectrum1.getSampleId());
+    Assertions.assertEquals((Integer) 2, mutationSpectrum1.getCtoA());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getCtoG());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getCtoT());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getTtoA());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getTtoC());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getTtoG());
     MutationSpectrum mutationSpectrum2 = result.get(1);
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, mutationSpectrum2.getMolecularProfileId());
-    Assert.assertEquals(SAMPLE_ID2, mutationSpectrum2.getSampleId());
-    Assert.assertEquals((Integer) 0, mutationSpectrum2.getCtoA());
-    Assert.assertEquals((Integer) 0, mutationSpectrum2.getCtoG());
-    Assert.assertEquals((Integer) 1, mutationSpectrum2.getCtoT());
-    Assert.assertEquals((Integer) 1, mutationSpectrum2.getTtoA());
-    Assert.assertEquals((Integer) 0, mutationSpectrum2.getTtoC());
-    Assert.assertEquals((Integer) 0, mutationSpectrum2.getTtoG());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, mutationSpectrum2.getMolecularProfileId());
+    Assertions.assertEquals(SAMPLE_ID2, mutationSpectrum2.getSampleId());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum2.getCtoA());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum2.getCtoG());
+    Assertions.assertEquals((Integer) 1, mutationSpectrum2.getCtoT());
+    Assertions.assertEquals((Integer) 1, mutationSpectrum2.getTtoA());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum2.getTtoC());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum2.getTtoG());
   }
 
   @Test
@@ -85,25 +85,25 @@ public class MutationSpectrumServiceImplTest extends BaseServiceImplTest {
         mutationSpectrumService.fetchMutationSpectrums(
             MOLECULAR_PROFILE_ID, Arrays.asList(SAMPLE_ID1, SAMPLE_ID2));
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     MutationSpectrum mutationSpectrum1 = result.get(0);
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, mutationSpectrum1.getMolecularProfileId());
-    Assert.assertEquals(SAMPLE_ID1, mutationSpectrum1.getSampleId());
-    Assert.assertEquals((Integer) 2, mutationSpectrum1.getCtoA());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getCtoG());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getCtoT());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getTtoA());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getTtoC());
-    Assert.assertEquals((Integer) 0, mutationSpectrum1.getTtoG());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, mutationSpectrum1.getMolecularProfileId());
+    Assertions.assertEquals(SAMPLE_ID1, mutationSpectrum1.getSampleId());
+    Assertions.assertEquals((Integer) 2, mutationSpectrum1.getCtoA());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getCtoG());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getCtoT());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getTtoA());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getTtoC());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum1.getTtoG());
     MutationSpectrum mutationSpectrum2 = result.get(1);
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, mutationSpectrum2.getMolecularProfileId());
-    Assert.assertEquals(SAMPLE_ID2, mutationSpectrum2.getSampleId());
-    Assert.assertEquals((Integer) 0, mutationSpectrum2.getCtoA());
-    Assert.assertEquals((Integer) 0, mutationSpectrum2.getCtoG());
-    Assert.assertEquals((Integer) 1, mutationSpectrum2.getCtoT());
-    Assert.assertEquals((Integer) 1, mutationSpectrum2.getTtoA());
-    Assert.assertEquals((Integer) 0, mutationSpectrum2.getTtoC());
-    Assert.assertEquals((Integer) 0, mutationSpectrum2.getTtoG());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, mutationSpectrum2.getMolecularProfileId());
+    Assertions.assertEquals(SAMPLE_ID2, mutationSpectrum2.getSampleId());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum2.getCtoA());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum2.getCtoG());
+    Assertions.assertEquals((Integer) 1, mutationSpectrum2.getCtoT());
+    Assertions.assertEquals((Integer) 1, mutationSpectrum2.getTtoA());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum2.getTtoC());
+    Assertions.assertEquals((Integer) 0, mutationSpectrum2.getTtoG());
   }
 
   private List<Mutation> createMutationList() {

@@ -1,13 +1,13 @@
 package org.cbioportal.application.file.export;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.cbioportal.application.file.model.CancerStudyMetadata;
 import org.cbioportal.application.file.model.ClinicalAttributesMetadata;
 import org.cbioportal.application.file.model.GeneticProfileDatatypeMetadata;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ToMetadataKeyValuesTest {
 

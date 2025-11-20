@@ -19,15 +19,15 @@ import org.cbioportal.legacy.persistence.DiscreteCopyNumberRepository;
 import org.cbioportal.legacy.service.MolecularDataService;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.exception.MolecularProfileNotFoundException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DiscreteCopyNumberServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private DiscreteCopyNumberServiceImpl discreteCopyNumberService;
@@ -55,7 +55,7 @@ public class DiscreteCopyNumberServiceImplTest extends BaseServiceImplTest {
         discreteCopyNumberService.getDiscreteCopyNumbersInMultipleMolecularProfiles(
             profiles, samples, geneIds, alterationTypes, PROJECTION);
 
-    Assert.assertEquals(toStrings(returned), toStrings(actual));
+    Assertions.assertEquals(toStrings(returned), toStrings(actual));
   }
 
   @Test
@@ -79,7 +79,7 @@ public class DiscreteCopyNumberServiceImplTest extends BaseServiceImplTest {
         discreteCopyNumberService.getDiscreteCopyNumbersInMultipleMolecularProfiles(
             profiles, samples, geneIds, alterationTypes, PROJECTION);
 
-    Assert.assertEquals(toStrings(returned), toStrings(actual));
+    Assertions.assertEquals(toStrings(returned), toStrings(actual));
   }
 
   @Test

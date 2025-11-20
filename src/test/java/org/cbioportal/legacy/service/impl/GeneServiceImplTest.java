@@ -8,15 +8,15 @@ import org.cbioportal.legacy.model.meta.BaseMeta;
 import org.cbioportal.legacy.persistence.GeneRepository;
 import org.cbioportal.legacy.service.exception.GeneNotFoundException;
 import org.cbioportal.legacy.service.util.ChromosomeCalculator;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class GeneServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private GeneServiceImpl geneService;
@@ -41,7 +41,7 @@ public class GeneServiceImplTest extends BaseServiceImplTest {
         geneService.getAllGenes(
             KEYWORD, ALIAS, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedGeneList, result);
+    Assertions.assertEquals(expectedGeneList, result);
   }
 
   @Test
@@ -52,7 +52,7 @@ public class GeneServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = geneService.getMetaGenes(null, ALIAS);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = GeneNotFoundException.class)
@@ -71,7 +71,7 @@ public class GeneServiceImplTest extends BaseServiceImplTest {
 
     Gene result = geneService.getGene(ENTREZ_GENE_ID_1.toString());
 
-    Assert.assertEquals(expectedGene, result);
+    Assertions.assertEquals(expectedGene, result);
   }
 
   @Test(expected = GeneNotFoundException.class)
@@ -90,7 +90,7 @@ public class GeneServiceImplTest extends BaseServiceImplTest {
 
     Gene result = geneService.getGene(HUGO_GENE_SYMBOL);
 
-    Assert.assertEquals(expectedGene, result);
+    Assertions.assertEquals(expectedGene, result);
   }
 
   @Test
@@ -104,7 +104,7 @@ public class GeneServiceImplTest extends BaseServiceImplTest {
         .thenReturn(expectedAliases);
     List<String> result = geneService.getAliasesOfGene(ENTREZ_GENE_ID_1.toString());
 
-    Assert.assertEquals(expectedAliases, result);
+    Assertions.assertEquals(expectedAliases, result);
   }
 
   @Test(expected = GeneNotFoundException.class)
@@ -125,7 +125,7 @@ public class GeneServiceImplTest extends BaseServiceImplTest {
         .thenReturn(expectedAliases);
     List<String> result = geneService.getAliasesOfGene(HUGO_GENE_SYMBOL);
 
-    Assert.assertEquals(expectedAliases, result);
+    Assertions.assertEquals(expectedAliases, result);
   }
 
   @Test(expected = GeneNotFoundException.class)
@@ -152,8 +152,8 @@ public class GeneServiceImplTest extends BaseServiceImplTest {
 
     List<Gene> result = geneService.fetchGenes(geneIds, GENE_ID_TYPE, PROJECTION);
 
-    Assert.assertEquals(1, result.size());
-    Assert.assertEquals(gene, result.get(0));
+    Assertions.assertEquals(1, result.size());
+    Assertions.assertEquals(gene, result.get(0));
   }
 
   @Test
@@ -172,6 +172,6 @@ public class GeneServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = geneService.fetchMetaGenes(geneIds, GENE_ID_TYPE);
 
-    Assert.assertEquals((Integer) 1, result.getTotalCount());
+    Assertions.assertEquals((Integer) 1, result.getTotalCount());
   }
 }

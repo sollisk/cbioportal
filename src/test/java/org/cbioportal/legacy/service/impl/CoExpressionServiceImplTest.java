@@ -19,15 +19,15 @@ import org.cbioportal.legacy.service.GenesetService;
 import org.cbioportal.legacy.service.MolecularDataService;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.util.CoExpressionAsyncMethods;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class CoExpressionServiceImplTest extends BaseServiceImplTest {
 
   private static final double THRESHOLD = 0.3;
@@ -90,14 +90,14 @@ public class CoExpressionServiceImplTest extends BaseServiceImplTest {
             MOLECULAR_PROFILE_ID_B,
             THRESHOLD);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     CoExpression coExpression1 = result.get(0);
-    Assert.assertEquals("2", coExpression1.getGeneticEntityId());
-    Assert.assertEquals(new BigDecimal("0.5"), coExpression1.getSpearmansCorrelation());
-    Assert.assertEquals(new BigDecimal("0.6666666666666667"), coExpression1.getpValue());
+    Assertions.assertEquals("2", coExpression1.getGeneticEntityId());
+    Assertions.assertEquals(new BigDecimal("0.5"), coExpression1.getSpearmansCorrelation());
+    Assertions.assertEquals(new BigDecimal("0.6666666666666667"), coExpression1.getpValue());
     CoExpression coExpression2 = result.get(1);
-    Assert.assertEquals("3", coExpression2.getGeneticEntityId());
-    Assert.assertEquals(
+    Assertions.assertEquals("3", coExpression2.getGeneticEntityId());
+    Assertions.assertEquals(
         new BigDecimal("0.8660254037844386"), coExpression2.getSpearmansCorrelation());
     Assert.assertEquals(new BigDecimal("0.3333333333333333"), coExpression2.getpValue());
   }

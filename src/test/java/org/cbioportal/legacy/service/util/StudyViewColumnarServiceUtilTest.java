@@ -1,6 +1,6 @@
 package org.cbioportal.legacy.service.util;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,8 +14,8 @@ import org.cbioportal.legacy.model.ClinicalDataCountItem;
 import org.cbioportal.legacy.model.GenomicDataCount;
 import org.cbioportal.legacy.model.GenomicDataCountItem;
 import org.cbioportal.legacy.web.parameter.GenomicDataFilter;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 public class StudyViewColumnarServiceUtilTest {
 
@@ -65,19 +65,19 @@ public class StudyViewColumnarServiceUtilTest {
         mergedItems.get(0).getCounts().stream()
             .filter(count -> count.getValue().equals("value1"))
             .findFirst();
-    Assert.assertEquals(3, mergedCount.get().getCount().intValue());
+    Assertions.assertEquals(3, mergedCount.get().getCount().intValue());
 
     Optional<ClinicalDataCount> mergedCount2 =
         mergedItems.get(0).getCounts().stream()
             .filter(count -> count.getValue().equals("value2"))
             .findFirst();
-    Assert.assertEquals(4, mergedCount2.get().getCount().intValue());
+    Assertions.assertEquals(4, mergedCount2.get().getCount().intValue());
 
     Optional<ClinicalDataCount> mergedCount3 =
         mergedItems.get(0).getCounts().stream()
             .filter(count -> count.getValue().equals("value3"))
             .findFirst();
-    Assert.assertEquals(10, mergedCount3.get().getCount().intValue());
+    Assertions.assertEquals(10, mergedCount3.get().getCount().intValue());
   }
 
   @Test

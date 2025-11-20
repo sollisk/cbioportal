@@ -1,12 +1,12 @@
 package org.cbioportal.domain.alteration.util;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.cbioportal.legacy.model.AlterationEnrichment;
 import org.cbioportal.legacy.model.CountSummary;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AlterationEnrichmentScoreUtilTest {
 

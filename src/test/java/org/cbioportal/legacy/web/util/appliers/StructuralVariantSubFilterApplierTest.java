@@ -17,15 +17,15 @@ import org.cbioportal.legacy.service.impl.StructuralVariantServiceImpl;
 import org.cbioportal.legacy.web.parameter.SampleIdentifier;
 import org.cbioportal.legacy.web.parameter.StudyViewFilter;
 import org.cbioportal.legacy.web.util.StudyViewFilterUtil;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class StructuralVariantSubFilterApplierTest {
 
   static final String ST_1_ID = "ST_1_ID";
@@ -103,13 +103,13 @@ public class StructuralVariantSubFilterApplierTest {
             createSampleId("10", ST_1_ID));
     List<SampleIdentifier> expected =
         Arrays.asList(createSampleId("4", ST_1_ID), createSampleId("5", ST_1_ID));
-    Assert.assertEquals(expected, subject.filter(sampleIdentifiers, structVarStudyViewFilter));
+    Assertions.assertEquals(expected, subject.filter(sampleIdentifiers, structVarStudyViewFilter));
   }
 
   @Test
   public void shouldApplyFilter() {
-    Assert.assertFalse(subject.shouldApplyFilter(emptyStudyViewFilter));
-    Assert.assertTrue(subject.shouldApplyFilter(structVarStudyViewFilter));
+    Assertions.assertFalse(subject.shouldApplyFilter(emptyStudyViewFilter));
+    Assertions.assertTrue(subject.shouldApplyFilter(structVarStudyViewFilter));
   }
 
   private StructuralVariantFilterQuery createQuery(String gene1, String gene2) {

@@ -14,14 +14,14 @@ import org.cbioportal.legacy.web.parameter.StudyViewFilter;
 import org.cbioportal.legacy.web.parameter.filter.AndedPatientTreatmentFilters;
 import org.cbioportal.legacy.web.parameter.filter.OredPatientTreatmentFilters;
 import org.cbioportal.legacy.web.parameter.filter.PatientTreatmentFilter;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class PatientTreatmentFilterApplierTest {
   @Mock TreatmentService treatmentService;
 
@@ -48,7 +48,7 @@ public class PatientTreatmentFilterApplierTest {
     List<SampleIdentifier> actual = subject.filter(samples, andedFilters);
     List<SampleIdentifier> expected = new ArrayList<>();
 
-    Assert.assertEquals(expected, actual);
+    Assertions.assertEquals(expected, actual);
   }
 
   @Test
@@ -70,7 +70,7 @@ public class PatientTreatmentFilterApplierTest {
     List<SampleIdentifier> actual = subject.filter(samples, andedFilters);
     List<SampleIdentifier> expected = new ArrayList<>();
 
-    Assert.assertEquals(expected, actual);
+    Assertions.assertEquals(expected, actual);
   }
 
   @Test
@@ -115,7 +115,7 @@ public class PatientTreatmentFilterApplierTest {
             createSampleId("SA_2", "ST_1"),
             createSampleId("SA_3", "ST_1"));
 
-    Assert.assertEquals(expected, actual);
+    Assertions.assertEquals(expected, actual);
   }
 
   private ClinicalEventSample createEvent(String sampleId, String studyId) {

@@ -8,13 +8,13 @@ import java.util.function.Predicate;
 import org.cbioportal.legacy.model.MolecularProfile;
 import org.cbioportal.legacy.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.legacy.service.impl.BaseServiceImplTest;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MolecularProfileUtilTest {
   @InjectMocks private MolecularProfileUtil molecularProfileUtil;
 
@@ -80,7 +80,7 @@ public class MolecularProfileUtilTest {
         molecularProfileUtil.getFirstFilteredMolecularProfileCaseIdentifiers(
             new ArrayList<>(), studyIds, sampleIds, Optional.empty());
     // no molecular profiles
-    Assert.assertEquals(0, result.size());
+    Assertions.assertEquals(0, result.size());
 
     List<MolecularProfile> allMolecularProfiles =
         Arrays.asList(
@@ -95,7 +95,7 @@ public class MolecularProfileUtilTest {
             allMolecularProfiles, studyIds, sampleIds, Optional.empty());
     // all molecular profiles
     // return would 3(6 profiles X 3 samples)
-    Assert.assertEquals("all profiles", 3, result.size());
+    Assertions.assertEquals(3, result.size(),"all profiles");
 
     // filtered mutation profile case identifiers
     result =
@@ -104,7 +104,7 @@ public class MolecularProfileUtilTest {
             studyIds,
             sampleIds,
             Optional.of(molecularProfileUtil.isMutationProfile));
-    Assert.assertEquals("mutation profile case identifiers", 3, result.size());
+    Assertions.assertEquals(3, result.size(),"mutation profile case identifiers");
 
     // filtered discrete CNA profile case identifiers
     result =
@@ -113,7 +113,7 @@ public class MolecularProfileUtilTest {
             studyIds,
             sampleIds,
             Optional.of(molecularProfileUtil.isDiscreteCNAMolecularProfile));
-    Assert.assertEquals("discrete CNA profile case identifiers", 3, result.size());
+    Assertions.assertEquals(3, result.size(),"discrete CNA profile case identifiers");
 
     // filtered structural variant profile case identifiers
     result =
@@ -122,7 +122,7 @@ public class MolecularProfileUtilTest {
             studyIds,
             sampleIds,
             Optional.of(molecularProfileUtil.isStructuralVariantMolecularProfile));
-    Assert.assertEquals("structural variant profile case identifiers", 3, result.size());
+    Assertions.assertEquals(3, result.size(),"structural variant profile case identifiers");
   }
 
   @Test
@@ -187,7 +187,7 @@ public class MolecularProfileUtilTest {
         molecularProfileUtil.getFilteredMolecularProfileCaseIdentifiers(
             new ArrayList<>(), studyIds, sampleIds, Optional.empty());
     // no molecular profiles
-    Assert.assertEquals(0, result.size());
+    Assertions.assertEquals(0, result.size());
 
     List<MolecularProfile> allMolecularProfiles =
         Arrays.asList(
@@ -202,7 +202,7 @@ public class MolecularProfileUtilTest {
             allMolecularProfiles, studyIds, sampleIds, Optional.empty());
     // all molecular profiles
     // return would 18(6 profiles X 3 samples) instead of 24(8 profiles X 3 samples)
-    Assert.assertEquals("all profiles", 18, result.size());
+    Assertions.assertEquals(18, result.size(),"all profiles");
 
     // filtered mutation profile case identifiers
     result =
@@ -211,7 +211,7 @@ public class MolecularProfileUtilTest {
             studyIds,
             sampleIds,
             Optional.of(molecularProfileUtil.isMutationProfile));
-    Assert.assertEquals("mutation profile case identifiers", 3, result.size());
+    Assertions.assertEquals(3, result.size(),"mutation profile case identifiers");
 
     // filtered discrete CNA profile case identifiers
     result =
@@ -220,7 +220,7 @@ public class MolecularProfileUtilTest {
             studyIds,
             sampleIds,
             Optional.of(molecularProfileUtil.isDiscreteCNAMolecularProfile));
-    Assert.assertEquals("discrete CNA profile case identifiers", 3, result.size());
+    Assertions.assertEquals(3, result.size(),"discrete CNA profile case identifiers");
 
     // filtered structural variant profile case identifiers
     result =
@@ -229,7 +229,7 @@ public class MolecularProfileUtilTest {
             studyIds,
             sampleIds,
             Optional.of(molecularProfileUtil.isStructuralVariantMolecularProfile));
-    Assert.assertEquals("structural variant profile case identifiers", 3, result.size());
+    Assertions.assertEquals(3, result.size(),"structural variant profile case identifiers");
 
     // filtered MRNA expression profile case identifiers (multiple molecular profiles)
     Predicate<MolecularProfile> isMRNAProfile =
@@ -239,6 +239,6 @@ public class MolecularProfileUtilTest {
     result =
         molecularProfileUtil.getFilteredMolecularProfileCaseIdentifiers(
             allMolecularProfiles, studyIds, sampleIds, Optional.of(isMRNAProfile));
-    Assert.assertEquals("structural variant profile case identifiers", 6, result.size());
+    Assertions.assertEquals(6, result.size(),"structural variant profile case identifiers");
   }
 }

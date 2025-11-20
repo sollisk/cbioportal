@@ -8,15 +8,15 @@ import java.util.List;
 import org.cbioportal.legacy.model.AlterationDriverAnnotation;
 import org.cbioportal.legacy.model.CustomDriverAnnotationReport;
 import org.cbioportal.legacy.persistence.AlterationDriverAnnotationRepository;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class AlterationDriverAnnotationServiceImplTest {
 
   @InjectMocks private AlterationDriverAnnotationServiceImpl alterationDriverAnnotationService;
@@ -45,8 +45,8 @@ public class AlterationDriverAnnotationServiceImplTest {
     CustomDriverAnnotationReport props =
         alterationDriverAnnotationService.getCustomDriverAnnotationProps(null);
 
-    Assert.assertTrue(props.getHasBinary());
-    Assert.assertTrue(props.getTiers().containsAll(Arrays.asList("Class1", "Class2")));
+    Assertions.assertTrue(props.getHasBinary());
+    Assertions.assertTrue(props.getTiers().containsAll(Arrays.asList("Class1", "Class2")));
   }
 
   @Test
@@ -63,8 +63,8 @@ public class AlterationDriverAnnotationServiceImplTest {
     CustomDriverAnnotationReport props =
         alterationDriverAnnotationService.getCustomDriverAnnotationProps(null);
 
-    Assert.assertFalse(props.getHasBinary());
-    Assert.assertTrue(props.getTiers().containsAll(Arrays.asList("Class1", "Class2")));
+    Assertions.assertFalse(props.getHasBinary());
+    Assertions.assertTrue(props.getTiers().containsAll(Arrays.asList("Class1", "Class2")));
   }
 
   @Test
@@ -80,8 +80,8 @@ public class AlterationDriverAnnotationServiceImplTest {
     CustomDriverAnnotationReport props =
         alterationDriverAnnotationService.getCustomDriverAnnotationProps(null);
 
-    Assert.assertTrue(props.getHasBinary());
-    Assert.assertEquals(0, props.getTiers().size());
+    Assertions.assertTrue(props.getHasBinary());
+    Assertions.assertEquals(0, props.getTiers().size());
   }
 
   @Test
@@ -96,7 +96,7 @@ public class AlterationDriverAnnotationServiceImplTest {
     CustomDriverAnnotationReport props =
         alterationDriverAnnotationService.getCustomDriverAnnotationProps(null);
 
-    Assert.assertTrue(props.getHasBinary());
+    Assertions.assertTrue(props.getHasBinary());
     Assert.assertEquals(0, props.getTiers().size());
   }
 

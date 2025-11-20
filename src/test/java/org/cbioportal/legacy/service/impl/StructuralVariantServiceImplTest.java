@@ -30,15 +30,15 @@ import org.cbioportal.legacy.model.GeneFilterQuery;
 import org.cbioportal.legacy.model.StructuralVariant;
 import org.cbioportal.legacy.model.StructuralVariantQuery;
 import org.cbioportal.legacy.persistence.StructuralVariantRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class StructuralVariantServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private StructuralVariantServiceImpl structuralVariantService;
@@ -65,7 +65,7 @@ public class StructuralVariantServiceImplTest extends BaseServiceImplTest {
         structuralVariantService.fetchStructuralVariants(
             molecularProfileIds, sampleIds, entrezGeneIds, noStructuralVariant);
 
-    Assert.assertEquals(expectedStructuralVariantList, result);
+    Assertions.assertEquals(expectedStructuralVariantList, result);
   }
 
   @Test
@@ -82,6 +82,6 @@ public class StructuralVariantServiceImplTest extends BaseServiceImplTest {
         structuralVariantService.fetchStructuralVariantsByGeneQueries(
             molecularProfileIds, sampleIds, geneFilterQueries);
 
-    Assert.assertEquals(expectedStructuralVariantList, result);
+    Assertions.assertEquals(expectedStructuralVariantList, result);
   }
 }

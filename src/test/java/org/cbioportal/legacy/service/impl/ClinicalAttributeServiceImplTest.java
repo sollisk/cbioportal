@@ -10,17 +10,17 @@ import org.cbioportal.legacy.persistence.ClinicalAttributeRepository;
 import org.cbioportal.legacy.service.StudyService;
 import org.cbioportal.legacy.service.exception.ClinicalAttributeNotFoundException;
 import org.cbioportal.legacy.service.exception.StudyNotFoundException;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private ClinicalAttributeServiceImpl clinicalAttributeService;
@@ -49,7 +49,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
         clinicalAttributeService.getAllClinicalAttributes(
             PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedClinicalAttributeList, result);
+    Assertions.assertEquals(expectedClinicalAttributeList, result);
   }
 
   @Test
@@ -60,7 +60,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
         .thenReturn(expectedBaseMeta);
     BaseMeta result = clinicalAttributeService.getMetaClinicalAttributes();
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = ClinicalAttributeNotFoundException.class)
@@ -91,7 +91,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
     ClinicalAttribute result =
         clinicalAttributeService.getClinicalAttribute(STUDY_ID, CLINICAL_ATTRIBUTE_ID_1);
 
-    Assert.assertEquals(expectedClinicalAttribute, result);
+    Assertions.assertEquals(expectedClinicalAttribute, result);
   }
 
   @Test
@@ -110,7 +110,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
         clinicalAttributeService.getAllClinicalAttributesInStudy(
             STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedClinicalAttributeList, result);
+    Assertions.assertEquals(expectedClinicalAttributeList, result);
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -129,7 +129,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
         .thenReturn(expectedBaseMeta);
     BaseMeta result = clinicalAttributeService.getMetaClinicalAttributesInStudy(STUDY_ID);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -154,7 +154,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
     List<ClinicalAttribute> result =
         clinicalAttributeService.fetchClinicalAttributes(Arrays.asList(STUDY_ID), PROJECTION);
 
-    Assert.assertEquals(expectedClinicalAttributeList, result);
+    Assertions.assertEquals(expectedClinicalAttributeList, result);
   }
 
   @Test
@@ -165,7 +165,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
         .thenReturn(expectedBaseMeta);
     BaseMeta result = clinicalAttributeService.fetchMetaClinicalAttributes(Arrays.asList(STUDY_ID));
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
@@ -187,7 +187,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
     List<ClinicalAttributeCount> result =
         clinicalAttributeService.getClinicalAttributeCountsBySampleIds(sampleIds, studyIds);
 
-    Assert.assertEquals(expectedClinicalAttributeCounts, result);
+    Assertions.assertEquals(expectedClinicalAttributeCounts, result);
   }
 
   @Test

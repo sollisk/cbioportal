@@ -42,17 +42,17 @@ import org.cbioportal.legacy.service.NamespaceDataService;
 import org.cbioportal.legacy.service.SignificantCopyNumberRegionService;
 import org.cbioportal.legacy.service.SignificantlyMutatedGeneService;
 import org.cbioportal.legacy.service.util.MolecularProfileUtil;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class StudyViewServiceImplTest extends BaseServiceImplTest {
 
   @Spy @InjectMocks private StudyViewServiceImpl studyViewService;
@@ -191,7 +191,7 @@ public class StudyViewServiceImplTest extends BaseServiceImplTest {
 
     List<GenomicDataCount> result = studyViewService.getGenomicDataCounts(studyIds, sampleIds);
 
-    Assert.assertEquals(expectedGenomicDataCounts, result);
+    Assertions.assertEquals(expectedGenomicDataCounts, result);
   }
 
   @Test
@@ -289,8 +289,8 @@ public class StudyViewServiceImplTest extends BaseServiceImplTest {
     List<GenomicDataCountItem> result =
         studyViewService.getMutationCountsByGeneSpecific(
             studyIds, sampleIds, genomicDataFilters, alterationFilter);
-    Assert.assertEquals(1, result.size());
-    Assert.assertEquals(1, result.get(0).getCounts().size());
+    Assertions.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.get(0).getCounts().size());
   }
 
   @Test
@@ -353,11 +353,11 @@ public class StudyViewServiceImplTest extends BaseServiceImplTest {
     List<GenomicDataCountItem> result =
         studyViewService.getMutationTypeCountsByGeneSpecific(
             studyIds, sampleIds, genomicDataFilters);
-    Assert.assertEquals(1, result.size());
-    Assert.assertEquals(BaseServiceImplTest.HUGO_GENE_SYMBOL_1, result.get(0).getHugoGeneSymbol());
-    Assert.assertEquals(BaseServiceImplTest.PROFILE_TYPE_1, result.get(0).getProfileType());
-    Assert.assertEquals(2, result.get(0).getCounts().get(0).getCount().intValue());
-    Assert.assertEquals(2, result.get(0).getCounts().get(1).getCount().intValue());
+    Assertions.assertEquals(1, result.size());
+    Assertions.assertEquals(BaseServiceImplTest.HUGO_GENE_SYMBOL_1, result.get(0).getHugoGeneSymbol());
+    Assertions.assertEquals(BaseServiceImplTest.PROFILE_TYPE_1, result.get(0).getProfileType());
+    Assertions.assertEquals(2, result.get(0).getCounts().get(0).getCount().intValue());
+    Assertions.assertEquals(2, result.get(0).getCounts().get(1).getCount().intValue());
   }
 
   @Test
@@ -398,7 +398,7 @@ public class StudyViewServiceImplTest extends BaseServiceImplTest {
     List<AlterationCountByGene> result =
         studyViewService.getStructuralVariantAlterationCountByGenes(
             studyIds, sampleIds, alterationFilter);
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
   }
 
   @Test
@@ -445,7 +445,7 @@ public class StudyViewServiceImplTest extends BaseServiceImplTest {
         .thenReturn(new Pair<>(alterationCountByGenes, 2L));
     List<CopyNumberCountByGene> result =
         studyViewService.getCNAAlterationCountByGenes(studyIds, sampleIds, alterationFilter);
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
   }
 
   @Test
@@ -517,15 +517,15 @@ public class StudyViewServiceImplTest extends BaseServiceImplTest {
     List<GenomicDataCountItem> result =
         studyViewService.getCNAAlterationCountsByGeneSpecific(
             studyIds, sampleIds, genomicDataFilters);
-    Assert.assertEquals(2, result.size());
-    Assert.assertEquals(BaseServiceImplTest.HUGO_GENE_SYMBOL_1, result.get(0).getHugoGeneSymbol());
-    Assert.assertEquals(BaseServiceImplTest.PROFILE_TYPE_1, result.get(0).getProfileType());
-    Assert.assertEquals(2, result.get(0).getCounts().get(0).getCount().intValue());
-    Assert.assertEquals(2, result.get(0).getCounts().get(1).getCount().intValue());
-    Assert.assertEquals(BaseServiceImplTest.HUGO_GENE_SYMBOL_2, result.get(1).getHugoGeneSymbol());
-    Assert.assertEquals(BaseServiceImplTest.PROFILE_TYPE_2, result.get(1).getProfileType());
-    Assert.assertEquals(2, result.get(1).getCounts().get(0).getCount().intValue());
-    Assert.assertEquals(2, result.get(1).getCounts().get(1).getCount().intValue());
+    Assertions.assertEquals(2, result.size());
+    Assertions.assertEquals(BaseServiceImplTest.HUGO_GENE_SYMBOL_1, result.get(0).getHugoGeneSymbol());
+    Assertions.assertEquals(BaseServiceImplTest.PROFILE_TYPE_1, result.get(0).getProfileType());
+    Assertions.assertEquals(2, result.get(0).getCounts().get(0).getCount().intValue());
+    Assertions.assertEquals(2, result.get(0).getCounts().get(1).getCount().intValue());
+    Assertions.assertEquals(BaseServiceImplTest.HUGO_GENE_SYMBOL_2, result.get(1).getHugoGeneSymbol());
+    Assertions.assertEquals(BaseServiceImplTest.PROFILE_TYPE_2, result.get(1).getProfileType());
+    Assertions.assertEquals(2, result.get(1).getCounts().get(0).getCount().intValue());
+    Assertions.assertEquals(2, result.get(1).getCounts().get(1).getCount().intValue());
   }
 
   @Test
@@ -622,25 +622,25 @@ public class StudyViewServiceImplTest extends BaseServiceImplTest {
     List<GenericAssayDataCountItem> result =
         studyViewService.fetchGenericAssayDataCounts(sampleIds, studyIds, stableIds, profileTypes);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
 
     GenericAssayDataCountItem item1 = result.get(0);
-    Assert.assertEquals(BaseServiceImplTest.STABLE_ID_1, item1.getStableId());
+    Assertions.assertEquals(BaseServiceImplTest.STABLE_ID_1, item1.getStableId());
     GenericAssayDataCount countInItem1 = item1.getCounts().get(0);
-    Assert.assertEquals(BaseServiceImplTest.CATEGORY_VALUE_1, countInItem1.getValue());
-    Assert.assertEquals((Integer) 2, countInItem1.getCount());
+    Assertions.assertEquals(BaseServiceImplTest.CATEGORY_VALUE_1, countInItem1.getValue());
+    Assertions.assertEquals((Integer) 2, countInItem1.getCount());
     GenericAssayDataCount countInItem2 = item1.getCounts().get(1);
-    Assert.assertEquals(BaseServiceImplTest.CATEGORY_VALUE_2, countInItem2.getValue());
-    Assert.assertEquals((Integer) 1, countInItem2.getCount());
+    Assertions.assertEquals(BaseServiceImplTest.CATEGORY_VALUE_2, countInItem2.getValue());
+    Assertions.assertEquals((Integer) 1, countInItem2.getCount());
 
     GenericAssayDataCountItem item2 = result.get(1);
-    Assert.assertEquals(BaseServiceImplTest.STABLE_ID_2, item2.getStableId());
+    Assertions.assertEquals(BaseServiceImplTest.STABLE_ID_2, item2.getStableId());
     GenericAssayDataCount countInItem3 = item2.getCounts().get(0);
-    Assert.assertEquals(BaseServiceImplTest.CATEGORY_VALUE_1, countInItem3.getValue());
-    Assert.assertEquals((Integer) 1, countInItem3.getCount());
+    Assertions.assertEquals(BaseServiceImplTest.CATEGORY_VALUE_1, countInItem3.getValue());
+    Assertions.assertEquals((Integer) 1, countInItem3.getCount());
     GenericAssayDataCount countInItem4 = item2.getCounts().get(1);
-    Assert.assertEquals(BaseServiceImplTest.EMPTY_VALUE_2, countInItem4.getValue());
-    Assert.assertEquals((Integer) 2, countInItem4.getCount());
+    Assertions.assertEquals(BaseServiceImplTest.EMPTY_VALUE_2, countInItem4.getValue());
+    Assertions.assertEquals((Integer) 2, countInItem4.getCount());
   }
 
   @Test
@@ -694,6 +694,6 @@ public class StudyViewServiceImplTest extends BaseServiceImplTest {
     List<NamespaceDataCountItem> result =
         studyViewService.fetchNamespaceDataCounts(sampleIds, studyIds, namespaceAttributes);
 
-    Assert.assertEquals(expectedCountItems, result);
+    Assertions.assertEquals(expectedCountItems, result);
   }
 }

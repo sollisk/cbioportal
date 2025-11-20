@@ -8,15 +8,15 @@ import java.util.List;
 import org.cbioportal.legacy.model.NamespaceAttribute;
 import org.cbioportal.legacy.model.NamespaceAttributeCount;
 import org.cbioportal.legacy.persistence.NamespaceRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class NamespaceAttributeServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private NamespaceAttributeServiceImpl namespaceAttributeService;
@@ -40,7 +40,7 @@ public class NamespaceAttributeServiceImplTest extends BaseServiceImplTest {
     List<NamespaceAttribute> result =
         namespaceAttributeService.fetchNamespaceAttributes(Arrays.asList(STUDY_ID));
 
-    Assert.assertEquals(expectedNamespaceAttributeList, result);
+    Assertions.assertEquals(expectedNamespaceAttributeList, result);
   }
 
   @Test
@@ -68,6 +68,6 @@ public class NamespaceAttributeServiceImplTest extends BaseServiceImplTest {
         namespaceAttributeService.fetchNamespaceAttributeCountsBySampleIds(
             sampleIds, studyIds, namespaceAttributes);
 
-    Assert.assertEquals(expectedNamespaceAttributeCounts, result);
+    Assertions.assertEquals(expectedNamespaceAttributeCounts, result);
   }
 }

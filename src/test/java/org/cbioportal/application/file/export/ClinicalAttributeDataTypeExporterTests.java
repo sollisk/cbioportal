@@ -1,8 +1,8 @@
 package org.cbioportal.application.file.export;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ import org.cbioportal.application.file.export.services.ClinicalAttributeDataServ
 import org.cbioportal.application.file.model.ClinicalAttribute;
 import org.cbioportal.application.file.model.ClinicalAttributeValue;
 import org.cbioportal.application.file.utils.CloseableIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ClinicalAttributeDataTypeExporterTests {
 
@@ -32,7 +32,7 @@ public class ClinicalAttributeDataTypeExporterTests {
                 })
             .exportData(factory, new ExportDetails("TEST_STUDY_ID"));
 
-    assertFalse("No data should be exported", exported);
+    assertFalse(exported, "No data should be exported");
     var fileContents = factory.getFileContents();
     assertTrue(fileContents.isEmpty());
   }
@@ -45,7 +45,7 @@ public class ClinicalAttributeDataTypeExporterTests {
         new ClinicalSampleAttributesDataTypeExporter(clinicalDataAttributeDataService)
             .exportData(factory, new ExportDetails("TEST_STUDY_ID"));
 
-    assertTrue("Data should be exported", exported);
+    assertTrue(exported, "Data should be exported");
     var fileContents = factory.getFileContents();
     assertEquals(
         Set.of("meta_clinical_sample_attributes.txt", "data_clinical_sample_attributes.txt"),
@@ -82,7 +82,7 @@ public class ClinicalAttributeDataTypeExporterTests {
         new ClinicalSampleAttributesDataTypeExporter(clinicalDataAttributeDataService)
             .exportData(factory, new ExportDetails("TEST_STUDY_ID", "TEST_STUDY_ID_B"));
 
-    assertTrue("Data should be exported", exported);
+    assertTrue(exported, "Data should be exported");
     var fileContents = factory.getFileContents();
     assertEquals(
         Set.of("meta_clinical_sample_attributes.txt", "data_clinical_sample_attributes.txt"),
@@ -113,7 +113,7 @@ public class ClinicalAttributeDataTypeExporterTests {
                 })
             .exportData(factory, new ExportDetails("TEST_STUDY_ID"));
 
-    assertFalse("No data should be exported", exported);
+    assertFalse(exported, "No data should be exported");
     var fileContents = factory.getFileContents();
     assertTrue(fileContents.isEmpty());
   }
@@ -126,7 +126,7 @@ public class ClinicalAttributeDataTypeExporterTests {
         new ClinicalPatientAttributesDataTypeExporter(clinicalDataAttributeDataService)
             .exportData(factory, new ExportDetails("TEST_STUDY_ID"));
 
-    assertTrue("Data should be exported", exported);
+    assertTrue(exported, "Data should be exported");
     var fileContents = factory.getFileContents();
     assertEquals(
         Set.of("meta_clinical_patient_attributes.txt", "data_clinical_patient_attributes.txt"),

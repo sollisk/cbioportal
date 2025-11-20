@@ -10,16 +10,16 @@ import org.cbioportal.legacy.persistence.cachemaputil.StaticRefCacheMapUtil;
 import org.cbioportal.legacy.persistence.util.CacheUtils;
 import org.cbioportal.legacy.service.exception.CacheOperationException;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.test.util.ReflectionTestUtils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CacheServiceImplTest {
 
   @InjectMocks private CacheServiceImpl cachingService;

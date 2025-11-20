@@ -13,14 +13,14 @@ import org.cbioportal.legacy.service.CancerTypeService;
 import org.cbioportal.legacy.service.ReadPermissionService;
 import org.cbioportal.legacy.service.exception.StudyNotFoundException;
 import org.cbioportal.legacy.utils.security.AccessLevel;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class StudyServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private StudyServiceImpl studyService;
@@ -47,7 +47,7 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
         studyService.getAllStudies(
             KEYWORD, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION, null, AccessLevel.READ);
 
-    Assert.assertEquals(expectedCancerStudyList.get(0), result.get(0));
+    Assertions.assertEquals(expectedCancerStudyList.get(0), result.get(0));
   }
 
   @Test
@@ -58,7 +58,7 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = studyService.getMetaStudies(null);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -78,7 +78,7 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
 
     CancerStudy result = studyService.getStudy(STUDY_ID);
 
-    Assert.assertEquals(expectedCancerStudy, result);
+    Assertions.assertEquals(expectedCancerStudy, result);
   }
 
   @Test
@@ -93,7 +93,7 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
 
     List<CancerStudy> result = studyService.fetchStudies(Arrays.asList(STUDY_ID), PROJECTION);
 
-    Assert.assertEquals(expectedCancerStudyList, result);
+    Assertions.assertEquals(expectedCancerStudyList, result);
   }
 
   @Test
@@ -105,6 +105,6 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = studyService.fetchMetaStudies(Arrays.asList(STUDY_ID));
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 }

@@ -10,17 +10,17 @@ import java.util.List;
 import org.cbioportal.application.security.CancerStudyPermissionEvaluator;
 import org.cbioportal.legacy.model.CancerStudy;
 import org.cbioportal.legacy.utils.security.AccessLevel;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.util.ReflectionTestUtils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ReadPermissionServiceImplTest {
 
   @InjectMocks private ReadPermissionServiceImpl readPermissionService;
@@ -45,7 +45,7 @@ public class ReadPermissionServiceImplTest {
   @Test
   public void setReadPermissionSuccess() {
     readPermissionService.setReadPermission(cancerStudies, authentication);
-    Assert.assertFalse(cancerStudies.get(0).getReadPermission());
+    Assertions.assertFalse(cancerStudies.get(0).getReadPermission());
     Assert.assertTrue(cancerStudies.get(1).getReadPermission());
   }
 

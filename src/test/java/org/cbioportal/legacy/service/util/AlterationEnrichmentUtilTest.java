@@ -8,13 +8,13 @@ import org.cbioportal.legacy.model.AlterationEnrichment;
 import org.cbioportal.legacy.model.Gene;
 import org.cbioportal.legacy.model.MolecularProfileCaseIdentifier;
 import org.cbioportal.legacy.service.GeneService;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class AlterationEnrichmentUtilTest {
 
   @InjectMocks private AlterationEnrichmentUtil alterationEnrichmentUtil;
@@ -114,38 +114,38 @@ public class AlterationEnrichmentUtilTest {
     List<AlterationEnrichment> result =
         alterationEnrichmentUtil.createAlterationEnrichments(mutationCountsbyEntrezGeneIdAndGroup);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     AlterationEnrichment alterationEnrichment1 = result.get(0);
-    Assert.assertEquals((Integer) 2, alterationEnrichment1.getEntrezGeneId());
-    Assert.assertEquals("HUGO2", alterationEnrichment1.getHugoGeneSymbol());
-    Assert.assertEquals(null, alterationEnrichment1.getCytoband());
-    Assert.assertEquals(2, alterationEnrichment1.getCounts().size());
-    Assert.assertEquals(new BigDecimal("1.0"), alterationEnrichment1.getpValue());
+    Assertions.assertEquals((Integer) 2, alterationEnrichment1.getEntrezGeneId());
+    Assertions.assertEquals("HUGO2", alterationEnrichment1.getHugoGeneSymbol());
+    Assertions.assertEquals(null, alterationEnrichment1.getCytoband());
+    Assertions.assertEquals(2, alterationEnrichment1.getCounts().size());
+    Assertions.assertEquals(new BigDecimal("1.0"), alterationEnrichment1.getpValue());
     alterationEnrichment1
         .getCounts()
         .forEach(
             countSummary -> {
               if (countSummary.getName().equals("group2")) {
-                Assert.assertEquals((Integer) 0, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 0, countSummary.getAlteredCount());
               } else if (countSummary.getName().equals("group1")) {
-                Assert.assertEquals((Integer) 1, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 1, countSummary.getAlteredCount());
               }
             });
 
     AlterationEnrichment alterationEnrichment2 = result.get(1);
-    Assert.assertEquals((Integer) 3, alterationEnrichment2.getEntrezGeneId());
-    Assert.assertEquals("HUGO3", alterationEnrichment2.getHugoGeneSymbol());
-    Assert.assertEquals(null, alterationEnrichment2.getCytoband());
-    Assert.assertEquals(2, alterationEnrichment2.getCounts().size());
-    Assert.assertEquals(new BigDecimal("0.3"), alterationEnrichment2.getpValue());
+    Assertions.assertEquals((Integer) 3, alterationEnrichment2.getEntrezGeneId());
+    Assertions.assertEquals("HUGO3", alterationEnrichment2.getHugoGeneSymbol());
+    Assertions.assertEquals(null, alterationEnrichment2.getCytoband());
+    Assertions.assertEquals(2, alterationEnrichment2.getCounts().size());
+    Assertions.assertEquals(new BigDecimal("0.3"), alterationEnrichment2.getpValue());
     alterationEnrichment2
         .getCounts()
         .forEach(
             countSummary -> {
               if (countSummary.getName().equals("group2")) {
-                Assert.assertEquals((Integer) 2, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 2, countSummary.getAlteredCount());
               } else if (countSummary.getName().equals("group1")) {
-                Assert.assertEquals((Integer) 0, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 0, countSummary.getAlteredCount());
               }
             });
 
@@ -162,44 +162,44 @@ public class AlterationEnrichmentUtilTest {
     result =
         alterationEnrichmentUtil.createAlterationEnrichments(mutationCountsbyEntrezGeneIdAndGroup);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     alterationEnrichment1 = result.get(0);
-    Assert.assertEquals((Integer) 2, alterationEnrichment1.getEntrezGeneId());
-    Assert.assertEquals("HUGO2", alterationEnrichment1.getHugoGeneSymbol());
-    Assert.assertEquals(null, alterationEnrichment1.getCytoband());
-    Assert.assertEquals(3, alterationEnrichment1.getCounts().size());
+    Assertions.assertEquals((Integer) 2, alterationEnrichment1.getEntrezGeneId());
+    Assertions.assertEquals("HUGO2", alterationEnrichment1.getHugoGeneSymbol());
+    Assertions.assertEquals(null, alterationEnrichment1.getCytoband());
+    Assertions.assertEquals(3, alterationEnrichment1.getCounts().size());
 
-    Assert.assertEquals(new BigDecimal("0.4723665527410149"), alterationEnrichment1.getpValue());
+    Assertions.assertEquals(new BigDecimal("0.4723665527410149"), alterationEnrichment1.getpValue());
     alterationEnrichment1
         .getCounts()
         .forEach(
             countSummary -> {
               if (countSummary.getName().equals("group3")) {
-                Assert.assertEquals((Integer) 1, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 1, countSummary.getAlteredCount());
               } else if (countSummary.getName().equals("group2")) {
-                Assert.assertEquals((Integer) 0, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 0, countSummary.getAlteredCount());
               } else if (countSummary.getName().equals("group1")) {
-                Assert.assertEquals((Integer) 1, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 1, countSummary.getAlteredCount());
               }
             });
 
     alterationEnrichment2 = result.get(1);
-    Assert.assertEquals((Integer) 3, alterationEnrichment2.getEntrezGeneId());
-    Assert.assertEquals("HUGO3", alterationEnrichment2.getHugoGeneSymbol());
-    Assert.assertEquals(null, alterationEnrichment2.getCytoband());
-    Assert.assertEquals(3, alterationEnrichment2.getCounts().size());
+    Assertions.assertEquals((Integer) 3, alterationEnrichment2.getEntrezGeneId());
+    Assertions.assertEquals("HUGO3", alterationEnrichment2.getHugoGeneSymbol());
+    Assertions.assertEquals(null, alterationEnrichment2.getCytoband());
+    Assertions.assertEquals(3, alterationEnrichment2.getCounts().size());
 
-    Assert.assertEquals(new BigDecimal("0.04978706836786395"), alterationEnrichment2.getpValue());
+    Assertions.assertEquals(new BigDecimal("0.04978706836786395"), alterationEnrichment2.getpValue());
     alterationEnrichment2
         .getCounts()
         .forEach(
             countSummary -> {
               if (countSummary.getName().equals("group3")) {
-                Assert.assertEquals((Integer) 2, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 2, countSummary.getAlteredCount());
               } else if (countSummary.getName().equals("group2")) {
-                Assert.assertEquals((Integer) 2, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 2, countSummary.getAlteredCount());
               } else if (countSummary.getName().equals("group1")) {
-                Assert.assertEquals((Integer) 0, countSummary.getAlteredCount());
+                Assertions.assertEquals((Integer) 0, countSummary.getAlteredCount());
               }
             });
 

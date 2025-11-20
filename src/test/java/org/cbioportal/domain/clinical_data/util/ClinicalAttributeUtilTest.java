@@ -1,13 +1,13 @@
 package org.cbioportal.domain.clinical_data.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.List;
 import org.cbioportal.domain.clinical_attributes.util.ClinicalAttributeUtil;
 import org.cbioportal.legacy.model.ClinicalAttribute;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ClinicalAttributeUtilTest {
 
@@ -33,22 +33,19 @@ public class ClinicalAttributeUtilTest {
     var result = ClinicalAttributeUtil.categorizeClinicalAttributes(clinicalAttributes);
 
     // Verify sample attributes
-    assertEquals("Should have 2 sample attributes", 2, result.sampleAttributeIds().size());
-    assertTrue(
-        "Should contain mutation_count", result.sampleAttributeIds().contains("mutation_count"));
-    assertTrue(
-        "Should contain days_to_collection",
-        result.sampleAttributeIds().contains("days_to_collection"));
+    assertEquals(2, result.sampleAttributeIds().size(),"Should have 2 sample attributes");
+    assertTrue(result.sampleAttributeIds().contains("mutation_count"),"Should contain mutation_count");
+    assertTrue(result.sampleAttributeIds().contains("days_to_collection"),"Should contain days_to_collection");
 
     // Verify patient attributes
-    assertEquals("Should have 3 patient attributes", 3, result.patientAttributeIds().size());
-    assertTrue("Should contain age", result.patientAttributeIds().contains("age"));
-    assertTrue("Should contain center", result.patientAttributeIds().contains("center"));
-    assertTrue("Should contain dead", result.patientAttributeIds().contains("dead"));
+    assertEquals(3, result.patientAttributeIds().size(),"Should have 3 patient attributes");
+    assertTrue(result.patientAttributeIds().contains("age"),"Should contain age");
+    assertTrue(result.patientAttributeIds().contains("center"), "Should contain center");
+    assertTrue(result.patientAttributeIds().contains("dead"),"Should contain dead");
 
     // Verify conflicting attributes
-    assertEquals("Should have 1 conflicting attribute", 1, result.conflictingAttributeIds().size());
-    assertTrue("Should contain subtype", result.conflictingAttributeIds().contains("subtype"));
+    assertEquals(1, result.conflictingAttributeIds().size(),"Should have 1 conflicting attribute");
+    assertTrue(result.conflictingAttributeIds().contains("subtype"),"Should contain subtype");
   }
 
   @Test
@@ -56,10 +53,9 @@ public class ClinicalAttributeUtilTest {
     // Test with empty input
     var result = ClinicalAttributeUtil.categorizeClinicalAttributes(List.of());
 
-    assertTrue("Sample attributes should be empty", result.sampleAttributeIds().isEmpty());
-    assertTrue("Patient attributes should be empty", result.patientAttributeIds().isEmpty());
-    assertTrue(
-        "Conflicting attributes should be empty", result.conflictingAttributeIds().isEmpty());
+    assertTrue(result.sampleAttributeIds().isEmpty(),"Sample attributes should be empty");
+    assertTrue(result.patientAttributeIds().isEmpty(),"Patient attributes should be empty");
+    assertTrue(result.conflictingAttributeIds().isEmpty(),"Conflicting attributes should be empty");
   }
 
   @Test
@@ -73,10 +69,9 @@ public class ClinicalAttributeUtilTest {
 
     var result = ClinicalAttributeUtil.categorizeClinicalAttributes(clinicalAttributes);
 
-    assertEquals("Should have 3 sample attributes", 3, result.sampleAttributeIds().size());
-    assertTrue("Patient attributes should be empty", result.patientAttributeIds().isEmpty());
-    assertTrue(
-        "Conflicting attributes should be empty", result.conflictingAttributeIds().isEmpty());
+    assertEquals(3, result.sampleAttributeIds().size(),"Should have 3 sample attributes");
+    assertTrue(result.patientAttributeIds().isEmpty(),"Patient attributes should be empty");
+    assertTrue(result.conflictingAttributeIds().isEmpty(),"Conflicting attributes should be empty");
   }
 
   @Test
@@ -90,10 +85,9 @@ public class ClinicalAttributeUtilTest {
 
     var result = ClinicalAttributeUtil.categorizeClinicalAttributes(clinicalAttributes);
 
-    assertTrue("Sample attributes should be empty", result.sampleAttributeIds().isEmpty());
-    assertEquals("Should have 3 patient attributes", 3, result.patientAttributeIds().size());
-    assertTrue(
-        "Conflicting attributes should be empty", result.conflictingAttributeIds().isEmpty());
+    assertTrue(result.sampleAttributeIds().isEmpty(),"Sample attributes should be empty");
+    assertEquals(3, result.patientAttributeIds().size(),"Should have 3 patient attributes");
+    assertTrue(result.conflictingAttributeIds().isEmpty(),"Conflicting attributes should be empty");
   }
 
   @Test
@@ -115,16 +109,12 @@ public class ClinicalAttributeUtilTest {
 
     var result = ClinicalAttributeUtil.categorizeClinicalAttributes(clinicalAttributes);
 
-    assertEquals("Should have 1 sample attribute", 1, result.sampleAttributeIds().size());
-    assertEquals("Should have 1 patient attribute", 1, result.patientAttributeIds().size());
-    assertEquals(
-        "Should have 2 conflicting attributes", 2, result.conflictingAttributeIds().size());
+    assertEquals(1, result.sampleAttributeIds().size(),"Should have 1 sample attribute");
+    assertEquals(1, result.patientAttributeIds().size(),"Should have 1 patient attribute");
+    assertEquals(2, result.conflictingAttributeIds().size(),"Should have 2 conflicting attributes");
 
-    assertTrue(
-        "Should contain subtype in conflicting",
-        result.conflictingAttributeIds().contains("subtype"));
-    assertTrue(
-        "Should contain grade in conflicting", result.conflictingAttributeIds().contains("grade"));
+    assertTrue(result.conflictingAttributeIds().contains("subtype"),"Should contain subtype in conflicting");
+    assertTrue(result.conflictingAttributeIds().contains("grade"),"Should contain grade in conflicting");
   }
 
   @Test
@@ -137,10 +127,9 @@ public class ClinicalAttributeUtilTest {
 
     var result = ClinicalAttributeUtil.categorizeClinicalAttributes(clinicalAttributes);
 
-    assertEquals("Should have 1 sample attribute", 1, result.sampleAttributeIds().size());
-    assertEquals("Should have 1 patient attribute", 1, result.patientAttributeIds().size());
-    assertTrue(
-        "Conflicting attributes should be empty", result.conflictingAttributeIds().isEmpty());
+    assertEquals(1, result.sampleAttributeIds().size(),"Should have 1 sample attribute");
+    assertEquals(1, result.patientAttributeIds().size(),"Should have 1 patient attribute");
+    assertTrue(result.conflictingAttributeIds().isEmpty(),"Conflicting attributes should be empty");
   }
 
   // Helper method to create ClinicalAttribute for testing

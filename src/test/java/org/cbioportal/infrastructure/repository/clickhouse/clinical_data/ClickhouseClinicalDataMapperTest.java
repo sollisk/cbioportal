@@ -1,6 +1,6 @@
 package org.cbioportal.infrastructure.repository.clickhouse.clinical_data;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -13,8 +13,9 @@ import org.cbioportal.legacy.model.ClinicalDataCount;
 import org.cbioportal.legacy.web.parameter.ClinicalDataFilter;
 import org.cbioportal.legacy.web.parameter.DataFilterValue;
 import org.cbioportal.legacy.web.parameter.StudyViewFilter;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -23,7 +24,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 @Import(MyBatisConfig.class)
 @DataJpaTest
 @DirtiesContext
@@ -323,14 +324,13 @@ public class ClickhouseClinicalDataMapperTest {
     Integer sampleCount =
         mapper.fetchClinicalDataMeta(sampleUniqueIds, sampleAttributeIds, "sample");
 
-    assertEquals("Sample data count should match", sampleData.size(), sampleCount.intValue());
+    assertEquals(sampleData.size(), sampleCount.intValue(), "Sample data count should match");
 
     // Test Patient type - all data
     List<ClinicalData> allPatientData = mapper.fetchClinicalDataId(null, null, "patient");
     Integer allPatientCount = mapper.fetchClinicalDataMeta(null, null, "patient");
 
-    assertEquals(
-        "Patient data count should match", allPatientData.size(), allPatientCount.intValue());
+    assertEquals(allPatientData.size(), allPatientCount.intValue(), "Patient data count should match");
 
     // Test Patient type with specific filters
     List<String> patientUniqueIds =
@@ -343,13 +343,12 @@ public class ClickhouseClinicalDataMapperTest {
         mapper.fetchClinicalDataMeta(patientUniqueIds, patientAttributeIds, "patient");
 
     assertEquals(
-        "Filtered patient data count should match",
         filteredPatientData.size(),
-        filteredPatientCount.intValue());
+        filteredPatientCount.intValue(),
+        "Filtered patient data count should match");
 
     // Expected: 2 patients × 2 attributes = 4 records (if both patients have both attributes)
-    assertEquals(
-        "Should have 4 records for 2 patients × 2 attributes", 4, filteredPatientData.size());
+    assertEquals(4, filteredPatientData.size(), "Should have 4 records for 2 patients × 2 attributes");
   }
 
   @Test
@@ -360,8 +359,8 @@ public class ClickhouseClinicalDataMapperTest {
     List<ClinicalData> emptyData = mapper.fetchClinicalDataSummary(nonExistentIds, null, "sample");
     Integer emptyCount = mapper.fetchClinicalDataMeta(nonExistentIds, null, "sample");
 
-    assertEquals("Empty data should have size 0", 0, emptyData.size());
-    assertEquals("Empty count should be 0", 0, emptyCount.intValue());
+    assertEquals(0, emptyData.size(), "Empty data should have size 0");
+    assertEquals(0, emptyCount.intValue(), "Empty count should be 0");
 
     // Test with non-existent attribute IDs
     List<String> validIds = List.of("study_genie_pub_GENIE-TEST-301-01");
@@ -371,8 +370,8 @@ public class ClickhouseClinicalDataMapperTest {
         mapper.fetchClinicalDataSummary(validIds, nonExistentAttrs, "sample");
     Integer noAttrCount = mapper.fetchClinicalDataMeta(validIds, nonExistentAttrs, "sample");
 
-    assertEquals("No attribute data should have size 0", 0, noAttrData.size());
-    assertEquals("No attribute count should be 0", 0, noAttrCount.intValue());
+    assertEquals(0, noAttrData.size(), "No attribute data should have size 0");
+    assertEquals(0, noAttrCount.intValue(), "No attribute count should be 0");
   }
 
   @Test
@@ -391,16 +390,9 @@ public class ClickhouseClinicalDataMapperTest {
     Integer metaCount = mapper.fetchClinicalDataMeta(sameIds, sameAttributes, "sample");
 
     // All should have the same count
-    assertEquals(
-        "ID and SUMMARY projection should have same count", idData.size(), summaryData.size());
-    assertEquals(
-        "SUMMARY and DETAILED projection should have same count",
-        summaryData.size(),
-        detailedData.size());
-    assertEquals(
-        "DETAILED projection and meta count should match",
-        detailedData.size(),
-        metaCount.intValue());
+    assertEquals(idData.size(), summaryData.size(), "ID and SUMMARY projection should have same count");
+    assertEquals(summaryData.size(), detailedData.size(), "SUMMARY and DETAILED projection should have same count");
+    assertEquals(detailedData.size(), metaCount.intValue(), "DETAILED projection and meta count should match");
 
     // Verify projection differences in returned data
     if (!idData.isEmpty()) {
@@ -409,19 +401,17 @@ public class ClickhouseClinicalDataMapperTest {
       ClinicalData detailedResult = detailedData.getFirst();
 
       // ID projection should not have attrValue
-      assertNull("ID projection should not have attrValue", idResult.attrValue());
+      assertNull(idResult.attrValue(), "ID projection should not have attrValue");
 
       // SUMMARY projection should have attrValue
-      assertNotNull("SUMMARY projection should have attrValue", summaryResult.attrValue());
+      assertNotNull(summaryResult.attrValue(), "SUMMARY projection should have attrValue");
 
       // DETAILED projection should have clinical attribute info
-      assertNotNull(
-          "DETAILED projection should have clinical attribute", detailedResult.clinicalAttribute());
+      assertNotNull(detailedResult.clinicalAttribute(), "DETAILED projection should have clinical attribute");
 
       // Basic fields should be consistent across projections
-      assertEquals("AttrId should be consistent", idResult.attrId(), summaryResult.attrId());
-      assertEquals(
-          "PatientId should be consistent", idResult.patientId(), detailedResult.patientId());
+      assertEquals(idResult.attrId(), summaryResult.attrId(), "AttrId should be consistent");
+      assertEquals(idResult.patientId(), detailedResult.patientId(), "PatientId should be consistent");
     }
   }
 
@@ -445,20 +435,19 @@ public class ClickhouseClinicalDataMapperTest {
             .filter(c -> c.getAttributeId().equals("subtype"))
             .findFirst();
 
-    assertTrue("Subtype counts should be present", subtypeCountsOptional.isPresent());
+    assertTrue(subtypeCountsOptional.isPresent(), "Subtype counts should be present");
     var subtypeCounts = subtypeCountsOptional.get().getCounts();
 
     // Expected: sample-level data from acc_tcga + patient-level data from study_genie_pub
-    assertEquals("Should have 5 subtype categories", 5, subtypeCounts.size());
+    assertEquals(5, subtypeCounts.size(), "Should have 5 subtype categories");
 
-    assertEquals("Luminal A count", 2, findClinicalDataCount(subtypeCounts, "Luminal A"));
-    assertEquals("Luminal B count", 2, findClinicalDataCount(subtypeCounts, "Luminal B"));
-    assertEquals("HER2+ count", 2, findClinicalDataCount(subtypeCounts, "HER2+"));
-    assertEquals(
-        "Triple Negative count", 1, findClinicalDataCount(subtypeCounts, "Triple Negative"));
+    assertEquals(2, findClinicalDataCount(subtypeCounts, "Luminal A"), "Luminal A count");
+    assertEquals(2, findClinicalDataCount(subtypeCounts, "Luminal B"), "Luminal B count");
+    assertEquals(2, findClinicalDataCount(subtypeCounts, "HER2+"), "HER2+ count");
+    assertEquals(1, findClinicalDataCount(subtypeCounts, "Triple Negative"), "Triple Negative count");
 
     // NA count calculated using total SAMPLE count due to isConflicting=true
-    assertTrue("NA count should be > 0", findClinicalDataCount(subtypeCounts, "NA") > 0);
+    assertTrue(findClinicalDataCount(subtypeCounts, "NA") > 0, "NA count should be > 0");
   }
 
   @Test
@@ -476,18 +465,11 @@ public class ClickhouseClinicalDataMapperTest {
             );
 
     // Verify all three attribute types are returned via UNION logic
-    assertEquals("Should have 3 attributes", 3, combinedClinicalDataCounts.size());
+    assertEquals(3, combinedClinicalDataCounts.size(), "Should have 3 attributes");
 
-    assertTrue(
-        "mutation_count should be present",
-        combinedClinicalDataCounts.stream()
-            .anyMatch(c -> c.getAttributeId().equals("mutation_count")));
-    assertTrue(
-        "center should be present",
-        combinedClinicalDataCounts.stream().anyMatch(c -> c.getAttributeId().equals("center")));
-    assertTrue(
-        "subtype should be present",
-        combinedClinicalDataCounts.stream().anyMatch(c -> c.getAttributeId().equals("subtype")));
+    assertTrue(combinedClinicalDataCounts.stream().anyMatch(c -> c.getAttributeId().equals("mutation_count")), "mutation_count should be present");
+    assertTrue(combinedClinicalDataCounts.stream().anyMatch(c -> c.getAttributeId().equals("center")),"center should be present");
+    assertTrue(combinedClinicalDataCounts.stream().anyMatch(c -> c.getAttributeId().equals("subtype")),"subtype should be present");
   }
 
   @Test
@@ -512,22 +494,20 @@ public class ClickhouseClinicalDataMapperTest {
             .filter(c -> c.getAttributeId().equals("subtype"))
             .findFirst();
 
-    assertTrue("Filtered subtype counts should be present", subtypeCountsOptional.isPresent());
+    assertTrue(subtypeCountsOptional.isPresent(),"Filtered subtype counts should be present");
     var subtypeCounts = subtypeCountsOptional.get().getCounts();
 
     // After filtering: 10 total samples, 4 with actual values, 6 NA
-    assertEquals("Should have 5 subtype categories after filtering", 5, subtypeCounts.size());
+    assertEquals(5, subtypeCounts.size(),"Should have 5 subtype categories after filtering");
 
-    assertEquals(
-        "Triple Negative count", 1, findClinicalDataCount(subtypeCounts, "Triple Negative"));
-    assertEquals("Luminal A count", 1, findClinicalDataCount(subtypeCounts, "Luminal A"));
-    assertEquals("HER2+ count", 1, findClinicalDataCount(subtypeCounts, "HER2+"));
-    assertEquals("Luminal B count", 1, findClinicalDataCount(subtypeCounts, "Luminal B"));
-    assertEquals("NA count", 6, findClinicalDataCount(subtypeCounts, "NA"));
+    assertEquals(1, findClinicalDataCount(subtypeCounts, "Triple Negative"),"Triple Negative count");
+    assertEquals(1, findClinicalDataCount(subtypeCounts, "Luminal A"),"Luminal A count");
+    assertEquals(1, findClinicalDataCount(subtypeCounts, "HER2+"),"HER2+ count");
+    assertEquals(1, findClinicalDataCount(subtypeCounts, "Luminal B"),"Luminal B count");
+    assertEquals(6, findClinicalDataCount(subtypeCounts, "NA"), "NA count");
 
     // Verify NA calculation uses sample count even with filtering (isConflicting=true)
-    assertTrue(
-        "Should have NA count with filtering", findClinicalDataCount(subtypeCounts, "NA") > 0);
+    assertTrue(findClinicalDataCount(subtypeCounts, "NA") > 0,"Should have NA count with filtering");
   }
 
   @Test
@@ -541,7 +521,7 @@ public class ClickhouseClinicalDataMapperTest {
             StudyViewFilterFactory.make(studyViewFilter, null, studyViewFilter.getStudyIds(), null),
             attributeIds);
 
-    assertFalse("Patients should have age clinical data", data.isEmpty());
+    assertFalse(data.isEmpty(),"Patients should have age clinical data");
   }
 
   @Test
@@ -555,7 +535,7 @@ public class ClickhouseClinicalDataMapperTest {
             StudyViewFilterFactory.make(studyViewFilter, null, studyViewFilter.getStudyIds(), null),
             attributeIds);
 
-    assertFalse("Samples should have mutation_count clinical data", data.isEmpty());
+    assertFalse(data.isEmpty(),"Samples should have mutation_count clinical data");
   }
 
   private ClinicalDataFilter buildClinicalDataFilter(

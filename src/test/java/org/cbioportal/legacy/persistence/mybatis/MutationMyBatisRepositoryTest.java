@@ -16,15 +16,15 @@ import org.cbioportal.legacy.model.meta.MutationMeta;
 import org.cbioportal.legacy.model.util.Select;
 import org.cbioportal.legacy.persistence.mybatis.config.TestConfig;
 import org.cbioportal.legacy.persistence.mybatis.util.MolecularProfileCaseIdentifierUtil;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(
     classes = {
       MutationMyBatisRepository.class,
@@ -137,11 +137,11 @@ public class MutationMyBatisRepositoryTest {
             null,
             null);
 
-    Assert.assertEquals(8, result.size());
+    Assertions.assertEquals(8, result.size());
     Mutation mutation = result.get(0);
-    Assert.assertEquals("study_tcga_pub_mutations", mutation.getMolecularProfileId());
-    Assert.assertEquals("TCGA-A1-A0SB-01", mutation.getSampleId());
-    Assert.assertEquals((Integer) 207, mutation.getEntrezGeneId());
+    Assertions.assertEquals("study_tcga_pub_mutations", mutation.getMolecularProfileId());
+    Assertions.assertEquals("TCGA-A1-A0SB-01", mutation.getSampleId());
+    Assertions.assertEquals((Integer) 207, mutation.getEntrezGeneId());
   }
 
   @Test
@@ -159,39 +159,39 @@ public class MutationMyBatisRepositoryTest {
             null,
             null);
 
-    Assert.assertEquals(8, result.size());
+    Assertions.assertEquals(8, result.size());
 
     Optional<Mutation> mutationOptional =
         result.stream().filter(r -> r.getSampleId().equals("TCGA-A1-A0SB-01")).findAny();
-    Assert.assertTrue(mutationOptional.isPresent());
+    Assertions.assertTrue(mutationOptional.isPresent());
     Mutation mutation = mutationOptional.get();
 
-    Assert.assertEquals("study_tcga_pub_mutations", mutation.getMolecularProfileId());
-    Assert.assertEquals((Integer) 207, mutation.getEntrezGeneId());
-    Assert.assertEquals("cyclases/Protein", mutation.getAminoAcidChange());
-    Assert.assertEquals("genome.wustl.edu", mutation.getCenter());
-    Assert.assertEquals((Long) 41244748L, mutation.getEndPosition());
-    Assert.assertEquals("BRCA1 truncating", mutation.getKeyword());
-    Assert.assertEquals("Germline", mutation.getMutationStatus());
-    Assert.assertEquals("Nonsense_Mutation", mutation.getMutationType());
-    Assert.assertEquals("37", mutation.getNcbiBuild());
-    Assert.assertEquals((Integer) (-1), mutation.getNormalAltCount());
-    Assert.assertEquals((Integer) (-1), mutation.getNormalRefCount());
-    Assert.assertEquals((Integer) 934, mutation.getProteinPosEnd());
-    Assert.assertEquals((Integer) 934, mutation.getProteinPosStart());
-    Assert.assertEquals("NM_007294", mutation.getRefseqMrnaId());
-    Assert.assertEquals("Q934*", mutation.getProteinChange());
-    Assert.assertEquals("G", mutation.getReferenceAllele());
-    Assert.assertEquals((Long) 41244748L, mutation.getStartPosition());
-    Assert.assertEquals((Integer) (-1), mutation.getTumorAltCount());
-    Assert.assertEquals((Integer) (-1), mutation.getTumorRefCount());
-    Assert.assertEquals("A", mutation.getTumorSeqAllele());
-    Assert.assertEquals("Unknown", mutation.getValidationStatus());
-    Assert.assertEquals("SNP", mutation.getVariantType());
-    Assert.assertEquals("Putative_Driver", mutation.getDriverFilter());
-    Assert.assertEquals("Pathogenic", mutation.getDriverFilterAnnotation());
-    Assert.assertEquals("Tier 1", mutation.getDriverTiersFilter());
-    Assert.assertEquals("Highly Actionable", mutation.getDriverTiersFilterAnnotation());
+    Assertions.assertEquals("study_tcga_pub_mutations", mutation.getMolecularProfileId());
+    Assertions.assertEquals((Integer) 207, mutation.getEntrezGeneId());
+    Assertions.assertEquals("cyclases/Protein", mutation.getAminoAcidChange());
+    Assertions.assertEquals("genome.wustl.edu", mutation.getCenter());
+    Assertions.assertEquals((Long) 41244748L, mutation.getEndPosition());
+    Assertions.assertEquals("BRCA1 truncating", mutation.getKeyword());
+    Assertions.assertEquals("Germline", mutation.getMutationStatus());
+    Assertions.assertEquals("Nonsense_Mutation", mutation.getMutationType());
+    Assertions.assertEquals("37", mutation.getNcbiBuild());
+    Assertions.assertEquals((Integer) (-1), mutation.getNormalAltCount());
+    Assertions.assertEquals((Integer) (-1), mutation.getNormalRefCount());
+    Assertions.assertEquals((Integer) 934, mutation.getProteinPosEnd());
+    Assertions.assertEquals((Integer) 934, mutation.getProteinPosStart());
+    Assertions.assertEquals("NM_007294", mutation.getRefseqMrnaId());
+    Assertions.assertEquals("Q934*", mutation.getProteinChange());
+    Assertions.assertEquals("G", mutation.getReferenceAllele());
+    Assertions.assertEquals((Long) 41244748L, mutation.getStartPosition());
+    Assertions.assertEquals((Integer) (-1), mutation.getTumorAltCount());
+    Assertions.assertEquals((Integer) (-1), mutation.getTumorRefCount());
+    Assertions.assertEquals("A", mutation.getTumorSeqAllele());
+    Assertions.assertEquals("Unknown", mutation.getValidationStatus());
+    Assertions.assertEquals("SNP", mutation.getVariantType());
+    Assertions.assertEquals("Putative_Driver", mutation.getDriverFilter());
+    Assertions.assertEquals("Pathogenic", mutation.getDriverFilterAnnotation());
+    Assertions.assertEquals("Tier 1", mutation.getDriverTiersFilter());
+    Assertions.assertEquals("Highly Actionable", mutation.getDriverTiersFilterAnnotation());
   }
 
   @Test
@@ -214,39 +214,39 @@ public class MutationMyBatisRepositoryTest {
             null,
             null);
 
-    Assert.assertEquals(3, result.size());
+    Assertions.assertEquals(3, result.size());
     Optional<Mutation> mutationOptional =
         result.stream().filter(r -> r.getSampleId().equals("TCGA-A1-A0SB-01")).findAny();
-    Assert.assertTrue(mutationOptional.isPresent());
+    Assertions.assertTrue(mutationOptional.isPresent());
     Mutation mutation = mutationOptional.get();
 
-    Assert.assertEquals("study_tcga_pub_mutations", mutation.getMolecularProfileId());
-    Assert.assertEquals("TCGA-A1-A0SB-01", mutation.getSampleId());
-    Assert.assertEquals((Integer) 207, mutation.getEntrezGeneId());
-    Assert.assertEquals("cyclases/Protein", mutation.getAminoAcidChange());
-    Assert.assertEquals("genome.wustl.edu", mutation.getCenter());
-    Assert.assertEquals((Long) 41244748L, mutation.getEndPosition());
-    Assert.assertEquals("BRCA1 truncating", mutation.getKeyword());
-    Assert.assertEquals("Germline", mutation.getMutationStatus());
-    Assert.assertEquals("Nonsense_Mutation", mutation.getMutationType());
-    Assert.assertEquals("37", mutation.getNcbiBuild());
-    Assert.assertEquals((Integer) (-1), mutation.getNormalAltCount());
-    Assert.assertEquals((Integer) (-1), mutation.getNormalRefCount());
-    Assert.assertEquals((Integer) 934, mutation.getProteinPosEnd());
-    Assert.assertEquals((Integer) 934, mutation.getProteinPosStart());
-    Assert.assertEquals("NM_007294", mutation.getRefseqMrnaId());
-    Assert.assertEquals("Q934*", mutation.getProteinChange());
-    Assert.assertEquals("G", mutation.getReferenceAllele());
-    Assert.assertEquals((Long) 41244748L, mutation.getStartPosition());
-    Assert.assertEquals((Integer) (-1), mutation.getTumorAltCount());
-    Assert.assertEquals((Integer) (-1), mutation.getTumorRefCount());
-    Assert.assertEquals("A", mutation.getTumorSeqAllele());
-    Assert.assertEquals("Unknown", mutation.getValidationStatus());
-    Assert.assertEquals("SNP", mutation.getVariantType());
-    Assert.assertEquals("Putative_Driver", mutation.getDriverFilter());
-    Assert.assertEquals("Pathogenic", mutation.getDriverFilterAnnotation());
-    Assert.assertEquals("Tier 1", mutation.getDriverTiersFilter());
-    Assert.assertEquals("Highly Actionable", mutation.getDriverTiersFilterAnnotation());
+    Assertions.assertEquals("study_tcga_pub_mutations", mutation.getMolecularProfileId());
+    Assertions.assertEquals("TCGA-A1-A0SB-01", mutation.getSampleId());
+    Assertions.assertEquals((Integer) 207, mutation.getEntrezGeneId());
+    Assertions.assertEquals("cyclases/Protein", mutation.getAminoAcidChange());
+    Assertions.assertEquals("genome.wustl.edu", mutation.getCenter());
+    Assertions.assertEquals((Long) 41244748L, mutation.getEndPosition());
+    Assertions.assertEquals("BRCA1 truncating", mutation.getKeyword());
+    Assertions.assertEquals("Germline", mutation.getMutationStatus());
+    Assertions.assertEquals("Nonsense_Mutation", mutation.getMutationType());
+    Assertions.assertEquals("37", mutation.getNcbiBuild());
+    Assertions.assertEquals((Integer) (-1), mutation.getNormalAltCount());
+    Assertions.assertEquals((Integer) (-1), mutation.getNormalRefCount());
+    Assertions.assertEquals((Integer) 934, mutation.getProteinPosEnd());
+    Assertions.assertEquals((Integer) 934, mutation.getProteinPosStart());
+    Assertions.assertEquals("NM_007294", mutation.getRefseqMrnaId());
+    Assertions.assertEquals("Q934*", mutation.getProteinChange());
+    Assertions.assertEquals("G", mutation.getReferenceAllele());
+    Assertions.assertEquals((Long) 41244748L, mutation.getStartPosition());
+    Assertions.assertEquals((Integer) (-1), mutation.getTumorAltCount());
+    Assertions.assertEquals((Integer) (-1), mutation.getTumorRefCount());
+    Assertions.assertEquals("A", mutation.getTumorSeqAllele());
+    Assertions.assertEquals("Unknown", mutation.getValidationStatus());
+    Assertions.assertEquals("SNP", mutation.getVariantType());
+    Assertions.assertEquals("Putative_Driver", mutation.getDriverFilter());
+    Assertions.assertEquals("Pathogenic", mutation.getDriverFilterAnnotation());
+    Assertions.assertEquals("Tier 1", mutation.getDriverTiersFilter());
+    Assertions.assertEquals("Highly Actionable", mutation.getDriverTiersFilterAnnotation());
   }
 
   @Test
@@ -264,53 +264,53 @@ public class MutationMyBatisRepositoryTest {
             null,
             null);
 
-    Assert.assertEquals(8, result.size());
+    Assertions.assertEquals(8, result.size());
 
     Optional<Mutation> mutationOptional =
         result.stream().filter(r -> r.getSampleId().equals("TCGA-A1-A0SB-01")).findAny();
-    Assert.assertTrue(mutationOptional.isPresent());
+    Assertions.assertTrue(mutationOptional.isPresent());
     Mutation mutation = mutationOptional.get();
 
-    Assert.assertEquals("study_tcga_pub_mutations", mutation.getMolecularProfileId());
-    Assert.assertEquals("TCGA-A1-A0SB-01", mutation.getSampleId());
-    Assert.assertEquals((Integer) 207, mutation.getEntrezGeneId());
-    Assert.assertEquals("cyclases/Protein", mutation.getAminoAcidChange());
-    Assert.assertEquals("genome.wustl.edu", mutation.getCenter());
-    Assert.assertEquals((Long) 41244748L, mutation.getEndPosition());
-    Assert.assertEquals("BRCA1 truncating", mutation.getKeyword());
-    Assert.assertEquals("Germline", mutation.getMutationStatus());
-    Assert.assertEquals("Nonsense_Mutation", mutation.getMutationType());
-    Assert.assertEquals("37", mutation.getNcbiBuild());
-    Assert.assertEquals((Integer) (-1), mutation.getNormalAltCount());
-    Assert.assertEquals((Integer) (-1), mutation.getNormalRefCount());
-    Assert.assertEquals((Integer) 934, mutation.getProteinPosEnd());
-    Assert.assertEquals((Integer) 934, mutation.getProteinPosStart());
-    Assert.assertEquals("NM_007294", mutation.getRefseqMrnaId());
-    Assert.assertEquals("Q934*", mutation.getProteinChange());
-    Assert.assertEquals("G", mutation.getReferenceAllele());
-    Assert.assertEquals((Long) 41244748L, mutation.getStartPosition());
-    Assert.assertEquals((Integer) (-1), mutation.getTumorAltCount());
-    Assert.assertEquals((Integer) (-1), mutation.getTumorRefCount());
-    Assert.assertEquals("A", mutation.getTumorSeqAllele());
-    Assert.assertEquals("Unknown", mutation.getValidationStatus());
-    Assert.assertEquals("SNP", mutation.getVariantType());
-    Assert.assertEquals("Putative_Driver", mutation.getDriverFilter());
-    Assert.assertEquals("Pathogenic", mutation.getDriverFilterAnnotation());
-    Assert.assertEquals("Tier 1", mutation.getDriverTiersFilter());
-    Assert.assertEquals("Highly Actionable", mutation.getDriverTiersFilterAnnotation());
+    Assertions.assertEquals("study_tcga_pub_mutations", mutation.getMolecularProfileId());
+    Assertions.assertEquals("TCGA-A1-A0SB-01", mutation.getSampleId());
+    Assertions.assertEquals((Integer) 207, mutation.getEntrezGeneId());
+    Assertions.assertEquals("cyclases/Protein", mutation.getAminoAcidChange());
+    Assertions.assertEquals("genome.wustl.edu", mutation.getCenter());
+    Assertions.assertEquals((Long) 41244748L, mutation.getEndPosition());
+    Assertions.assertEquals("BRCA1 truncating", mutation.getKeyword());
+    Assertions.assertEquals("Germline", mutation.getMutationStatus());
+    Assertions.assertEquals("Nonsense_Mutation", mutation.getMutationType());
+    Assertions.assertEquals("37", mutation.getNcbiBuild());
+    Assertions.assertEquals((Integer) (-1), mutation.getNormalAltCount());
+    Assertions.assertEquals((Integer) (-1), mutation.getNormalRefCount());
+    Assertions.assertEquals((Integer) 934, mutation.getProteinPosEnd());
+    Assertions.assertEquals((Integer) 934, mutation.getProteinPosStart());
+    Assertions.assertEquals("NM_007294", mutation.getRefseqMrnaId());
+    Assertions.assertEquals("Q934*", mutation.getProteinChange());
+    Assertions.assertEquals("G", mutation.getReferenceAllele());
+    Assertions.assertEquals((Long) 41244748L, mutation.getStartPosition());
+    Assertions.assertEquals((Integer) (-1), mutation.getTumorAltCount());
+    Assertions.assertEquals((Integer) (-1), mutation.getTumorRefCount());
+    Assertions.assertEquals("A", mutation.getTumorSeqAllele());
+    Assertions.assertEquals("Unknown", mutation.getValidationStatus());
+    Assertions.assertEquals("SNP", mutation.getVariantType());
+    Assertions.assertEquals("Putative_Driver", mutation.getDriverFilter());
+    Assertions.assertEquals("Pathogenic", mutation.getDriverFilterAnnotation());
+    Assertions.assertEquals("Tier 1", mutation.getDriverTiersFilter());
+    Assertions.assertEquals("Highly Actionable", mutation.getDriverTiersFilterAnnotation());
     Gene gene = mutation.getGene();
-    Assert.assertEquals((Integer) 207, gene.getEntrezGeneId());
-    Assert.assertEquals("AKT1", gene.getHugoGeneSymbol());
-    Assert.assertEquals("protein-coding", gene.getType());
+    Assertions.assertEquals((Integer) 207, gene.getEntrezGeneId());
+    Assertions.assertEquals("AKT1", gene.getHugoGeneSymbol());
+    Assertions.assertEquals("protein-coding", gene.getType());
     AlleleSpecificCopyNumber alleleSpecificCopyNumber = mutation.getAlleleSpecificCopyNumber();
-    Assert.assertEquals((Integer) (3), alleleSpecificCopyNumber.getAscnIntegerCopyNumber());
-    Assert.assertEquals("FACETS", alleleSpecificCopyNumber.getAscnMethod());
-    Assert.assertEquals((Float) (1.25f), alleleSpecificCopyNumber.getCcfExpectedCopiesUpper());
-    Assert.assertEquals((Float) (1.75f), alleleSpecificCopyNumber.getCcfExpectedCopies());
-    Assert.assertEquals("CLONAL", alleleSpecificCopyNumber.getClonal());
-    Assert.assertEquals((Integer) (2), alleleSpecificCopyNumber.getMinorCopyNumber());
-    Assert.assertEquals((Integer) (1), alleleSpecificCopyNumber.getExpectedAltCopies());
-    Assert.assertEquals((Integer) (4), alleleSpecificCopyNumber.getTotalCopyNumber());
+    Assertions.assertEquals((Integer) (3), alleleSpecificCopyNumber.getAscnIntegerCopyNumber());
+    Assertions.assertEquals("FACETS", alleleSpecificCopyNumber.getAscnMethod());
+    Assertions.assertEquals((Float) (1.25f), alleleSpecificCopyNumber.getCcfExpectedCopiesUpper());
+    Assertions.assertEquals((Float) (1.75f), alleleSpecificCopyNumber.getCcfExpectedCopies());
+    Assertions.assertEquals("CLONAL", alleleSpecificCopyNumber.getClonal());
+    Assertions.assertEquals((Integer) (2), alleleSpecificCopyNumber.getMinorCopyNumber());
+    Assertions.assertEquals((Integer) (1), alleleSpecificCopyNumber.getExpectedAltCopies());
+    Assertions.assertEquals((Integer) (4), alleleSpecificCopyNumber.getTotalCopyNumber());
   }
 
   @Test
@@ -329,7 +329,7 @@ public class MutationMyBatisRepositoryTest {
             null,
             null);
 
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
   }
 
   @Test
@@ -348,11 +348,11 @@ public class MutationMyBatisRepositoryTest {
             "proteinChange",
             "ASC");
 
-    Assert.assertEquals(8, result.size());
-    Assert.assertEquals("C27_splice", result.get(0).getProteinChange());
-    Assert.assertEquals("C27_splice", result.get(1).getProteinChange());
-    Assert.assertEquals("C27_splice", result.get(2).getProteinChange());
-    Assert.assertEquals("C61G", result.get(3).getProteinChange());
+    Assertions.assertEquals(8, result.size());
+    Assertions.assertEquals("C27_splice", result.get(0).getProteinChange());
+    Assertions.assertEquals("C27_splice", result.get(1).getProteinChange());
+    Assertions.assertEquals("C27_splice", result.get(2).getProteinChange());
+    Assertions.assertEquals("C61G", result.get(3).getProteinChange());
   }
 
   @Test
@@ -362,8 +362,8 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMetaMutationsInMolecularProfileBySampleListId(
             "study_tcga_pub_mutations", "study_tcga_pub_all", null);
 
-    Assert.assertEquals((Integer) 8, result.getTotalCount());
-    Assert.assertEquals((Integer) 7, result.getSampleCount());
+    Assertions.assertEquals((Integer) 8, result.getTotalCount());
+    Assertions.assertEquals((Integer) 7, result.getSampleCount());
   }
 
   @Test
@@ -377,8 +377,8 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMetaMutationsInMolecularProfileBySampleListId(
             "study_tcga_pub_mutations", "study_tcga_pub_all", entrezGeneIds);
 
-    Assert.assertEquals((Integer) 3, result.getTotalCount());
-    Assert.assertEquals((Integer) 3, result.getSampleCount());
+    Assertions.assertEquals((Integer) 3, result.getTotalCount());
+    Assertions.assertEquals((Integer) 3, result.getSampleCount());
   }
 
   @Test
@@ -396,7 +396,7 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfiles(
             molecularProfileIds, sampleIds, null, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(3, result.size());
+    Assertions.assertEquals(3, result.size());
 
     Optional<Mutation> sampleOmutationOptional =
         result.stream()
@@ -414,8 +414,8 @@ public class MutationMyBatisRepositoryTest {
                         && r.getMolecularProfileId().equals("study_tcga_pub_mutations"))
             .collect(Collectors.toList());
 
-    Assert.assertEquals(2, sampleHmutations.size());
-    Assert.assertTrue(sampleOmutationOptional.isPresent());
+    Assertions.assertEquals(2, sampleHmutations.size());
+    Assertions.assertTrue(sampleOmutationOptional.isPresent());
   }
 
   @Test
@@ -467,7 +467,7 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(8, result.size());
+    Assertions.assertEquals(8, result.size());
   }
 
   @Test
@@ -523,7 +523,7 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(7, result.size());
+    Assertions.assertEquals(7, result.size());
   }
 
   @Test
@@ -579,7 +579,7 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(0, result.size());
+    Assertions.assertEquals(0, result.size());
   }
 
   @Test
@@ -635,7 +635,7 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
   }
 
   @Test
@@ -691,10 +691,10 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(4, result.size());
+    Assertions.assertEquals(4, result.size());
     List<String> expectedSampleIds =
         Arrays.asList("TCGA-A1-A0SB-01", "TCGA-A1-A0SH-01", "TCGA-A1-A0SI-01", "TCGA-A1-A0SP-01");
-    Assert.assertTrue(result.stream().allMatch(r -> expectedSampleIds.contains(r.getSampleId())));
+    Assertions.assertTrue(result.stream().allMatch(r -> expectedSampleIds.contains(r.getSampleId())));
   }
 
   @Test
@@ -750,10 +750,10 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(4, result.size());
+    Assertions.assertEquals(4, result.size());
     List<String> expectedSampleIds =
         Arrays.asList("TCGA-A1-A0SD-01", "TCGA-A1-A0SE-01", "TCGA-A1-A0SH-01", "TCGA-A1-A0SO-01");
-    Assert.assertTrue(result.stream().allMatch(r -> expectedSampleIds.contains(r.getSampleId())));
+    Assertions.assertTrue(result.stream().allMatch(r -> expectedSampleIds.contains(r.getSampleId())));
   }
 
   @Test
@@ -809,7 +809,7 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(0, result.size());
+    Assertions.assertEquals(0, result.size());
   }
 
   @Test
@@ -864,10 +864,10 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(3, result.size());
+    Assertions.assertEquals(3, result.size());
     List<String> expectedSampleIds =
         Arrays.asList("TCGA-A1-A0SD-01", "TCGA-A1-A0SH-01", "TCGA-A1-A0SI-01");
-    Assert.assertTrue(result.stream().allMatch(r -> expectedSampleIds.contains(r.getSampleId())));
+    Assertions.assertTrue(result.stream().allMatch(r -> expectedSampleIds.contains(r.getSampleId())));
   }
 
   @Test
@@ -922,10 +922,10 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMutationsInMultipleMolecularProfilesByGeneQueries(
             molecularProfileIds, sampleIds, geneQueries, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(3, result.size());
+    Assertions.assertEquals(3, result.size());
     List<String> expectedSampleIds =
         Arrays.asList("TCGA-A1-A0SB-01", "TCGA-A1-A0SH-01", "TCGA-A1-A0SO-01");
-    Assert.assertTrue(result.stream().allMatch(r -> expectedSampleIds.contains(r.getSampleId())));
+    Assertions.assertTrue(result.stream().allMatch(r -> expectedSampleIds.contains(r.getSampleId())));
   }
 
   @Test
@@ -943,8 +943,8 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.getMetaMutationsInMultipleMolecularProfiles(
             molecularProfileIds, sampleIds, null);
 
-    Assert.assertEquals((Integer) 3, result.getTotalCount());
-    Assert.assertEquals((Integer) 2, result.getSampleCount());
+    Assertions.assertEquals((Integer) 3, result.getTotalCount());
+    Assertions.assertEquals((Integer) 2, result.getSampleCount());
   }
 
   @Test
@@ -958,13 +958,13 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.fetchMutationsInMolecularProfile(
             "study_tcga_pub_mutations", sampleIds, null, false, "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(3, result.size());
-    Assert.assertEquals("study_tcga_pub_mutations", result.get(0).getMolecularProfileId());
-    Assert.assertEquals("TCGA-A1-A0SH-01", result.get(0).getSampleId());
-    Assert.assertEquals("study_tcga_pub_mutations", result.get(1).getMolecularProfileId());
-    Assert.assertEquals("TCGA-A1-A0SH-01", result.get(1).getSampleId());
-    Assert.assertEquals("study_tcga_pub_mutations", result.get(2).getMolecularProfileId());
-    Assert.assertEquals("TCGA-A1-A0SO-01", result.get(2).getSampleId());
+    Assertions.assertEquals(3, result.size());
+    Assertions.assertEquals("study_tcga_pub_mutations", result.get(0).getMolecularProfileId());
+    Assertions.assertEquals("TCGA-A1-A0SH-01", result.get(0).getSampleId());
+    Assertions.assertEquals("study_tcga_pub_mutations", result.get(1).getMolecularProfileId());
+    Assertions.assertEquals("TCGA-A1-A0SH-01", result.get(1).getSampleId());
+    Assertions.assertEquals("study_tcga_pub_mutations", result.get(2).getMolecularProfileId());
+    Assertions.assertEquals("TCGA-A1-A0SO-01", result.get(2).getSampleId());
   }
 
   @Test
@@ -978,8 +978,8 @@ public class MutationMyBatisRepositoryTest {
         mutationMyBatisRepository.fetchMetaMutationsInMolecularProfile(
             "study_tcga_pub_mutations", sampleIds, null);
 
-    Assert.assertEquals((Integer) 3, result.getTotalCount());
-    Assert.assertEquals((Integer) 2, result.getSampleCount());
+    Assertions.assertEquals((Integer) 3, result.getTotalCount());
+    Assertions.assertEquals((Integer) 2, result.getSampleCount());
   }
 
   @Test
@@ -988,10 +988,10 @@ public class MutationMyBatisRepositoryTest {
     MutationCountByPosition result =
         mutationMyBatisRepository.getMutationCountByPosition(672, 61, 936);
 
-    Assert.assertEquals((Integer) 672, result.getEntrezGeneId());
-    Assert.assertEquals((Integer) 61, result.getProteinPosStart());
-    Assert.assertEquals((Integer) 936, result.getProteinPosEnd());
-    Assert.assertEquals((Integer) 3, result.getCount());
+    Assertions.assertEquals((Integer) 672, result.getEntrezGeneId());
+    Assertions.assertEquals((Integer) 61, result.getProteinPosStart());
+    Assertions.assertEquals((Integer) 936, result.getProteinPosEnd());
+    Assertions.assertEquals((Integer) 3, result.getCount());
   }
 
   @Test
@@ -1003,8 +1003,8 @@ public class MutationMyBatisRepositoryTest {
             Collections.singletonList(207),
             "mutations");
 
-    Assert.assertEquals("AKT1", result.getHugoGeneSymbol());
-    Assert.assertEquals("mutations", result.getProfileType());
-    Assert.assertEquals(2, result.getCounts().size());
+    Assertions.assertEquals("AKT1", result.getHugoGeneSymbol());
+    Assertions.assertEquals("mutations", result.getProfileType());
+    Assertions.assertEquals(2, result.getCounts().size());
   }
 }

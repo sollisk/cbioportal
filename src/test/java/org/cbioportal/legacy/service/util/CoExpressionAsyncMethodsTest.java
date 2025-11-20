@@ -8,13 +8,13 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import org.cbioportal.legacy.model.CoExpression;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CoExpressionAsyncMethodsTest {
 
   private static final double THRESHOLD = 0.3;
@@ -44,16 +44,16 @@ public class CoExpressionAsyncMethodsTest {
             .map(CompletableFuture::join)
             .collect(Collectors.toList());
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     CoExpression coExpression1 = result.get(0);
-    Assert.assertEquals("2", coExpression1.getGeneticEntityId());
-    Assert.assertEquals(new BigDecimal("0.5"), coExpression1.getSpearmansCorrelation());
-    Assert.assertEquals(new BigDecimal("0.6666666666666667"), coExpression1.getpValue());
+    Assertions.assertEquals("2", coExpression1.getGeneticEntityId());
+    Assertions.assertEquals(new BigDecimal("0.5"), coExpression1.getSpearmansCorrelation());
+    Assertions.assertEquals(new BigDecimal("0.6666666666666667"), coExpression1.getpValue());
     CoExpression coExpression2 = result.get(1);
-    Assert.assertEquals("3", coExpression2.getGeneticEntityId());
-    Assert.assertEquals(
+    Assertions.assertEquals("3", coExpression2.getGeneticEntityId());
+    Assertions.assertEquals(
         new BigDecimal("0.8660254037844386"), coExpression2.getSpearmansCorrelation());
-    Assert.assertEquals(new BigDecimal("0.3333333333333333"), coExpression2.getpValue());
+    Assertions.assertEquals(new BigDecimal("0.3333333333333333"), coExpression2.getpValue());
   }
 
   @Test
@@ -82,16 +82,16 @@ public class CoExpressionAsyncMethodsTest {
             .map(CompletableFuture::join)
             .collect(Collectors.toList());
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     CoExpression coExpression1 = result.get(0);
-    Assert.assertEquals("KEGG_DNA_REPLICATION", coExpression1.getGeneticEntityId());
-    Assert.assertEquals(
+    Assertions.assertEquals("KEGG_DNA_REPLICATION", coExpression1.getGeneticEntityId());
+    Assertions.assertEquals(
         new BigDecimal("0.8660254037844386"), coExpression1.getSpearmansCorrelation());
-    Assert.assertEquals(new BigDecimal("0.3333333333333333"), coExpression1.getpValue());
+    Assertions.assertEquals(new BigDecimal("0.3333333333333333"), coExpression1.getpValue());
     CoExpression coExpression2 = result.get(1);
-    Assert.assertEquals("BIOCARTA_ASBCELL_PATHWAY", coExpression2.getGeneticEntityId());
-    Assert.assertEquals(new BigDecimal("0.5"), coExpression2.getSpearmansCorrelation());
-    Assert.assertEquals(new BigDecimal("0.6666666666666667"), coExpression2.getpValue());
+    Assertions.assertEquals("BIOCARTA_ASBCELL_PATHWAY", coExpression2.getGeneticEntityId());
+    Assertions.assertEquals(new BigDecimal("0.5"), coExpression2.getSpearmansCorrelation());
+    Assertions.assertEquals(new BigDecimal("0.6666666666666667"), coExpression2.getpValue());
   }
 
   private List<List<String>> createAllValuesA() {

@@ -29,17 +29,17 @@ import org.cbioportal.legacy.persistence.MolecularProfileRepository;
 import org.cbioportal.legacy.service.exception.MolecularProfileNotFoundException;
 import org.cbioportal.legacy.service.util.AlterationEnrichmentUtil;
 import org.cbioportal.legacy.service.util.MolecularProfileUtil;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class AlterationCountServiceImplTest extends BaseServiceImplTest {
 
   private AlterationCountServiceImpl alterationCountService;
@@ -170,7 +170,7 @@ public class AlterationCountServiceImplTest extends BaseServiceImplTest {
             includeMissingAlterationsFromGenePanel,
             alterationFilter);
 
-    Assert.assertEquals(expectedCountByGeneList, result.getFirst());
+    Assertions.assertEquals(expectedCountByGeneList, result.getFirst());
   }
 
   @Test

@@ -6,15 +6,16 @@ import java.util.List;
 import java.util.UUID;
 import org.cbioportal.legacy.model.DataAccessToken;
 import org.cbioportal.legacy.persistence.mybatis.config.TestConfig;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {DataAccessTokenMyBatisRepository.class, TestConfig.class})
 public class DataAccessTokenMyBatisRepositoryTest {
 

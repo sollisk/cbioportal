@@ -6,15 +6,15 @@ import org.cbioportal.legacy.model.Gene;
 import org.cbioportal.legacy.model.ReferenceGenome;
 import org.cbioportal.legacy.model.ReferenceGenomeGene;
 import org.cbioportal.legacy.persistence.ReferenceGenomeGeneRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ReferenceGenomeGeneServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private ReferenceGenomeGeneServiceImpl geneService;
@@ -38,7 +38,7 @@ public class ReferenceGenomeGeneServiceImplTest extends BaseServiceImplTest {
     List<ReferenceGenomeGene> result =
         geneService.fetchAllReferenceGenomeGenes(ReferenceGenome.HOMO_SAPIENS_DEFAULT_GENOME_NAME);
 
-    Assert.assertEquals(expectedGeneList, result);
+    Assertions.assertEquals(expectedGeneList, result);
   }
 
   @Test
@@ -65,7 +65,7 @@ public class ReferenceGenomeGeneServiceImplTest extends BaseServiceImplTest {
         geneService.fetchGenesByGenomeName(
             geneIds, ReferenceGenome.HOMO_SAPIENS_DEFAULT_GENOME_NAME);
 
-    Assert.assertEquals(expectedGeneList, result);
+    Assertions.assertEquals(expectedGeneList, result);
   }
 
   @Test
@@ -87,7 +87,7 @@ public class ReferenceGenomeGeneServiceImplTest extends BaseServiceImplTest {
         geneService.getReferenceGenomeGene(
             gene.getEntrezGeneId(), ReferenceGenome.HOMO_SAPIENS_DEFAULT_GENOME_NAME);
 
-    Assert.assertEquals(expectedGene, result);
+    Assertions.assertEquals(expectedGene, result);
   }
 
   @Test
@@ -105,6 +105,6 @@ public class ReferenceGenomeGeneServiceImplTest extends BaseServiceImplTest {
         geneService.getReferenceGenomeGeneByEntityId(
             GENETIC_ENTITY_ID_1, ReferenceGenome.HOMO_SAPIENS_DEFAULT_GENOME_NAME);
 
-    Assert.assertEquals(expectedGene, result);
+    Assertions.assertEquals(expectedGene, result);
   }
 }

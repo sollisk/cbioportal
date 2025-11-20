@@ -13,16 +13,16 @@ import org.cbioportal.legacy.service.GenesetService;
 import org.cbioportal.legacy.service.MolecularDataService;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.SampleService;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class GenesetHierarchyServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private GenesetHierarchyServiceImpl genesetHierarchyService;
@@ -172,13 +172,13 @@ public class GenesetHierarchyServiceImplTest extends BaseServiceImplTest {
     //   Root node ->  sub node A -> parent node 1 -> GENESET_ID1, with representative (median)
     // score=0.470 and p-value=0.0219
 
-    Assert.assertEquals(3, result.size());
+    Assertions.assertEquals(3, result.size());
     // 3 nodes, last one with 1 leaf (geneset):
-    Assert.assertEquals(null, result.get(0).getGenesets());
-    Assert.assertEquals(1, result.get(2).getGenesets().size());
+    Assertions.assertEquals(null, result.get(0).getGenesets());
+    Assertions.assertEquals(1, result.get(2).getGenesets().size());
     Geneset geneset = result.get(2).getGenesets().get(0);
-    Assert.assertEquals(GENESET_ID1, geneset.getGenesetId());
-    Assert.assertEquals((Double) 0.470, geneset.getRepresentativeScore());
+    Assertions.assertEquals(GENESET_ID1, geneset.getGenesetId());
+    Assertions.assertEquals((Double) 0.470, geneset.getRepresentativeScore());
     Assert.assertEquals((Double) 0.0219, geneset.getRepresentativePvalue());
 
     // 90th percentile, with thresholds abs_score=0.3 and p-value=0.05:

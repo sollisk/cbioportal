@@ -19,14 +19,14 @@ import org.cbioportal.legacy.persistence.MolecularDataRepository;
 import org.cbioportal.legacy.persistence.SampleListRepository;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.SampleService;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MolecularDataServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private MolecularDataServiceImpl molecularDataService;
@@ -81,12 +81,12 @@ public class MolecularDataServiceImplTest extends BaseServiceImplTest {
         molecularDataService.getMolecularData(
             MOLECULAR_PROFILE_ID, SAMPLE_LIST_ID, entrezGeneIds, PROJECTION);
 
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
     GeneMolecularData molecularData = result.get(0);
-    Assert.assertEquals(ENTREZ_GENE_ID_1, molecularData.getEntrezGeneId());
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, molecularData.getMolecularProfileId());
-    Assert.assertEquals(SAMPLE_ID1, molecularData.getSampleId());
-    Assert.assertEquals("0.4674", molecularData.getValue());
+    Assertions.assertEquals(ENTREZ_GENE_ID_1, molecularData.getEntrezGeneId());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, molecularData.getMolecularProfileId());
+    Assertions.assertEquals(SAMPLE_ID1, molecularData.getSampleId());
+    Assertions.assertEquals("0.4674", molecularData.getValue());
   }
 
   @Test
@@ -133,7 +133,7 @@ public class MolecularDataServiceImplTest extends BaseServiceImplTest {
         molecularDataService.getMetaMolecularData(
             MOLECULAR_PROFILE_ID, SAMPLE_LIST_ID, entrezGeneIds);
 
-    Assert.assertEquals((Integer) 1, result.getTotalCount());
+    Assertions.assertEquals((Integer) 1, result.getTotalCount());
   }
 
   @Test
@@ -183,17 +183,17 @@ public class MolecularDataServiceImplTest extends BaseServiceImplTest {
         molecularDataService.fetchMolecularData(
             MOLECULAR_PROFILE_ID, null, entrezGeneIds, PROJECTION);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     GeneMolecularData molecularData1 = result.get(0);
-    Assert.assertEquals(ENTREZ_GENE_ID_1, molecularData1.getEntrezGeneId());
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, molecularData1.getMolecularProfileId());
-    Assert.assertEquals(SAMPLE_ID1, molecularData1.getSampleId());
-    Assert.assertEquals("0.4674", molecularData1.getValue());
+    Assertions.assertEquals(ENTREZ_GENE_ID_1, molecularData1.getEntrezGeneId());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, molecularData1.getMolecularProfileId());
+    Assertions.assertEquals(SAMPLE_ID1, molecularData1.getSampleId());
+    Assertions.assertEquals("0.4674", molecularData1.getValue());
     GeneMolecularData molecularData2 = result.get(1);
-    Assert.assertEquals(ENTREZ_GENE_ID_1, molecularData2.getEntrezGeneId());
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, molecularData2.getMolecularProfileId());
-    Assert.assertEquals("sample_id_2", molecularData2.getSampleId());
-    Assert.assertEquals("-0.3456", molecularData2.getValue());
+    Assertions.assertEquals(ENTREZ_GENE_ID_1, molecularData2.getEntrezGeneId());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, molecularData2.getMolecularProfileId());
+    Assertions.assertEquals("sample_id_2", molecularData2.getSampleId());
+    Assertions.assertEquals("-0.3456", molecularData2.getValue());
   }
 
   @Test
@@ -242,7 +242,7 @@ public class MolecularDataServiceImplTest extends BaseServiceImplTest {
     BaseMeta result =
         molecularDataService.fetchMetaMolecularData(MOLECULAR_PROFILE_ID, null, entrezGeneIds);
 
-    Assert.assertEquals((Integer) 2, result.getTotalCount());
+    Assertions.assertEquals((Integer) 2, result.getTotalCount());
   }
 
   @Test
@@ -258,7 +258,7 @@ public class MolecularDataServiceImplTest extends BaseServiceImplTest {
     Integer result =
         molecularDataService.getNumberOfSamplesInMolecularProfile(MOLECULAR_PROFILE_ID);
 
-    Assert.assertEquals((Integer) 2, result);
+    Assertions.assertEquals((Integer) 2, result);
   }
 
   @Test
@@ -303,7 +303,7 @@ public class MolecularDataServiceImplTest extends BaseServiceImplTest {
 
     // one record comes out ...
     // so, test whether record correctly removed from result set
-    Assert.assertEquals(1, filteredData.size());
-    Assert.assertEquals("sample1", filteredData.get(0).getSampleId());
+    Assertions.assertEquals(1, filteredData.size());
+    Assertions.assertEquals("sample1", filteredData.get(0).getSampleId());
   }
 }

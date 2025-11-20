@@ -9,14 +9,15 @@ import org.cbioportal.legacy.model.CancerStudy;
 import org.cbioportal.legacy.model.Patient;
 import org.cbioportal.legacy.model.meta.BaseMeta;
 import org.cbioportal.legacy.persistence.mybatis.config.TestConfig;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {PatientMyBatisRepository.class, TestConfig.class})
 public class PatientMyBatisRepositoryTest {
 
@@ -28,11 +29,11 @@ public class PatientMyBatisRepositoryTest {
     List<Patient> result =
         patientMyBatisRepository.getAllPatients(null, "ID", null, null, null, null);
 
-    Assert.assertEquals(18, result.size());
+    Assertions.assertEquals(18, result.size());
     Patient patient = result.get(0);
-    Assert.assertEquals((Integer) 1, patient.getInternalId());
-    Assert.assertEquals("TCGA-A1-A0SB", patient.getStableId());
-    Assert.assertNull(patient.getCancerStudy());
+    Assertions.assertEquals((Integer) 1, patient.getInternalId());
+    Assertions.assertEquals("TCGA-A1-A0SB", patient.getStableId());
+    Assertions.assertNull(patient.getCancerStudy());
   }
 
   @Test
@@ -43,7 +44,7 @@ public class PatientMyBatisRepositoryTest {
     List<String> actual = result.stream().map(Patient::getStableId).collect(Collectors.toList());
     List<String> expected = Collections.singletonList("TCGA-A1-A0SB");
 
-    Assert.assertEquals(expected, actual);
+    Assertions.assertEquals(expected, actual);
   }
 
   @Test
@@ -51,7 +52,7 @@ public class PatientMyBatisRepositoryTest {
 
     BaseMeta result = patientMyBatisRepository.getMetaPatients(null);
 
-    Assert.assertEquals((Integer) 18, result.getTotalCount());
+    Assertions.assertEquals((Integer) 18, result.getTotalCount());
   }
 
   @Test
@@ -61,11 +62,11 @@ public class PatientMyBatisRepositoryTest {
         patientMyBatisRepository.getAllPatientsInStudy(
             "study_tcga_pub", "ID", null, null, null, null);
 
-    Assert.assertEquals(14, result.size());
+    Assertions.assertEquals(14, result.size());
     Patient patient = result.get(0);
-    Assert.assertEquals((Integer) 1, patient.getInternalId());
-    Assert.assertEquals("TCGA-A1-A0SB", patient.getStableId());
-    Assert.assertNull(patient.getCancerStudy());
+    Assertions.assertEquals((Integer) 1, patient.getInternalId());
+    Assertions.assertEquals("TCGA-A1-A0SB", patient.getStableId());
+    Assertions.assertNull(patient.getCancerStudy());
   }
 
   @Test
@@ -75,13 +76,13 @@ public class PatientMyBatisRepositoryTest {
         patientMyBatisRepository.getAllPatientsInStudy(
             "study_tcga_pub", "SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(14, result.size());
+    Assertions.assertEquals(14, result.size());
     Patient patient = result.get(0);
-    Assert.assertEquals((Integer) 1, patient.getInternalId());
-    Assert.assertEquals("TCGA-A1-A0SB", patient.getStableId());
-    Assert.assertEquals((Integer) 1, patient.getCancerStudyId());
-    Assert.assertEquals("study_tcga_pub", patient.getCancerStudyIdentifier());
-    Assert.assertNull(patient.getCancerStudy());
+    Assertions.assertEquals((Integer) 1, patient.getInternalId());
+    Assertions.assertEquals("TCGA-A1-A0SB", patient.getStableId());
+    Assertions.assertEquals((Integer) 1, patient.getCancerStudyId());
+    Assertions.assertEquals("study_tcga_pub", patient.getCancerStudyIdentifier());
+    Assertions.assertNull(patient.getCancerStudy());
   }
 
   @Test
@@ -91,27 +92,27 @@ public class PatientMyBatisRepositoryTest {
         patientMyBatisRepository.getAllPatientsInStudy(
             "study_tcga_pub", "DETAILED", null, null, null, null);
 
-    Assert.assertEquals(14, result.size());
+    Assertions.assertEquals(14, result.size());
     Patient patient = result.get(0);
-    Assert.assertEquals((Integer) 1, patient.getInternalId());
-    Assert.assertEquals("TCGA-A1-A0SB", patient.getStableId());
-    Assert.assertEquals((Integer) 1, patient.getCancerStudyId());
-    Assert.assertEquals("study_tcga_pub", patient.getCancerStudyIdentifier());
+    Assertions.assertEquals((Integer) 1, patient.getInternalId());
+    Assertions.assertEquals("TCGA-A1-A0SB", patient.getStableId());
+    Assertions.assertEquals((Integer) 1, patient.getCancerStudyId());
+    Assertions.assertEquals("study_tcga_pub", patient.getCancerStudyIdentifier());
     CancerStudy cancerStudy = patient.getCancerStudy();
-    Assert.assertEquals((Integer) 1, cancerStudy.getCancerStudyId());
-    Assert.assertEquals("study_tcga_pub", cancerStudy.getCancerStudyIdentifier());
-    Assert.assertEquals("brca", cancerStudy.getTypeOfCancerId());
-    Assert.assertEquals("Breast Invasive Carcinoma (TCGA, Nature 2012)", cancerStudy.getName());
-    Assert.assertEquals(
+    Assertions.assertEquals((Integer) 1, cancerStudy.getCancerStudyId());
+    Assertions.assertEquals("study_tcga_pub", cancerStudy.getCancerStudyIdentifier());
+    Assertions.assertEquals("brca", cancerStudy.getTypeOfCancerId());
+    Assertions.assertEquals("Breast Invasive Carcinoma (TCGA, Nature 2012)", cancerStudy.getName());
+    Assertions.assertEquals(
         "<a href=\\\"http://cancergenome.nih.gov/\\\">The Cancer Genome Atlas (TCGA)</a> Breast"
             + " Invasive Carcinoma project. 825 cases.<br><i>Nature 2012.</i> <a href=\\\"http://tcga-data.nci."
             + "nih.gov/tcga/\\\">Raw data via the TCGA Data Portal</a>.",
         cancerStudy.getDescription());
-    Assert.assertEquals(true, cancerStudy.getPublicStudy());
-    Assert.assertEquals("23000897,26451490", cancerStudy.getPmid());
-    Assert.assertEquals("TCGA, Nature 2012, ...", cancerStudy.getCitation());
-    Assert.assertEquals("SU2C-PI3K;PUBLIC;GDAC", cancerStudy.getGroups());
-    Assert.assertEquals((Integer) 0, cancerStudy.getStatus());
+    Assertions.assertEquals(true, cancerStudy.getPublicStudy());
+    Assertions.assertEquals("23000897,26451490", cancerStudy.getPmid());
+    Assertions.assertEquals("TCGA, Nature 2012, ...", cancerStudy.getCitation());
+    Assertions.assertEquals("SU2C-PI3K;PUBLIC;GDAC", cancerStudy.getGroups());
+    Assertions.assertEquals((Integer) 0, cancerStudy.getStatus());
   }
 
   @Test
@@ -121,7 +122,7 @@ public class PatientMyBatisRepositoryTest {
         patientMyBatisRepository.getAllPatientsInStudy(
             "study_tcga_pub", "SUMMARY", 1, 0, null, null);
 
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
   }
 
   @Test
@@ -131,13 +132,13 @@ public class PatientMyBatisRepositoryTest {
         patientMyBatisRepository.getAllPatientsInStudy(
             "study_tcga_pub", "SUMMARY", null, null, "stableId", "ASC");
 
-    Assert.assertEquals(14, result.size());
-    Assert.assertEquals("TCGA-A1-A0SB", result.get(0).getStableId());
-    Assert.assertEquals("TCGA-A1-A0SD", result.get(1).getStableId());
-    Assert.assertEquals("TCGA-A1-A0SE", result.get(2).getStableId());
-    Assert.assertEquals("TCGA-A1-A0SF", result.get(3).getStableId());
-    Assert.assertEquals("TCGA-A1-A0SG", result.get(4).getStableId());
-    Assert.assertEquals("TCGA-A1-A0SH", result.get(5).getStableId());
+    Assertions.assertEquals(14, result.size());
+    Assertions.assertEquals("TCGA-A1-A0SB", result.get(0).getStableId());
+    Assertions.assertEquals("TCGA-A1-A0SD", result.get(1).getStableId());
+    Assertions.assertEquals("TCGA-A1-A0SE", result.get(2).getStableId());
+    Assertions.assertEquals("TCGA-A1-A0SF", result.get(3).getStableId());
+    Assertions.assertEquals("TCGA-A1-A0SG", result.get(4).getStableId());
+    Assertions.assertEquals("TCGA-A1-A0SH", result.get(5).getStableId());
   }
 
   @Test
@@ -145,7 +146,7 @@ public class PatientMyBatisRepositoryTest {
 
     BaseMeta result = patientMyBatisRepository.getMetaPatientsInStudy("study_tcga_pub");
 
-    Assert.assertEquals((Integer) 14, result.getTotalCount());
+    Assertions.assertEquals((Integer) 14, result.getTotalCount());
   }
 
   @Test
@@ -154,7 +155,7 @@ public class PatientMyBatisRepositoryTest {
     Patient result =
         patientMyBatisRepository.getPatientInStudy("study_tcga_pub", "invalid_patient");
 
-    Assert.assertNull(result);
+    Assertions.assertNull(result);
   }
 
   @Test
@@ -162,25 +163,25 @@ public class PatientMyBatisRepositoryTest {
 
     Patient patient = patientMyBatisRepository.getPatientInStudy("study_tcga_pub", "TCGA-A1-A0SI");
 
-    Assert.assertEquals((Integer) 7, patient.getInternalId());
-    Assert.assertEquals("TCGA-A1-A0SI", patient.getStableId());
-    Assert.assertEquals((Integer) 1, patient.getCancerStudyId());
-    Assert.assertEquals("study_tcga_pub", patient.getCancerStudyIdentifier());
+    Assertions.assertEquals((Integer) 7, patient.getInternalId());
+    Assertions.assertEquals("TCGA-A1-A0SI", patient.getStableId());
+    Assertions.assertEquals((Integer) 1, patient.getCancerStudyId());
+    Assertions.assertEquals("study_tcga_pub", patient.getCancerStudyIdentifier());
     CancerStudy cancerStudy = patient.getCancerStudy();
-    Assert.assertEquals((Integer) 1, cancerStudy.getCancerStudyId());
-    Assert.assertEquals("study_tcga_pub", cancerStudy.getCancerStudyIdentifier());
-    Assert.assertEquals("brca", cancerStudy.getTypeOfCancerId());
-    Assert.assertEquals("Breast Invasive Carcinoma (TCGA, Nature 2012)", cancerStudy.getName());
-    Assert.assertEquals(
+    Assertions.assertEquals((Integer) 1, cancerStudy.getCancerStudyId());
+    Assertions.assertEquals("study_tcga_pub", cancerStudy.getCancerStudyIdentifier());
+    Assertions.assertEquals("brca", cancerStudy.getTypeOfCancerId());
+    Assertions.assertEquals("Breast Invasive Carcinoma (TCGA, Nature 2012)", cancerStudy.getName());
+    Assertions.assertEquals(
         "<a href=\\\"http://cancergenome.nih.gov/\\\">The Cancer Genome Atlas (TCGA)</a> Breast"
             + " Invasive Carcinoma project. 825 cases.<br><i>Nature 2012.</i> <a href=\\\"http://tcga-data.nci."
             + "nih.gov/tcga/\\\">Raw data via the TCGA Data Portal</a>.",
         cancerStudy.getDescription());
-    Assert.assertEquals(true, cancerStudy.getPublicStudy());
-    Assert.assertEquals("23000897,26451490", cancerStudy.getPmid());
-    Assert.assertEquals("TCGA, Nature 2012, ...", cancerStudy.getCitation());
-    Assert.assertEquals("SU2C-PI3K;PUBLIC;GDAC", cancerStudy.getGroups());
-    Assert.assertEquals((Integer) 0, cancerStudy.getStatus());
+    Assertions.assertEquals(true, cancerStudy.getPublicStudy());
+    Assertions.assertEquals("23000897,26451490", cancerStudy.getPmid());
+    Assertions.assertEquals("TCGA, Nature 2012, ...", cancerStudy.getCitation());
+    Assertions.assertEquals("SU2C-PI3K;PUBLIC;GDAC", cancerStudy.getGroups());
+    Assertions.assertEquals((Integer) 0, cancerStudy.getStatus());
   }
 
   @Test
@@ -195,9 +196,9 @@ public class PatientMyBatisRepositoryTest {
 
     List<Patient> result = patientMyBatisRepository.fetchPatients(studyIds, patientIds, "SUMMARY");
 
-    Assert.assertEquals(2, result.size());
-    Assert.assertEquals("TCGA-A1-A0SB", result.get(0).getStableId());
-    Assert.assertEquals("TCGA-A1-A0SE", result.get(1).getStableId());
+    Assertions.assertEquals(2, result.size());
+    Assertions.assertEquals("TCGA-A1-A0SB", result.get(0).getStableId());
+    Assertions.assertEquals("TCGA-A1-A0SE", result.get(1).getStableId());
   }
 
   @Test
@@ -212,7 +213,7 @@ public class PatientMyBatisRepositoryTest {
 
     BaseMeta result = patientMyBatisRepository.fetchMetaPatients(studyIds, patientIds);
 
-    Assert.assertEquals((Integer) 2, result.getTotalCount());
+    Assertions.assertEquals((Integer) 2, result.getTotalCount());
   }
 
   @Test
@@ -223,9 +224,9 @@ public class PatientMyBatisRepositoryTest {
             Arrays.asList("study_tcga_pub", "study_tcga_pub", "study_tcga_pub"),
             Arrays.asList("TCGA-A1-A0SB-01", "TCGA-A1-A0SD-01", "TCGA-A1-A0SB-02"));
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     List<String> stableIds = result.stream().map(r -> r.getStableId()).collect(Collectors.toList());
-    Assert.assertTrue(stableIds.contains("TCGA-A1-A0SD"));
-    Assert.assertTrue(stableIds.contains("TCGA-A1-A0SB"));
+    Assertions.assertTrue(stableIds.contains("TCGA-A1-A0SD"));
+    Assertions.assertTrue(stableIds.contains("TCGA-A1-A0SB"));
   }
 }

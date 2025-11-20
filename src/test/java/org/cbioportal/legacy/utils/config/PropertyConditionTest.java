@@ -5,17 +5,17 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 import java.util.HashMap;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Answers;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class PropertyConditionTest {
 
   @Mock private AnnotatedTypeMetadata metadata;
@@ -43,7 +43,7 @@ public class PropertyConditionTest {
     attributes.put("matchIfMissing", false);
     when(metadata.getAnnotationAttributes(any())).thenReturn(attributes);
     when(context.getEnvironment().getProperty(eq("requested_prop"))).thenReturn("requested_value");
-    Assert.assertTrue(propertyCondition.matches(context, metadata));
+    Assertions.assertTrue(propertyCondition.matches(context, metadata));
   }
 
   @Test
@@ -53,7 +53,7 @@ public class PropertyConditionTest {
     attributes.put("matchIfMissing", false);
     when(metadata.getAnnotationAttributes(any())).thenReturn(attributes);
     when(context.getEnvironment().getProperty(eq("requested_prop"))).thenReturn("different_value");
-    Assert.assertFalse(propertyCondition.matches(context, metadata));
+    Assertions.assertFalse(propertyCondition.matches(context, metadata));
   }
 
   @Test
@@ -63,7 +63,7 @@ public class PropertyConditionTest {
     attributes.put("matchIfMissing", false);
     when(metadata.getAnnotationAttributes(any())).thenReturn(attributes);
     when(context.getEnvironment().getProperty(eq("requested_prop"))).thenReturn(null);
-    Assert.assertFalse(propertyCondition.matches(context, metadata));
+    Assertions.assertFalse(propertyCondition.matches(context, metadata));
   }
 
   @Test
@@ -73,7 +73,7 @@ public class PropertyConditionTest {
     attributes.put("matchIfMissing", true);
     when(metadata.getAnnotationAttributes(any())).thenReturn(attributes);
     when(context.getEnvironment().getProperty(eq("requested_prop"))).thenReturn(null);
-    Assert.assertTrue(propertyCondition.matches(context, metadata));
+    Assertions.assertTrue(propertyCondition.matches(context, metadata));
   }
 
   @Test
@@ -84,7 +84,7 @@ public class PropertyConditionTest {
     attributes.put("isNot", true);
     when(metadata.getAnnotationAttributes(any())).thenReturn(attributes);
     when(context.getEnvironment().getProperty(eq("requested_prop"))).thenReturn("different_value");
-    Assert.assertTrue(propertyCondition.matches(context, metadata));
+    Assertions.assertTrue(propertyCondition.matches(context, metadata));
   }
 
   @Test
@@ -95,6 +95,6 @@ public class PropertyConditionTest {
     when(metadata.getAnnotationAttributes(any())).thenReturn(attributes);
     when(context.getEnvironment().getProperty(eq("requested_prop")))
         .thenReturn("requested_value_2");
-    Assert.assertTrue(propertyCondition.matches(context, metadata));
+    Assertions.assertTrue(propertyCondition.matches(context, metadata));
   }
 }

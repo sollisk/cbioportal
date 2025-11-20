@@ -1,10 +1,10 @@
 package org.cbioportal.legacy.persistence.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.cbioportal.legacy.persistence.util.fakeclient.MockInMemoryRedissonClient;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * This test is... not great, but it's my attempt to create a runnable integration test for the

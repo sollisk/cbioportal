@@ -1,6 +1,6 @@
 package org.cbioportal.infrastructure.repository.clickhouse.treatment;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import org.cbioportal.domain.studyview.StudyViewFilterFactory;
@@ -15,8 +15,8 @@ import org.cbioportal.legacy.web.parameter.filter.OredSampleTreatmentFilters;
 import org.cbioportal.legacy.web.parameter.filter.PatientTreatmentFilter;
 import org.cbioportal.legacy.web.parameter.filter.SampleTreatmentFilter;
 import org.cbioportal.shared.enums.ProjectionType;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,7 +25,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 @Import(MyBatisConfig.class)
 @DataJpaTest
 @DirtiesContext

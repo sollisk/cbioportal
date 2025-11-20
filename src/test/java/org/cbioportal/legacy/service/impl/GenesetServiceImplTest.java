@@ -9,15 +9,15 @@ import org.cbioportal.legacy.persistence.GenesetRepository;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.SampleService;
 import org.cbioportal.legacy.service.exception.GenesetNotFoundException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class GenesetServiceImplTest extends BaseServiceImplTest {
 
   public static final String GENESET_ID_1 = "geneset_id_1";
@@ -40,7 +40,7 @@ public class GenesetServiceImplTest extends BaseServiceImplTest {
 
     List<Geneset> result = genesetService.getAllGenesets(PROJECTION, PAGE_SIZE, PAGE_NUMBER);
 
-    Assert.assertEquals(genesetList, result);
+    Assertions.assertEquals(genesetList, result);
   }
 
   @Test
@@ -50,7 +50,7 @@ public class GenesetServiceImplTest extends BaseServiceImplTest {
     Mockito.when(genesetRepository.getMetaGenesets()).thenReturn(expectedBaseMeta);
     BaseMeta result = genesetService.getMetaGenesets();
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
@@ -60,7 +60,7 @@ public class GenesetServiceImplTest extends BaseServiceImplTest {
     Mockito.when(genesetRepository.getGeneset(GENESET_ID_1)).thenReturn(geneset);
 
     Geneset result = genesetService.getGeneset(GENESET_ID_1);
-    Assert.assertEquals(geneset, result);
+    Assertions.assertEquals(geneset, result);
   }
 
   @Test(expected = GenesetNotFoundException.class)
@@ -82,7 +82,7 @@ public class GenesetServiceImplTest extends BaseServiceImplTest {
     Mockito.when(genesetRepository.getGeneset(GENESET_ID_2)).thenReturn(geneset);
 
     List<Gene> result = genesetService.getGenesByGenesetId(GENESET_ID_2);
-    Assert.assertEquals(genes, result);
+    Assertions.assertEquals(genes, result);
   }
 
   private List<Geneset> createGenesetList() {

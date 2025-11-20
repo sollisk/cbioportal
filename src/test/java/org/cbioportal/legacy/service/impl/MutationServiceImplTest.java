@@ -20,15 +20,15 @@ import org.cbioportal.legacy.model.meta.MutationMeta;
 import org.cbioportal.legacy.persistence.MutationRepository;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.exception.MolecularProfileNotFoundException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class MutationServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private MutationServiceImpl mutationService;
@@ -77,7 +77,7 @@ public class MutationServiceImplTest extends BaseServiceImplTest {
             SORT,
             DIRECTION);
 
-    Assert.assertEquals(expectedMutationList, result);
+    Assertions.assertEquals(expectedMutationList, result);
     Assert.assertEquals("19", result.get(0).getChr());
   }
 

@@ -9,15 +9,15 @@ import org.cbioportal.legacy.model.meta.BaseMeta;
 import org.cbioportal.legacy.persistence.SignificantCopyNumberRegionRepository;
 import org.cbioportal.legacy.service.StudyService;
 import org.cbioportal.legacy.service.exception.StudyNotFoundException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class SignificantCopyNumberRegionServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private SignificantCopyNumberRegionServiceImpl significantCopyNumberRegionService;
@@ -51,10 +51,10 @@ public class SignificantCopyNumberRegionServiceImplTest extends BaseServiceImplT
         significantCopyNumberRegionService.getSignificantCopyNumberRegions(
             STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(1, result.size());
-    Assert.assertEquals(gistic, result.get(0));
-    Assert.assertEquals(1, result.get(0).getGenes().size());
-    Assert.assertEquals(gisticToGene, result.get(0).getGenes().get(0));
+    Assertions.assertEquals(1, result.size());
+    Assertions.assertEquals(gistic, result.get(0));
+    Assertions.assertEquals(1, result.get(0).getGenes().size());
+    Assertions.assertEquals(gisticToGene, result.get(0).getGenes().get(0));
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -75,7 +75,7 @@ public class SignificantCopyNumberRegionServiceImplTest extends BaseServiceImplT
     BaseMeta result =
         significantCopyNumberRegionService.getMetaSignificantCopyNumberRegions(STUDY_ID);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = StudyNotFoundException.class)

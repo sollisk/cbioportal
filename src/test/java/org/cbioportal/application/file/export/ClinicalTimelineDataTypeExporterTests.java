@@ -2,10 +2,10 @@ package org.cbioportal.application.file.export;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -17,7 +17,7 @@ import org.cbioportal.application.file.export.services.ClinicalAttributeDataServ
 import org.cbioportal.application.file.model.ClinicalEvent;
 import org.cbioportal.application.file.model.ClinicalEventData;
 import org.cbioportal.application.file.utils.CloseableIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ClinicalTimelineDataTypeExporterTests {
 

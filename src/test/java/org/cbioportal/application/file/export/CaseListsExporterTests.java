@@ -1,8 +1,8 @@
 package org.cbioportal.application.file.export;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.cbioportal.application.file.export.exporters.CaseListsExporter;
 import org.cbioportal.application.file.export.exporters.ExportDetails;
 import org.cbioportal.application.file.export.services.CaseListMetadataService;
 import org.cbioportal.application.file.model.CaseListMetadata;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class CaseListsExporterTests {
 
@@ -55,8 +55,8 @@ public class CaseListsExporterTests {
 
     boolean exported = exporter.exportData(factory, exportDetails);
 
-    assertFalse("No case lists should be exported", exported);
-    assertTrue("No files should be created", factory.getFileContents().isEmpty());
+    assertFalse(exported,"No case lists should be exported");
+    assertTrue(factory.getFileContents().isEmpty(), "No files should be created");
   }
 
   @Test
@@ -67,7 +67,7 @@ public class CaseListsExporterTests {
     boolean exported = exporter.exportData(factory, exportDetails);
 
     var fileContents = factory.getFileContents();
-    assertTrue("Case lists should be exported", exported);
+    assertTrue(exported, "Case lists should be exported");
     assertEquals(2, fileContents.size());
     assertTrue(fileContents.containsKey("case_lists/cases_stable_id_1.txt"));
     assertTrue(fileContents.containsKey("case_lists/cases_stable_id_2.txt"));
@@ -104,7 +104,7 @@ public class CaseListsExporterTests {
         exporter.exportData(factory, new ExportDetails(exportDetails.getStudyId(), "STUDY_ID_B"));
 
     var fileContents = factory.getFileContents();
-    assertTrue("Case lists should be exported", exported);
+    assertTrue(exported, "Case lists should be exported");
     assertEquals(2, fileContents.size());
     assertTrue(fileContents.containsKey("case_lists/cases_stable_id_1.txt"));
     assertTrue(fileContents.containsKey("case_lists/cases_stable_id_2.txt"));

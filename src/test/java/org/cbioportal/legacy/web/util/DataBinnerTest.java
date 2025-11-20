@@ -20,10 +20,10 @@ import org.cbioportal.legacy.service.util.MolecularProfileUtil;
 import org.cbioportal.legacy.web.parameter.BinsGeneratorConfig;
 import org.cbioportal.legacy.web.parameter.ClinicalDataBinFilter;
 import org.cbioportal.legacy.web.parameter.ClinicalDataType;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +31,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest
 @ContextConfiguration(
     classes = {
@@ -84,15 +84,15 @@ public class DataBinnerTest {
         dataBinner.calculateDataBins(
             clinicalDataBinFilter, ClinicalDataType.PATIENT, clinicalData, patientIds);
 
-    Assert.assertEquals(11, dataBins.size());
+    Assertions.assertEquals(11, dataBins.size());
 
-    Assert.assertEquals("<=", dataBins.get(0).getSpecialValue());
-    Assert.assertEquals(new BigDecimal("40.0"), dataBins.get(0).getEnd());
-    Assert.assertEquals(2, dataBins.get(0).getCount().intValue());
+    Assertions.assertEquals("<=", dataBins.get(0).getSpecialValue());
+    Assertions.assertEquals(new BigDecimal("40.0"), dataBins.get(0).getEnd());
+    Assertions.assertEquals(2, dataBins.get(0).getCount().intValue());
 
-    Assert.assertEquals(new BigDecimal("40.0"), dataBins.get(1).getStart());
-    Assert.assertEquals(new BigDecimal("45.0"), dataBins.get(1).getEnd());
-    Assert.assertEquals(6, dataBins.get(1).getCount().intValue());
+    Assertions.assertEquals(new BigDecimal("40.0"), dataBins.get(1).getStart());
+    Assertions.assertEquals(new BigDecimal("45.0"), dataBins.get(1).getEnd());
+    Assertions.assertEquals(6, dataBins.get(1).getCount().intValue());
 
     Assert.assertEquals(new BigDecimal("45.0"), dataBins.get(2).getStart());
     Assert.assertEquals(new BigDecimal("50.0"), dataBins.get(2).getEnd());

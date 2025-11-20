@@ -12,16 +12,16 @@ import org.cbioportal.legacy.persistence.GenePanelRepository;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.exception.GenePanelNotFoundException;
 import org.cbioportal.legacy.service.util.MolecularProfileUtil;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class GenePanelServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private GenePanelServiceImpl genePanelService;
@@ -43,7 +43,7 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
     List<GenePanel> result =
         genePanelService.getAllGenePanels("SUMMARY", PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedGenePanelList, result);
+    Assertions.assertEquals(expectedGenePanelList, result);
   }
 
   @Test
@@ -69,11 +69,11 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
     List<GenePanel> result =
         genePanelService.getAllGenePanels("DETAILED", PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedGenePanelList, result);
-    Assert.assertEquals(1, result.size());
-    Assert.assertEquals(genePanel, result.get(0));
-    Assert.assertEquals(1, result.get(0).getGenes().size());
-    Assert.assertEquals(genePanelToGene, result.get(0).getGenes().get(0));
+    Assertions.assertEquals(expectedGenePanelList, result);
+    Assertions.assertEquals(1, result.size());
+    Assertions.assertEquals(genePanel, result.get(0));
+    Assertions.assertEquals(1, result.get(0).getGenes().size());
+    Assertions.assertEquals(genePanelToGene, result.get(0).getGenes().get(0));
   }
 
   @Test
@@ -85,7 +85,7 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = genePanelService.getMetaGenePanels();
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = GenePanelNotFoundException.class)

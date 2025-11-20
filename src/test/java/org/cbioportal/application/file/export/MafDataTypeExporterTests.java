@@ -1,9 +1,9 @@
 package org.cbioportal.application.file.export;
 
 import static java.util.Collections.emptyList;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.Set;
@@ -15,7 +15,7 @@ import org.cbioportal.application.file.export.services.MafRecordService;
 import org.cbioportal.application.file.model.GeneticProfileDatatypeMetadata;
 import org.cbioportal.application.file.model.MafRecord;
 import org.cbioportal.application.file.utils.CloseableIterator;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class MafDataTypeExporterTests {
 

@@ -8,13 +8,13 @@ import org.cbioportal.legacy.model.ClinicalData;
 import org.cbioportal.legacy.model.ClinicalViolinPlotData;
 import org.cbioportal.legacy.model.Sample;
 import org.cbioportal.legacy.web.parameter.StudyViewFilter;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class ViolinPlotServiceImplTest {
   private static final String[][] FGA_VALUES =
       new String[][] {
@@ -87,8 +87,8 @@ public class ViolinPlotServiceImplTest {
               return a.getCategory().compareTo(b.getCategory());
             });
 
-    Assert.assertEquals(FGA_VALUES.length, result.getRows().size());
-    Assert.assertEquals(
+    Assertions.assertEquals(FGA_VALUES.length, result.getRows().size());
+    Assertions.assertEquals(
         NUM_CURVE_POINTS,
         result
             .getRows()

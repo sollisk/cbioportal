@@ -53,15 +53,15 @@ package org.cbioportal.legacy.service.impl;
 import java.util.*;
 import org.cbioportal.legacy.model.DataAccessToken;
 import org.cbioportal.legacy.persistence.DataAccessTokenRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @TestPropertySource(
     properties = {
@@ -71,7 +71,7 @@ import org.springframework.test.context.junit4.SpringRunner;
     },
     inheritLocations = false)
 @ContextConfiguration(classes = UuidDataAccessTokenServiceImplTestConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UuidDataAccessTokenServiceImplTest {
 
   @Autowired
@@ -108,7 +108,7 @@ public class UuidDataAccessTokenServiceImplTest {
         createdDataAccessToken,
         UuidDataAccessTokenServiceImplTestConfiguration.MOCK_USERNAME_WITH_ONE_TOKEN,
         expectedExpirationDate)) {
-      Assert.fail(
+      Assertions.fail(
           "Created token (Username: "
               + createdDataAccessToken.getUsername()
               + ", Expiration: "
@@ -121,7 +121,7 @@ public class UuidDataAccessTokenServiceImplTest {
     }
     if (deletedDataAccessToken
         != uuidDataAccessTokenServiceImplTestConfiguration.OLDEST_TOKEN_UUID) {
-      Assert.fail(
+      Assertions.fail(
           "Expired token: "
               + deletedDataAccessToken
               + ", expected to expire token:"
@@ -162,7 +162,7 @@ public class UuidDataAccessTokenServiceImplTest {
         uuidDataAccessTokenServiceImpl.isValid(
             UuidDataAccessTokenServiceImplTestConfiguration.NONEXISTENT_TOKEN_STRING);
     if (nonexistantTokenIsValid) {
-      Assert.fail("Validation of nonexistant token returned true, expected false.");
+      Assertions.fail("Validation of nonexistant token returned true, expected false.");
     }
   }
 
@@ -175,7 +175,7 @@ public class UuidDataAccessTokenServiceImplTest {
         uuidDataAccessTokenServiceImpl.isValid(
             UuidDataAccessTokenServiceImplTestConfiguration.FAIL_TO_GET_TOKEN_STRING);
     if (failedToGetTokenIsValid) {
-      Assert.fail("Validation of token that we failed to look up returned true, expected false.");
+      Assertions.fail("Validation of token that we failed to look up returned true, expected false.");
     }
   }
 
@@ -189,7 +189,7 @@ public class UuidDataAccessTokenServiceImplTest {
         uuidDataAccessTokenServiceImpl.isValid(
             UuidDataAccessTokenServiceImplTestConfiguration.EXPIRED_TOKEN_STRING);
     if (expiredTokenIsValid) {
-      Assert.fail("Validation of expired token returned true, expected false");
+      Assertions.fail("Validation of expired token returned true, expected false");
     }
   }
 
@@ -203,7 +203,7 @@ public class UuidDataAccessTokenServiceImplTest {
         uuidDataAccessTokenServiceImpl.isValid(
             UuidDataAccessTokenServiceImplTestConfiguration.VALID_TOKEN_STRING);
     if (!validTokenIsValid) {
-      Assert.fail("Validation of valid token returned false, expected true.");
+      Assertions.fail("Validation of valid token returned false, expected true.");
     }
   }
 }

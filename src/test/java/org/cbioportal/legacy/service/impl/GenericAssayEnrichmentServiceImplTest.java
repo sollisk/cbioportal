@@ -25,16 +25,16 @@ import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.SampleService;
 import org.cbioportal.legacy.service.exception.MolecularProfileNotFoundException;
 import org.cbioportal.legacy.service.util.ExpressionEnrichmentUtil;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class GenericAssayEnrichmentServiceImplTest extends BaseServiceImplTest {
   @InjectMocks private ExpressionEnrichmentServiceImpl expressionEnrichmentServiceImpl;
   @Mock private SampleService sampleService;
@@ -214,45 +214,45 @@ public class GenericAssayEnrichmentServiceImplTest extends BaseServiceImplTest {
         expressionEnrichmentServiceImpl.getGenericAssayBinaryEnrichments(
             MOLECULAR_PROFILE_ID, molecularProfileCaseSets, EnrichmentType.SAMPLE);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     GenericAssayBinaryEnrichment genericAssayBinaryEnrichment = result.get(0);
-    Assert.assertEquals(HUGO_GENE_SYMBOL_1, genericAssayBinaryEnrichment.getStableId());
-    Assert.assertEquals(2, genericAssayBinaryEnrichment.getGroupsStatistics().size());
+    Assertions.assertEquals(HUGO_GENE_SYMBOL_1, genericAssayBinaryEnrichment.getStableId());
+    Assertions.assertEquals(2, genericAssayBinaryEnrichment.getGroupsStatistics().size());
 
     GroupStatistics unalteredGroupStats = genericAssayBinaryEnrichment.getGroupsStatistics().get(0);
-    Assert.assertEquals("unaltered samples", unalteredGroupStats.getName());
-    Assert.assertEquals(new BigDecimal("0.5"), unalteredGroupStats.getMeanExpression());
-    Assert.assertEquals(
+    Assertions.assertEquals("unaltered samples", unalteredGroupStats.getName());
+    Assertions.assertEquals(new BigDecimal("0.5"), unalteredGroupStats.getMeanExpression());
+    Assertions.assertEquals(
         new BigDecimal("0.7071067811865476"), unalteredGroupStats.getStandardDeviation());
 
     GroupStatistics alteredGroupStats = genericAssayBinaryEnrichment.getGroupsStatistics().get(1);
-    Assert.assertEquals("altered samples", alteredGroupStats.getName());
-    Assert.assertEquals(new BigDecimal("1.0"), alteredGroupStats.getMeanExpression());
-    Assert.assertEquals(new BigDecimal("0.0"), alteredGroupStats.getStandardDeviation());
+    Assertions.assertEquals("altered samples", alteredGroupStats.getName());
+    Assertions.assertEquals(new BigDecimal("1.0"), alteredGroupStats.getMeanExpression());
+    Assertions.assertEquals(new BigDecimal("0.0"), alteredGroupStats.getStandardDeviation());
 
-    Assert.assertEquals(
+    Assertions.assertEquals(
         new BigDecimal("0.49999999999999983"), genericAssayBinaryEnrichment.getpValue());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         new BigDecimal("0.99999999999999966"), genericAssayBinaryEnrichment.getqValue());
 
     genericAssayBinaryEnrichment = result.get(1);
-    Assert.assertEquals(HUGO_GENE_SYMBOL_2, genericAssayBinaryEnrichment.getStableId());
-    Assert.assertEquals(2, genericAssayBinaryEnrichment.getGroupsStatistics().size());
+    Assertions.assertEquals(HUGO_GENE_SYMBOL_2, genericAssayBinaryEnrichment.getStableId());
+    Assertions.assertEquals(2, genericAssayBinaryEnrichment.getGroupsStatistics().size());
 
     unalteredGroupStats = genericAssayBinaryEnrichment.getGroupsStatistics().get(0);
-    Assert.assertEquals("unaltered samples", unalteredGroupStats.getName());
-    Assert.assertEquals(new BigDecimal("0.5"), unalteredGroupStats.getMeanExpression());
-    Assert.assertEquals(
+    Assertions.assertEquals("unaltered samples", unalteredGroupStats.getName());
+    Assertions.assertEquals(new BigDecimal("0.5"), unalteredGroupStats.getMeanExpression());
+    Assertions.assertEquals(
         new BigDecimal("0.7071067811865476"), unalteredGroupStats.getStandardDeviation());
 
     alteredGroupStats = genericAssayBinaryEnrichment.getGroupsStatistics().get(1);
-    Assert.assertEquals("altered samples", alteredGroupStats.getName());
-    Assert.assertEquals(new BigDecimal("0.5"), alteredGroupStats.getMeanExpression());
-    Assert.assertEquals(
+    Assertions.assertEquals("altered samples", alteredGroupStats.getName());
+    Assertions.assertEquals(new BigDecimal("0.5"), alteredGroupStats.getMeanExpression());
+    Assertions.assertEquals(
         new BigDecimal("0.7071067811865476"), alteredGroupStats.getStandardDeviation());
 
-    Assert.assertEquals(new BigDecimal("1.0"), genericAssayBinaryEnrichment.getpValue());
-    Assert.assertEquals(new BigDecimal("1.0"), genericAssayBinaryEnrichment.getqValue());
+    Assertions.assertEquals(new BigDecimal("1.0"), genericAssayBinaryEnrichment.getpValue());
+    Assertions.assertEquals(new BigDecimal("1.0"), genericAssayBinaryEnrichment.getqValue());
   }
 
   @Test
@@ -323,37 +323,37 @@ public class GenericAssayEnrichmentServiceImplTest extends BaseServiceImplTest {
         expressionEnrichmentServiceImpl.getGenericAssayCategoricalEnrichments(
             MOLECULAR_PROFILE_ID, molecularProfileCaseSets, EnrichmentType.SAMPLE);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     GenericAssayCategoricalEnrichment genericAssayCategoricalEnrichment = result.get(0);
-    Assert.assertEquals(HUGO_GENE_SYMBOL_1, genericAssayCategoricalEnrichment.getStableId());
-    Assert.assertEquals(2, genericAssayCategoricalEnrichment.getGroupsStatistics().size());
+    Assertions.assertEquals(HUGO_GENE_SYMBOL_1, genericAssayCategoricalEnrichment.getStableId());
+    Assertions.assertEquals(2, genericAssayCategoricalEnrichment.getGroupsStatistics().size());
 
     GroupStatistics unalteredGroupStats =
         genericAssayCategoricalEnrichment.getGroupsStatistics().get(0);
-    Assert.assertEquals("unaltered samples", unalteredGroupStats.getName());
+    Assertions.assertEquals("unaltered samples", unalteredGroupStats.getName());
 
     GroupStatistics alteredGroupStats =
         genericAssayCategoricalEnrichment.getGroupsStatistics().get(1);
-    Assert.assertEquals("altered samples", alteredGroupStats.getName());
+    Assertions.assertEquals("altered samples", alteredGroupStats.getName());
 
-    Assert.assertEquals(
+    Assertions.assertEquals(
         new BigDecimal("0.04550026389635764"), genericAssayCategoricalEnrichment.getpValue());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         new BigDecimal("0.04550026389635764"), genericAssayCategoricalEnrichment.getqValue());
 
     genericAssayCategoricalEnrichment = result.get(1);
-    Assert.assertEquals(HUGO_GENE_SYMBOL_2, genericAssayCategoricalEnrichment.getStableId());
-    Assert.assertEquals(2, genericAssayCategoricalEnrichment.getGroupsStatistics().size());
+    Assertions.assertEquals(HUGO_GENE_SYMBOL_2, genericAssayCategoricalEnrichment.getStableId());
+    Assertions.assertEquals(2, genericAssayCategoricalEnrichment.getGroupsStatistics().size());
 
     unalteredGroupStats = genericAssayCategoricalEnrichment.getGroupsStatistics().get(0);
-    Assert.assertEquals("unaltered samples", unalteredGroupStats.getName());
+    Assertions.assertEquals("unaltered samples", unalteredGroupStats.getName());
 
     alteredGroupStats = genericAssayCategoricalEnrichment.getGroupsStatistics().get(1);
-    Assert.assertEquals("altered samples", alteredGroupStats.getName());
+    Assertions.assertEquals("altered samples", alteredGroupStats.getName());
 
-    Assert.assertEquals(
+    Assertions.assertEquals(
         new BigDecimal("0.04550026389635764"), genericAssayCategoricalEnrichment.getpValue());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         new BigDecimal("0.04550026389635764"), genericAssayCategoricalEnrichment.getqValue());
   }
 }

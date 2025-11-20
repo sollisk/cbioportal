@@ -11,15 +11,15 @@ import org.cbioportal.legacy.persistence.VariantCountRepository;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.MutationService;
 import org.cbioportal.legacy.service.SampleListService;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class VariantCountServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private VariantCountServiceImpl variantCountService;
@@ -62,7 +62,7 @@ public class VariantCountServiceImplTest extends BaseServiceImplTest {
         variantCountService.fetchVariantCounts(
             MOLECULAR_PROFILE_ID, Arrays.asList(ENTREZ_GENE_ID_1), Arrays.asList(KEYWORD));
 
-    Assert.assertEquals(expectedVariantCounts, result);
-    Assert.assertEquals((Integer) 5, result.get(0).getNumberOfSamples());
+    Assertions.assertEquals(expectedVariantCounts, result);
+    Assertions.assertEquals((Integer) 5, result.get(0).getNumberOfSamples());
   }
 }

@@ -17,16 +17,16 @@ import org.cbioportal.legacy.persistence.PersistenceConstants;
 import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.SampleService;
 import org.cbioportal.legacy.service.exception.GenericAssayNotFoundException;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class GenericAssayServiceImpTest extends BaseServiceImplTest {
 
   public static final String GENERIC_ASSAY_ID_1 = "generic_assay_id_1";
@@ -222,11 +222,11 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
     //     SAMPLE_2:
     //         generic assay1 value: 0.499
     //         generic assay2 value: -0.509
-    Assert.assertEquals(8, result.size());
+    Assertions.assertEquals(8, result.size());
     GenericAssayData item1 = result.get(0);
-    Assert.assertEquals(item1.getSampleId(), SAMPLE_ID1);
-    Assert.assertEquals(item1.getStableId(), STABLE_ID_1);
-    Assert.assertEquals(item1.getValue(), "0.2");
+    Assertions.assertEquals(item1.getSampleId(), SAMPLE_ID1);
+    Assertions.assertEquals(item1.getStableId(), STABLE_ID_1);
+    Assertions.assertEquals(item1.getValue(), "0.2");
     Assert.assertEquals(item1.getMolecularProfileId(), MOLECULAR_PROFILE_ID_1);
     GenericAssayData item2 = result.get(1);
     Assert.assertEquals(item2.getSampleId(), SAMPLE_ID1);

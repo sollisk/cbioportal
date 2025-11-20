@@ -9,15 +9,15 @@ import org.cbioportal.legacy.model.SampleTreatmentRow;
 import org.cbioportal.legacy.model.TemporalRelation;
 import org.cbioportal.legacy.model.Treatment;
 import org.cbioportal.legacy.persistence.TreatmentRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class TreatmentServiceImplTest {
 
   private static final String STUDY_ID = "cancer_study";
@@ -38,7 +38,7 @@ public class TreatmentServiceImplTest {
     List<PatientTreatmentRow> actual =
         treatmentService.getAllPatientTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -57,7 +57,7 @@ public class TreatmentServiceImplTest {
     List<PatientTreatmentRow> actual =
         treatmentService.getAllPatientTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -73,7 +73,7 @@ public class TreatmentServiceImplTest {
     List<PatientTreatmentRow> actual =
         treatmentService.getAllPatientTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -89,7 +89,7 @@ public class TreatmentServiceImplTest {
     List<PatientTreatmentRow> actual =
         treatmentService.getAllPatientTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -108,7 +108,7 @@ public class TreatmentServiceImplTest {
     List<PatientTreatmentRow> actual =
         treatmentService.getAllPatientTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test

@@ -16,15 +16,15 @@ import org.cbioportal.legacy.service.StudyService;
 import org.cbioportal.legacy.service.exception.PatientNotFoundException;
 import org.cbioportal.legacy.service.exception.SampleNotFoundException;
 import org.cbioportal.legacy.service.exception.StudyNotFoundException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.Silent.class)
+@ExtendWith(MockitoExtension.class)
 public class SampleServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private SampleServiceImpl sampleService;
@@ -59,7 +59,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
     List<String> actual = result.stream().map(Sample::getStableId).collect(Collectors.toList());
     List<String> expected = Arrays.asList(SAMPLE_ID1, SAMPLE_ID2, SAMPLE_ID3, SAMPLE_ID4);
 
-    Assert.assertEquals(expected, actual);
+    Assertions.assertEquals(expected, actual);
   }
 
   @Test
@@ -72,7 +72,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
     Integer actual = result.getTotalCount();
     Integer expected = 4;
 
-    Assert.assertEquals(expected, actual);
+    Assertions.assertEquals(expected, actual);
   }
 
   @Test
@@ -97,7 +97,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
         sampleService.getAllSamplesInStudy(
             STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedSampleList, result);
+    Assertions.assertEquals(expectedSampleList, result);
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -115,7 +115,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
     Mockito.when(sampleRepository.getMetaSamplesInStudy(STUDY_ID)).thenReturn(expectedBaseMeta);
     BaseMeta result = sampleService.getMetaSamplesInStudy(STUDY_ID);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -154,7 +154,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
 
     Sample result = sampleService.getSampleInStudy(STUDY_ID, SAMPLE_ID1);
 
-    Assert.assertEquals(expectedSample, result);
+    Assertions.assertEquals(expectedSample, result);
   }
 
   @Test
@@ -179,7 +179,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
         sampleService.getAllSamplesOfPatientInStudy(
             STUDY_ID, PATIENT_ID_1, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedSampleList, result);
+    Assertions.assertEquals(expectedSampleList, result);
   }
 
   @Test(expected = PatientNotFoundException.class)
@@ -199,7 +199,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
         .thenReturn(expectedBaseMeta);
     BaseMeta result = sampleService.getMetaSamplesOfPatientInStudy(STUDY_ID, PATIENT_ID_1);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = PatientNotFoundException.class)
@@ -232,7 +232,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
         sampleService.getAllSamplesOfPatientsInStudy(
             STUDY_ID, Arrays.asList(PATIENT_ID_1), PROJECTION);
 
-    Assert.assertEquals(expectedSampleList, result);
+    Assertions.assertEquals(expectedSampleList, result);
   }
 
   @Test
@@ -256,7 +256,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
     List<Sample> result =
         sampleService.fetchSamples(Arrays.asList(STUDY_ID), Arrays.asList(SAMPLE_ID1), PROJECTION);
 
-    Assert.assertEquals(expectedSampleList, result);
+    Assertions.assertEquals(expectedSampleList, result);
   }
 
   @Test
@@ -302,9 +302,9 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
 
     List<Sample> result =
         sampleService.fetchSamples(Arrays.asList(STUDY_ID), Arrays.asList(SAMPLE_ID1), "DETAILED");
-    Assert.assertEquals(2, result.size());
-    Assert.assertTrue(result.get(0).getCopyNumberSegmentPresent());
-    Assert.assertFalse(result.get(1).getCopyNumberSegmentPresent());
+    Assertions.assertEquals(2, result.size());
+    Assertions.assertTrue(result.get(0).getCopyNumberSegmentPresent());
+    Assertions.assertFalse(result.get(1).getCopyNumberSegmentPresent());
   }
 
   @Test
@@ -320,7 +320,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
 
     List<Sample> result = sampleService.fetchSamples(Arrays.asList(SAMPLE_LIST_ID), PROJECTION);
 
-    Assert.assertEquals(expectedSampleList, result);
+    Assertions.assertEquals(expectedSampleList, result);
   }
 
   @Test
@@ -333,7 +333,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
     BaseMeta result =
         sampleService.fetchMetaSamples(Arrays.asList(STUDY_ID), Arrays.asList(SAMPLE_ID1));
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
@@ -344,7 +344,7 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
         .thenReturn(expectedBaseMeta);
     BaseMeta result = sampleService.fetchMetaSamples(Arrays.asList(SAMPLE_LIST_ID));
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
@@ -359,6 +359,6 @@ public class SampleServiceImplTest extends BaseServiceImplTest {
 
     List<Sample> result = sampleService.getSamplesByInternalIds(Arrays.asList(SAMPLE_INTERNAL_ID));
 
-    Assert.assertEquals(expectedSampleList, result);
+    Assertions.assertEquals(expectedSampleList, result);
   }
 }

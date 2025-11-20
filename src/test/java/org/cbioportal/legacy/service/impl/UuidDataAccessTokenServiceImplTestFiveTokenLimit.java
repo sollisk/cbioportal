@@ -53,9 +53,9 @@ package org.cbioportal.legacy.service.impl;
 import java.util.*;
 import org.cbioportal.legacy.model.DataAccessToken;
 import org.cbioportal.legacy.persistence.DataAccessTokenRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,7 +71,7 @@ import org.springframework.test.context.junit4.SpringRunner;
     },
     inheritLocations = false)
 @ContextConfiguration(classes = UuidDataAccessTokenServiceImplTestConfiguration.class)
-@RunWith(SpringRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class UuidDataAccessTokenServiceImplTestFiveTokenLimit {
 
   @Autowired
@@ -108,7 +108,7 @@ public class UuidDataAccessTokenServiceImplTestFiveTokenLimit {
         createdDataAccessToken,
         UuidDataAccessTokenServiceImplTestConfiguration.MOCK_USERNAME_WITH_FIVE_TOKENS,
         expectedExpirationDate)) {
-      Assert.fail(
+      Assertions.fail(
           "Created token (Username: "
               + createdDataAccessToken.getUsername()
               + ", Expiration: "

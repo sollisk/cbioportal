@@ -15,14 +15,14 @@ import org.cbioportal.legacy.model.Sample;
 import org.cbioportal.legacy.service.ClinicalAttributeService;
 import org.cbioportal.legacy.service.ClinicalDataService;
 import org.cbioportal.legacy.service.SampleService;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ClinicalDataEnrichmentUtilTest {
 
   public static final String STUDY_ID1 = "study_id_1";
@@ -144,7 +144,7 @@ public class ClinicalDataEnrichmentUtilTest {
         .thenReturn(new ArrayList<ClinicalDataCountItem>());
 
     // when there is no data
-    Assert.assertTrue(
+    Assertions.assertTrue(
         clinicalDataEnrichmentUtil
             .createEnrichmentsForCategoricalData(attributes, groupedSamples)
             .isEmpty());
@@ -157,14 +157,14 @@ public class ClinicalDataEnrichmentUtilTest {
             Arrays.asList(group1sampleClinicalDataCountItem, group1patientClinicalDataCountItem));
 
     // where there are no attributes with STRING datatype
-    Assert.assertTrue(
+    Assertions.assertTrue(
         clinicalDataEnrichmentUtil
             .createEnrichmentsForCategoricalData(
                 Arrays.asList(attribute3, attribute4), groupedSamples)
             .isEmpty());
 
     // when attributes is empty
-    Assert.assertTrue(
+    Assertions.assertTrue(
         clinicalDataEnrichmentUtil
             .createEnrichmentsForCategoricalData(new ArrayList<ClinicalAttribute>(), groupedSamples)
             .isEmpty());
@@ -173,7 +173,7 @@ public class ClinicalDataEnrichmentUtilTest {
         clinicalDataEnrichmentUtil.createEnrichmentsForCategoricalData(attributes, groupedSamples);
 
     // when there is data for only one group
-    Assert.assertEquals(0, actualClinicalDataEnrichments.size());
+    Assertions.assertEquals(0, actualClinicalDataEnrichments.size());
 
     ClinicalDataCount sampleClinicalDataCount3 = new ClinicalDataCount();
     sampleClinicalDataCount3.setAttributeId(CLINICAL_ATTRIBUTE_ID_1);
@@ -205,10 +205,10 @@ public class ClinicalDataEnrichmentUtilTest {
         clinicalDataEnrichmentUtil.createEnrichmentsForCategoricalData(attributes, groupedSamples);
 
     // when there is data for more than one group
-    Assert.assertEquals(2, actualClinicalDataEnrichments.size());
-    Assert.assertEquals(
+    Assertions.assertEquals(2, actualClinicalDataEnrichments.size());
+    Assertions.assertEquals(
         "0.08208499862670093", actualClinicalDataEnrichments.get(0).getpValue().toString());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         "4.999999999999999", actualClinicalDataEnrichments.get(0).getScore().toString());
     Assert.assertEquals("Chi-squared Test", actualClinicalDataEnrichments.get(0).getMethod());
   }

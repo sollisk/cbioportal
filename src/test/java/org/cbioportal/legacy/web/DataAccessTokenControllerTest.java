@@ -27,11 +27,12 @@ import org.cbioportal.legacy.service.DataAccessTokenService;
 import org.cbioportal.legacy.service.exception.TokenNotFoundException;
 import org.cbioportal.legacy.web.config.DataAccessTokenControllerTestConfig;
 import org.cbioportal.legacy.web.config.TestConfig;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.invocation.InvocationOnMock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -41,7 +42,6 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -51,7 +51,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
     properties = {
       "download_group=PLACEHOLDER_ROLE",
     })
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 @WebMvcTest
 @ContextConfiguration(
     classes = {
@@ -132,7 +132,7 @@ public class DataAccessTokenControllerTest {
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andReturn();
     if (!result.getResponse().getContentAsString().contains(NOT_FOUND_ERROR_MESSAGE)) {
-      Assert.fail(
+      Assertions.fail(
           "Returned response did not contain expected error message. Expected response: '"
               + NOT_FOUND_ERROR_MESSAGE
               + "' Returned response: '"
@@ -170,7 +170,7 @@ public class DataAccessTokenControllerTest {
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andReturn();
     if (!receivedArgument.equals(VALID_TOKEN_STRING)) {
-      Assert.fail(
+      Assertions.fail(
           "Unexpected argument passed to service class. Expected argument: "
               + VALID_TOKEN_STRING
               + " Received argument: "
@@ -202,7 +202,7 @@ public class DataAccessTokenControllerTest {
             .andExpect(MockMvcResultMatchers.status().isNotFound())
             .andReturn();
     if (!result.getResponse().getContentAsString().contains(NOT_FOUND_ERROR_MESSAGE)) {
-      Assert.fail(
+      Assertions.fail(
           "Returned response did not contain expected error message. Expected response: '"
               + NOT_FOUND_ERROR_MESSAGE
               + "' Returned response: '"

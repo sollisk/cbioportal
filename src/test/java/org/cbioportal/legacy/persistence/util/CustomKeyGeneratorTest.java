@@ -5,15 +5,15 @@ import static org.mockito.Mockito.when;
 import java.lang.reflect.Method;
 import org.cbioportal.legacy.persistence.CacheEnabledConfig;
 import org.cbioportal.legacy.persistence.StudyRepository;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class CustomKeyGeneratorTest {
 
   @InjectMocks private CustomKeyGenerator customKeyGenerator;
@@ -33,7 +33,7 @@ public class CustomKeyGeneratorTest {
   @Test
   public void testGenerateCacheDisabled() {
     when(cacheEnabledConfig.isEnabled()).thenReturn(false);
-    Assert.assertEquals("", customKeyGenerator.generate(null, null));
+    Assertions.assertEquals("", customKeyGenerator.generate(null, null));
   }
 
   @Test

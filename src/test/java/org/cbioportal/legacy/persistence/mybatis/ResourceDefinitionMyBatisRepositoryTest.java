@@ -4,14 +4,14 @@ import java.util.List;
 import org.cbioportal.legacy.model.ResourceDefinition;
 import org.cbioportal.legacy.model.ResourceType;
 import org.cbioportal.legacy.persistence.mybatis.config.TestConfig;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {ResourceDefinitionMyBatisRepository.class, TestConfig.class})
 public class ResourceDefinitionMyBatisRepositoryTest {
 

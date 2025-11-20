@@ -24,16 +24,16 @@ import org.cbioportal.legacy.service.MolecularProfileService;
 import org.cbioportal.legacy.service.SampleService;
 import org.cbioportal.legacy.service.exception.MolecularProfileNotFoundException;
 import org.cbioportal.legacy.service.util.ExpressionEnrichmentUtil;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ExpressionEnrichmentServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private ExpressionEnrichmentServiceImpl enrichmentServiceImpl;
@@ -209,9 +209,9 @@ public class ExpressionEnrichmentServiceImplTest extends BaseServiceImplTest {
         enrichmentServiceImpl.getGenomicEnrichments(
             MOLECULAR_PROFILE_ID, molecularProfileCaseSets, EnrichmentType.SAMPLE);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     GenomicEnrichment expressionEnrichment = result.get(0);
-    Assert.assertEquals(ENTREZ_GENE_ID_2, expressionEnrichment.getEntrezGeneId());
+    Assertions.assertEquals(ENTREZ_GENE_ID_2, expressionEnrichment.getEntrezGeneId());
     Assert.assertEquals(HUGO_GENE_SYMBOL_2, expressionEnrichment.getHugoGeneSymbol());
     Assert.assertEquals(null, expressionEnrichment.getCytoband());
     Assert.assertEquals(2, expressionEnrichment.getGroupsStatistics().size());

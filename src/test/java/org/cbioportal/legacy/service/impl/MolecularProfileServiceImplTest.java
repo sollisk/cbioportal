@@ -11,17 +11,17 @@ import org.cbioportal.legacy.service.StudyService;
 import org.cbioportal.legacy.service.exception.MolecularProfileNotFoundException;
 import org.cbioportal.legacy.service.exception.StudyNotFoundException;
 import org.cbioportal.legacy.service.util.MolecularProfileUtil;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private MolecularProfileServiceImpl molecularProfileService;
@@ -51,7 +51,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
         molecularProfileService.getAllMolecularProfiles(
             PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedMolecularProfileList, result);
+    Assertions.assertEquals(expectedMolecularProfileList, result);
   }
 
   @Test
@@ -64,7 +64,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = molecularProfileService.getMetaMolecularProfiles();
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = MolecularProfileNotFoundException.class)
@@ -86,7 +86,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
 
     MolecularProfile result = molecularProfileService.getMolecularProfile(MOLECULAR_PROFILE_ID);
 
-    Assert.assertEquals(expectedMolecularProfile, result);
+    Assertions.assertEquals(expectedMolecularProfile, result);
   }
 
   @Test
@@ -103,7 +103,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
         molecularProfileService.getMolecularProfiles(
             Collections.singleton(MOLECULAR_PROFILE_ID), PROJECTION);
 
-    Assert.assertEquals(expectedMolecularProfiles, result);
+    Assertions.assertEquals(expectedMolecularProfiles, result);
   }
 
   @Test
@@ -120,7 +120,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
         molecularProfileService.getMetaMolecularProfiles(
             Collections.singleton(MOLECULAR_PROFILE_ID));
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
@@ -139,7 +139,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
         molecularProfileService.getAllMolecularProfilesInStudy(
             STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedMolecularProfileList, result);
+    Assertions.assertEquals(expectedMolecularProfileList, result);
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -160,7 +160,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = molecularProfileService.getMetaMolecularProfilesInStudy(STUDY_ID);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test(expected = StudyNotFoundException.class)
@@ -185,7 +185,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
     List<MolecularProfile> result =
         molecularProfileService.getMolecularProfilesInStudies(Arrays.asList(STUDY_ID), PROJECTION);
 
-    Assert.assertEquals(expectedMolecularProfileList, result);
+    Assertions.assertEquals(expectedMolecularProfileList, result);
   }
 
   @Test
@@ -200,7 +200,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
     BaseMeta result =
         molecularProfileService.getMetaMolecularProfilesInStudies(Arrays.asList(STUDY_ID));
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
@@ -217,7 +217,7 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
     List<MolecularProfile> result =
         molecularProfileService.getMolecularProfilesReferredBy(MOLECULAR_PROFILE_ID);
 
-    Assert.assertEquals(expectedMolecularProfileList, result);
+    Assertions.assertEquals(expectedMolecularProfileList, result);
   }
 
   @Test
@@ -234,6 +234,6 @@ public class MolecularProfileServiceImplTest extends BaseServiceImplTest {
     List<MolecularProfile> result =
         molecularProfileService.getMolecularProfilesReferringTo(MOLECULAR_PROFILE_ID);
 
-    Assert.assertEquals(expectedMolecularProfileList, result);
+    Assertions.assertEquals(expectedMolecularProfileList, result);
   }
 }

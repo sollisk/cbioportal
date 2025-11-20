@@ -1,7 +1,7 @@
 package org.cbioportal.legacy.service.impl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -26,13 +26,13 @@ import org.cbioportal.legacy.web.parameter.ClinicalEventRequest;
 import org.cbioportal.legacy.web.parameter.ClinicalEventRequestIdentifier;
 import org.cbioportal.legacy.web.parameter.OccurrencePosition;
 import org.cbioportal.legacy.web.parameter.SurvivalRequest;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
   private static final String TEST_CLINICAL_EVENT_TYPE_1 = "SERVICE";
   private static final String TEST_CLINICAL_EVENT_TYPE_2 = "test_clinical_event_type_2";

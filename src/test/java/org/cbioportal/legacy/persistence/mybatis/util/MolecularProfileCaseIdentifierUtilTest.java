@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class MolecularProfileCaseIdentifierUtilTest {
   @InjectMocks private MolecularProfileCaseIdentifierUtil molecularProfileCaseIdentifierUtil;
 
@@ -26,28 +26,28 @@ public class MolecularProfileCaseIdentifierUtilTest {
     Map<String, Set<String>> result =
         molecularProfileCaseIdentifierUtil.getGroupedCasesByMolecularProfileId(
             new ArrayList<>(), new ArrayList<>());
-    Assert.assertEquals("empty request", 0, result.size());
+    Assertions.assertEquals(0, result.size(),"empty request");
 
     result =
         molecularProfileCaseIdentifierUtil.getGroupedCasesByMolecularProfileId(
             Arrays.asList(MOLECULAR_PROFILE_ID_1), new ArrayList<>());
-    Assert.assertEquals("empty sample ids", 1, result.size());
-    Assert.assertEquals(0, result.get(MOLECULAR_PROFILE_ID_1).size());
+    Assertions.assertEquals(1, result.size(),"empty sample ids");
+    Assertions.assertEquals(0, result.get(MOLECULAR_PROFILE_ID_1).size());
 
     result =
         molecularProfileCaseIdentifierUtil.getGroupedCasesByMolecularProfileId(
             Arrays.asList(MOLECULAR_PROFILE_ID_1, MOLECULAR_PROFILE_ID_1, MOLECULAR_PROFILE_ID_1),
             Arrays.asList(SAMPLE_ID_1, SAMPLE_ID_2, SAMPLE_ID_3));
 
-    Assert.assertEquals("valid - single profile", 1, result.size());
+    Assertions.assertEquals(1, result.size(),"valid - single profile");
 
     result =
         molecularProfileCaseIdentifierUtil.getGroupedCasesByMolecularProfileId(
             Arrays.asList(MOLECULAR_PROFILE_ID_1, MOLECULAR_PROFILE_ID_1, MOLECULAR_PROFILE_ID_2),
             Arrays.asList(SAMPLE_ID_1, SAMPLE_ID_2, SAMPLE_ID_3));
 
-    Assert.assertEquals("valid - multiple profiles", 2, result.size());
-    Assert.assertEquals(2, result.get(MOLECULAR_PROFILE_ID_1).size());
-    Assert.assertEquals(1, result.get(MOLECULAR_PROFILE_ID_2).size());
+    Assertions.assertEquals(2, result.size(),"valid - multiple profiles");
+    Assertions.assertEquals(2, result.get(MOLECULAR_PROFILE_ID_1).size());
+    Assertions.assertEquals(1, result.get(MOLECULAR_PROFILE_ID_2).size());
   }
 }

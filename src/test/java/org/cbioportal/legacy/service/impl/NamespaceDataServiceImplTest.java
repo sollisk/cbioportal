@@ -9,14 +9,14 @@ import org.cbioportal.legacy.model.NamespaceDataCount;
 import org.cbioportal.legacy.model.NamespaceDataCountItem;
 import org.cbioportal.legacy.persistence.NamespaceRepository;
 import org.cbioportal.legacy.web.parameter.NamespaceDataFilter;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class NamespaceDataServiceImplTest extends BaseServiceImplTest {
 
   @InjectMocks private NamespaceDataServiceImpl namespaceDataService;
@@ -48,7 +48,7 @@ public class NamespaceDataServiceImplTest extends BaseServiceImplTest {
             Arrays.asList(SAMPLE_ID1, SAMPLE_ID2, SAMPLE_ID3),
             namespaceDataFilters);
 
-    Assert.assertEquals(expectedNamespaceDataList, result);
+    Assertions.assertEquals(expectedNamespaceDataList, result);
   }
 
   @Test
@@ -76,7 +76,7 @@ public class NamespaceDataServiceImplTest extends BaseServiceImplTest {
             namespaceAttribute,
             Arrays.asList(CATEGORY_VALUE_1));
 
-    Assert.assertEquals(expectedNamespaceDataList, result);
+    Assertions.assertEquals(expectedNamespaceDataList, result);
   }
 
   @Test

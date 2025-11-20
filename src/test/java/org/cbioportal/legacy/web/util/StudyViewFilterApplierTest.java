@@ -59,20 +59,21 @@ import org.cbioportal.legacy.web.parameter.MutationOption;
 import org.cbioportal.legacy.web.parameter.Projection;
 import org.cbioportal.legacy.web.parameter.SampleIdentifier;
 import org.cbioportal.legacy.web.parameter.StudyViewFilter;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.ResourceUtils;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 @ContextConfiguration(classes = TestConfig.class)
 public class StudyViewFilterApplierTest {
 
@@ -522,9 +523,9 @@ public class StudyViewFilterApplierTest {
 
     List<SampleIdentifier> result = studyViewFilterApplier.apply(studyViewFilter);
 
-    Assert.assertEquals(2, result.size());
-    Assert.assertEquals(SAMPLE_ID1, result.get(0).getSampleId());
-    Assert.assertEquals(SAMPLE_ID2, result.get(1).getSampleId());
+    Assertions.assertEquals(2, result.size());
+    Assertions.assertEquals(SAMPLE_ID1, result.get(0).getSampleId());
+    Assertions.assertEquals(SAMPLE_ID2, result.get(1).getSampleId());
   }
 
   @Test
@@ -678,7 +679,7 @@ public class StudyViewFilterApplierTest {
         .thenReturn(clinicalAttributeList);
 
     List<SampleIdentifier> result1 = studyViewFilterApplier.apply(studyViewFilter);
-    Assert.assertEquals(1, result1.size());
+    Assertions.assertEquals(1, result1.size());
 
     DataFilterValue filterValue2 = new DataFilterValue();
     filterValue2.setStart(new BigDecimal("6.66"));
@@ -686,7 +687,7 @@ public class StudyViewFilterApplierTest {
     clinicalDataIntervalFilter1.setValues(Arrays.asList(filterValue1, filterValue2));
 
     List<SampleIdentifier> result2 = studyViewFilterApplier.apply(studyViewFilter);
-    Assert.assertEquals(2, result2.size());
+    Assertions.assertEquals(2, result2.size());
 
     DataFilterValue filterValue3 = new DataFilterValue();
     filterValue3.setStart(new BigDecimal("6.66"));
@@ -694,21 +695,21 @@ public class StudyViewFilterApplierTest {
     clinicalDataIntervalFilter1.setValues(Arrays.asList(filterValue1, filterValue2, filterValue3));
 
     List<SampleIdentifier> result3 = studyViewFilterApplier.apply(studyViewFilter);
-    Assert.assertEquals(2, result3.size());
+    Assertions.assertEquals(2, result3.size());
 
     DataFilterValue filterValue4 = new DataFilterValue();
     filterValue4.setValue("na");
     clinicalDataIntervalFilter1.setValues(Arrays.asList(filterValue3, filterValue4));
 
     List<SampleIdentifier> result4 = studyViewFilterApplier.apply(studyViewFilter);
-    Assert.assertEquals(3, result4.size());
+    Assertions.assertEquals(3, result4.size());
 
     DataFilterValue filterValue5 = new DataFilterValue();
     filterValue5.setValue("something_else");
     clinicalDataIntervalFilter1.setValues(Arrays.asList(filterValue1, filterValue5));
 
     List<SampleIdentifier> result5 = studyViewFilterApplier.apply(studyViewFilter);
-    Assert.assertEquals(2, result5.size());
+    Assertions.assertEquals(2, result5.size());
   }
 
   @Test
@@ -872,7 +873,7 @@ public class StudyViewFilterApplierTest {
     List<SampleIdentifier> result = studyViewFilterApplier.apply(studyViewFilter);
     // Return 4 samples since this is a patient level profile
     // And sample1 sample2 belong to patient1
-    Assert.assertEquals(4, result.size());
+    Assertions.assertEquals(4, result.size());
   }
 
   @Test
@@ -912,7 +913,7 @@ public class StudyViewFilterApplierTest {
 
     List<SampleIdentifier> result = studyViewFilterApplier.apply(studyViewFilter);
 
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
   }
 
   @Test
@@ -949,7 +950,7 @@ public class StudyViewFilterApplierTest {
 
     List<SampleIdentifier> result = studyViewFilterApplier.apply(studyViewFilter);
 
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
   }
 
   @Test
@@ -1076,7 +1077,7 @@ public class StudyViewFilterApplierTest {
 
     List<SampleIdentifier> result1 = studyViewFilterApplier.apply(studyViewFilter);
     // Return 4 samples since four mutations are MUTATED
-    Assert.assertEquals(4, result1.size());
+    Assertions.assertEquals(4, result1.size());
 
     DataFilterValue filterValue2 = new DataFilterValue();
     filterValue2.setValue(MUTATION_TYPE_1);
@@ -1086,7 +1087,7 @@ public class StudyViewFilterApplierTest {
 
     // Return 2 samples since two mutations are MUTATION_TYPE_1
     List<SampleIdentifier> result2 = studyViewFilterApplier.apply(studyViewFilter);
-    Assert.assertEquals(2, result2.size());
+    Assertions.assertEquals(2, result2.size());
   }
 
   private DataFilterValue createDataFilterValue(String value) {

@@ -4,14 +4,14 @@ import java.util.List;
 import org.cbioportal.legacy.model.TypeOfCancer;
 import org.cbioportal.legacy.model.meta.BaseMeta;
 import org.cbioportal.legacy.persistence.mybatis.config.TestConfig;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {CancerTypeMyBatisRepository.class, TestConfig.class})
 public class CancerTypeMyBatisRepositoryTest {
 
@@ -23,9 +23,9 @@ public class CancerTypeMyBatisRepositoryTest {
     List<TypeOfCancer> result =
         cancerTypeMyBatisRepository.getAllCancerTypes("ID", null, null, null, null);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     TypeOfCancer typeOfCancer = result.get(0);
-    Assert.assertEquals("acc", typeOfCancer.getTypeOfCancerId());
+    Assertions.assertEquals("acc", typeOfCancer.getTypeOfCancerId());
   }
 
   @Test
@@ -34,13 +34,13 @@ public class CancerTypeMyBatisRepositoryTest {
     List<TypeOfCancer> result =
         cancerTypeMyBatisRepository.getAllCancerTypes("SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     TypeOfCancer typeOfCancer = result.get(0);
-    Assert.assertEquals("brca", typeOfCancer.getTypeOfCancerId());
-    Assert.assertEquals("Breast Invasive Carcinoma", typeOfCancer.getName());
-    Assert.assertEquals("HotPink", typeOfCancer.getDedicatedColor());
-    Assert.assertEquals("Breast", typeOfCancer.getShortName());
-    Assert.assertEquals("tissue", typeOfCancer.getParent());
+    Assertions.assertEquals("brca", typeOfCancer.getTypeOfCancerId());
+    Assertions.assertEquals("Breast Invasive Carcinoma", typeOfCancer.getName());
+    Assertions.assertEquals("HotPink", typeOfCancer.getDedicatedColor());
+    Assertions.assertEquals("Breast", typeOfCancer.getShortName());
+    Assertions.assertEquals("tissue", typeOfCancer.getParent());
   }
 
   @Test
@@ -49,13 +49,13 @@ public class CancerTypeMyBatisRepositoryTest {
     List<TypeOfCancer> result =
         cancerTypeMyBatisRepository.getAllCancerTypes("DETAILED", null, null, null, null);
 
-    Assert.assertEquals(2, result.size());
+    Assertions.assertEquals(2, result.size());
     TypeOfCancer typeOfCancer = result.get(0);
-    Assert.assertEquals("brca", typeOfCancer.getTypeOfCancerId());
-    Assert.assertEquals("Breast Invasive Carcinoma", typeOfCancer.getName());
-    Assert.assertEquals("HotPink", typeOfCancer.getDedicatedColor());
-    Assert.assertEquals("Breast", typeOfCancer.getShortName());
-    Assert.assertEquals("tissue", typeOfCancer.getParent());
+    Assertions.assertEquals("brca", typeOfCancer.getTypeOfCancerId());
+    Assertions.assertEquals("Breast Invasive Carcinoma", typeOfCancer.getName());
+    Assertions.assertEquals("HotPink", typeOfCancer.getDedicatedColor());
+    Assertions.assertEquals("Breast", typeOfCancer.getShortName());
+    Assertions.assertEquals("tissue", typeOfCancer.getParent());
   }
 
   @Test
@@ -64,7 +64,7 @@ public class CancerTypeMyBatisRepositoryTest {
     List<TypeOfCancer> result =
         cancerTypeMyBatisRepository.getAllCancerTypes("SUMMARY", 1, 0, null, null);
 
-    Assert.assertEquals(1, result.size());
+    Assertions.assertEquals(1, result.size());
   }
 
   @Test
@@ -73,9 +73,9 @@ public class CancerTypeMyBatisRepositoryTest {
     List<TypeOfCancer> result =
         cancerTypeMyBatisRepository.getAllCancerTypes("SUMMARY", null, null, "name", "ASC");
 
-    Assert.assertEquals(2, result.size());
-    Assert.assertEquals("Adrenocortical Carcinoma", result.get(0).getName());
-    Assert.assertEquals("Breast Invasive Carcinoma", result.get(1).getName());
+    Assertions.assertEquals(2, result.size());
+    Assertions.assertEquals("Adrenocortical Carcinoma", result.get(0).getName());
+    Assertions.assertEquals("Breast Invasive Carcinoma", result.get(1).getName());
   }
 
   @Test
@@ -83,7 +83,7 @@ public class CancerTypeMyBatisRepositoryTest {
 
     BaseMeta result = cancerTypeMyBatisRepository.getMetaCancerTypes();
 
-    Assert.assertEquals((Integer) 2, result.getTotalCount());
+    Assertions.assertEquals((Integer) 2, result.getTotalCount());
   }
 
   @Test
@@ -91,7 +91,7 @@ public class CancerTypeMyBatisRepositoryTest {
 
     TypeOfCancer result = cancerTypeMyBatisRepository.getCancerType("invalid_cancer_type");
 
-    Assert.assertNull(result);
+    Assertions.assertNull(result);
   }
 
   @Test
@@ -99,10 +99,10 @@ public class CancerTypeMyBatisRepositoryTest {
 
     TypeOfCancer result = cancerTypeMyBatisRepository.getCancerType("acc");
 
-    Assert.assertEquals("acc", result.getTypeOfCancerId());
-    Assert.assertEquals("Adrenocortical Carcinoma", result.getName());
-    Assert.assertEquals("Purple", result.getDedicatedColor());
-    Assert.assertEquals("ACC", result.getShortName());
-    Assert.assertEquals("adrenal_gland", result.getParent());
+    Assertions.assertEquals("acc", result.getTypeOfCancerId());
+    Assertions.assertEquals("Adrenocortical Carcinoma", result.getName());
+    Assertions.assertEquals("Purple", result.getDedicatedColor());
+    Assertions.assertEquals("ACC", result.getShortName());
+    Assertions.assertEquals("adrenal_gland", result.getParent());
   }
 }

@@ -1,6 +1,6 @@
 package org.cbioportal.legacy.service.util;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -17,7 +17,7 @@ import org.cbioportal.legacy.model.Gistic;
 import org.cbioportal.legacy.model.GisticToGene;
 import org.cbioportal.legacy.model.MolecularProfile;
 import org.cbioportal.legacy.model.MutSig;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class AlterationCountServiceUtilTest {
 
