@@ -55,6 +55,7 @@ import org.cbioportal.legacy.service.exception.InvalidDataAccessTokenException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -81,16 +82,17 @@ public class JwtUtilsTest {
   public void createTokenTest() {
     String token = jwtUtils.createToken(TEST_SUBJECT).getToken();
     if (token.isEmpty()) {
-      Assert.fail("token was empty");
+      Assertions.fail("token was empty");
     }
     if (!token.matches("^\\S+\\.\\S+\\.\\S+$")) {
-      Assert.fail("generated token does not have proper format");
+      Assertions.fail("generated token does not have proper format");
     }
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void createInvalidTokenTest() {
-    String token = jwtUtils.createToken("").getToken();
+    Assertions.assertThrows(IllegalArgumentException.class, () -> 
+        jwtUtils.createToken(""));
   }
 
   @Test
@@ -99,8 +101,8 @@ public class JwtUtilsTest {
     jwtUtils.validate(token); // when token is valid, there will be no exception thrown
   }
 
-  @Test(expected = InvalidDataAccessTokenException.class)
-  public void validateBadSignatureTokenTest() throws InvalidDataAccessTokenException {
+  @Test
+  public void validateBadSignatureTokenTest() {
     String token = jwtUtils.createToken(TEST_SUBJECT).getToken();
     int finalDividerIndex = token.lastIndexOf(".");
     String badSignature = "";
@@ -108,25 +110,26 @@ public class JwtUtilsTest {
       badSignature = badSignature + "A";
     }
     String badSignatureToken = token.substring(0, finalDividerIndex + 1) + badSignature;
-    jwtUtils.validate(badSignatureToken);
+    Assertions.assertThrows(InvalidDataAccessTokenException.class, () -> 
+        jwtUtils.validate(badSignatureToken));
   }
 
-  @Test(expected = InvalidDataAccessTokenException.class)
-  public void validateExpiredTokenTest()
-      throws InvalidDataAccessTokenException, InterruptedException {
+  @Test
+  public void validateExpiredTokenTest() throws InterruptedException {
     String token = jwtUtils.createToken(TEST_SUBJECT).getToken();
     Thread.sleep(
         TEST_TOKEN_EXPIRATION_MILLISECONDS
             + 10L); // NOTE: sleep time must be adequate to allow created token to expire
-    jwtUtils.validate(token);
+    Assertions.assertThrows(InvalidDataAccessTokenException.class, () -> 
+        jwtUtils.validate(token));
   }
 
   @Test
   public void extractSubjectTest() throws InvalidDataAccessTokenException {
     String token = jwtUtils.createToken(TEST_SUBJECT).getToken();
     String extractedSubject = jwtUtils.extractSubject(token);
-    if (extractedSubject.isEmpty() || !extractedSubject.equals(TEST_SUBJECT)) {
-      Assert.fail("extracted subject does not match expected value");
+    if (extractedSubject.isBlank() || !extractedSubject.equals(TEST_SUBJECT)) {
+      Assertions.fail("extracted subject does not match expected value");
     }
   }
 
@@ -141,7 +144,7 @@ public class JwtUtilsTest {
     if (extractedExpirationDate == null
         || timeDifference > TEST_TOKEN_EXPIRATION_MILLISECONDS + 10L
         || timeDifference < 0) {
-      Assert.fail("extracted expiration date is not in the expected range");
+      Assertions.fail("extracted expiration date is not in the expected range");
     }
   }
 
@@ -150,7 +153,7 @@ public class JwtUtilsTest {
     String token = jwtUtils.createToken(TEST_SUBJECT).getToken();
     Map<String, Object> extractedProperties = jwtUtils.extractProperties(token);
     if (extractedProperties == null || extractedProperties.keySet().size() < 3) {
-      Assert.fail("extracted properties is not large enough (at least 3 keys were expected)");
+      Assertions.fail("extracted properties is not large enough (at least 3 keys were expected)");
     }
   }
 }

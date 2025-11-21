@@ -127,7 +127,7 @@ public class TreatmentServiceImplTest {
     List<SampleTreatmentRow> actual =
         treatmentService.getAllSampleTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -146,7 +146,7 @@ public class TreatmentServiceImplTest {
     List<SampleTreatmentRow> actual =
         treatmentService.getAllSampleTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -172,7 +172,7 @@ public class TreatmentServiceImplTest {
     List<SampleTreatmentRow> actual =
         treatmentService.getAllSampleTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -200,7 +200,7 @@ public class TreatmentServiceImplTest {
     List<SampleTreatmentRow> actual =
         treatmentService.getAllSampleTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -244,7 +244,7 @@ public class TreatmentServiceImplTest {
     List<SampleTreatmentRow> actual =
         treatmentService.getAllSampleTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   @Test
@@ -296,7 +296,7 @@ public class TreatmentServiceImplTest {
     List<SampleTreatmentRow> actual =
         treatmentService.getAllSampleTreatmentRows(null, null, ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
+    Assertions.assertEquals(new HashSet<>(expected), new HashSet<>(actual));
   }
 
   private void mockTreatmentsByPatient(Treatment... treatments) {

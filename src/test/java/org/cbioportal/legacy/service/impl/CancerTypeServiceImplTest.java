@@ -22,7 +22,7 @@ public class CancerTypeServiceImplTest extends BaseServiceImplTest {
   @Mock private CancerTypeRepository cancerTypeRepository;
 
   @Test
-  public void getAllCancerTypes() throws Exception {
+  public void getAllCancerTypes() {
 
     List<TypeOfCancer> expectedTypeOfCancerList = new ArrayList<>();
     TypeOfCancer typeOfCancer = new TypeOfCancer();
@@ -36,11 +36,11 @@ public class CancerTypeServiceImplTest extends BaseServiceImplTest {
     List<TypeOfCancer> result =
         cancerTypeService.getAllCancerTypes(PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedTypeOfCancerList, result);
+    Assertions.assertEquals(expectedTypeOfCancerList, result);
   }
 
   @Test
-  public void getMetaCancerTypes() throws Exception {
+  public void getMetaCancerTypes() {
 
     BaseMeta expectedBaseMeta = new BaseMeta();
 
@@ -48,15 +48,16 @@ public class CancerTypeServiceImplTest extends BaseServiceImplTest {
 
     BaseMeta result = cancerTypeService.getMetaCancerTypes();
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = CancerTypeNotFoundException.class)
-  public void getCancerTypeNotFound() throws Exception {
+  @Test
+  public void getCancerTypeNotFound() {
 
     Mockito.when(cancerTypeRepository.getCancerType(CANCER_TYPE_ID)).thenReturn(null);
 
-    cancerTypeService.getCancerType(CANCER_TYPE_ID);
+    Assertions.assertThrows(CancerTypeNotFoundException.class, () -> 
+        cancerTypeService.getCancerType(CANCER_TYPE_ID));
   }
 
   @Test
@@ -69,6 +70,6 @@ public class CancerTypeServiceImplTest extends BaseServiceImplTest {
 
     TypeOfCancer result = cancerTypeService.getCancerType(CANCER_TYPE_ID);
 
-    Assert.assertEquals(expectedTypeOfCancer, result);
+    Assertions.assertEquals(expectedTypeOfCancer, result);
   }
 }

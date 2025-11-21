@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.OngoingStubbing;
 
 @ExtendWith(MockitoExtension.class)
 public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
@@ -43,13 +44,14 @@ public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedCopyNumberSegList, result);
   }
 
-  @Test(expected = SampleNotFoundException.class)
+  @Test
   public void getCopyNumberSegmentsInSampleInStudySampleNotFound() throws Exception {
 
     Mockito.when(sampleService.getSampleInStudy(STUDY_ID, SAMPLE_ID1))
         .thenThrow(new SampleNotFoundException(STUDY_ID, SAMPLE_ID1));
-    copyNumberSegmentService.getCopyNumberSegmentsInSampleInStudy(
-        STUDY_ID, SAMPLE_ID1, null, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
+    Assertions.assertThrows(SampleNotFoundException.class, () -> 
+        copyNumberSegmentService.getCopyNumberSegmentsInSampleInStudy(
+            STUDY_ID, SAMPLE_ID1, null, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION));
   }
 
   @Test
@@ -69,50 +71,51 @@ public class CopyNumberSegmentServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = SampleNotFoundException.class)
+  @Test
   public void getMetaCopyNumberSegmentsInSampleInStudySampleNotFound() throws Exception {
 
     Mockito.when(sampleService.getSampleInStudy(STUDY_ID, SAMPLE_ID1))
         .thenThrow(new SampleNotFoundException(STUDY_ID, SAMPLE_ID1));
-    copyNumberSegmentService.getMetaCopyNumberSegmentsInSampleInStudy(STUDY_ID, SAMPLE_ID1, null);
+    Assertions.assertThrows(SampleNotFoundException.class, () -> 
+        copyNumberSegmentService.getMetaCopyNumberSegmentsInSampleInStudy(STUDY_ID, SAMPLE_ID1, null));
   }
 
   @Test
-  public void fetchCopyNumberSegments() throws Exception {
+  public void fetchCopyNumberSegments() {
 
     List<CopyNumberSeg> expectedCopyNumberSegList = new ArrayList<>();
     CopyNumberSeg copyNumberSeg = new CopyNumberSeg();
     expectedCopyNumberSegList.add(copyNumberSeg);
 
-    Mockito.when(
-            copyNumberSegmentRepository.fetchCopyNumberSegments(
-                Arrays.asList(STUDY_ID), Arrays.asList(PATIENT_ID_1), null, PROJECTION))
-        .thenReturn(expectedCopyNumberSegList);
+      OngoingStubbing<List<CopyNumberSeg>> listOngoingStubbing = Mockito.when(
+              copyNumberSegmentRepository.fetchCopyNumberSegments(
+                  List.of(STUDY_ID), List.of(PATIENT_ID_1), null, PROJECTION))
+          .thenReturn(expectedCopyNumberSegList);
 
-    List<CopyNumberSeg> result =
+      List<CopyNumberSeg> result =
         copyNumberSegmentService.fetchCopyNumberSegments(
-            Arrays.asList(STUDY_ID), Arrays.asList(PATIENT_ID_1), null, PROJECTION);
+            List.of(STUDY_ID), List.of(PATIENT_ID_1), null, PROJECTION);
 
     Assertions.assertEquals(expectedCopyNumberSegList, result);
   }
 
   @Test
-  public void fetchMetaCopyNumberSegments() throws Exception {
+  public void fetchMetaCopyNumberSegments() {
 
     BaseMeta expectedBaseMeta = new BaseMeta();
     Mockito.when(
             copyNumberSegmentRepository.fetchMetaCopyNumberSegments(
-                Arrays.asList(STUDY_ID), Arrays.asList(PATIENT_ID_1), null))
+                List.of(STUDY_ID), List.of(PATIENT_ID_1), null))
         .thenReturn(expectedBaseMeta);
     BaseMeta result =
         copyNumberSegmentService.fetchMetaCopyNumberSegments(
-            Arrays.asList(STUDY_ID), Arrays.asList(PATIENT_ID_1), null);
+            List.of(STUDY_ID), List.of(PATIENT_ID_1), null);
 
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
-  public void getCopyNumberSegmentsBySampleListId() throws Exception {
+  public void getCopyNumberSegmentsBySampleListId()  {
 
     List<CopyNumberSeg> expectedCopyNumberSegList = new ArrayList<>();
     CopyNumberSeg copyNumberSeg = new CopyNumberSeg();

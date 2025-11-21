@@ -26,6 +26,7 @@ import org.cbioportal.legacy.web.parameter.ClinicalEventRequest;
 import org.cbioportal.legacy.web.parameter.ClinicalEventRequestIdentifier;
 import org.cbioportal.legacy.web.parameter.OccurrencePosition;
 import org.cbioportal.legacy.web.parameter.SurvivalRequest;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -61,7 +62,7 @@ public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
     clinicalEventData.setClinicalEventId(CLINICAL_EVENT_ID);
     expectedClinicalEventDataList.add(clinicalEventData);
 
-    when(clinicalEventRepository.getDataOfClinicalEvents(Arrays.asList(CLINICAL_EVENT_ID)))
+    when(clinicalEventRepository.getDataOfClinicalEvents(List.of(CLINICAL_EVENT_ID)))
         .thenReturn(expectedClinicalEventDataList);
 
     List<ClinicalEvent> result =
@@ -69,18 +70,19 @@ public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
             STUDY_ID, PATIENT_ID_1, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
     assertEquals(1, result.size());
-    assertEquals(clinicalEvent, result.get(0));
-    assertEquals(1, result.get(0).getAttributes().size());
-    assertEquals(clinicalEventData, result.get(0).getAttributes().get(0));
+    assertEquals(clinicalEvent, result.getFirst());
+    assertEquals(1, result.getFirst().getAttributes().size());
+    assertEquals(clinicalEventData, result.getFirst().getAttributes().getFirst());
   }
 
-  @Test(expected = PatientNotFoundException.class)
+  @Test
   public void getAllClinicalEventsOfPatientInStudyPatientNotFound() throws Exception {
 
     when(patientService.getPatientInStudy(STUDY_ID, PATIENT_ID_1))
         .thenThrow(new PatientNotFoundException(STUDY_ID, PATIENT_ID_1));
-    clinicalEventService.getAllClinicalEventsOfPatientInStudy(
-        STUDY_ID, PATIENT_ID_1, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
+    Assertions.assertThrows(PatientNotFoundException.class, () -> 
+        clinicalEventService.getAllClinicalEventsOfPatientInStudy(
+        STUDY_ID, PATIENT_ID_1, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION));
   }
 
   @Test
@@ -94,12 +96,13 @@ public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
     assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = PatientNotFoundException.class)
+  @Test
   public void getMetaPatientClinicalEventsPatientNotFound() throws Exception {
 
     when(patientService.getPatientInStudy(STUDY_ID, PATIENT_ID_1))
         .thenThrow(new PatientNotFoundException(STUDY_ID, PATIENT_ID_1));
-    clinicalEventService.getMetaPatientClinicalEvents(STUDY_ID, PATIENT_ID_1);
+    Assertions.assertThrows(PatientNotFoundException.class, () -> 
+        clinicalEventService.getMetaPatientClinicalEvents(STUDY_ID, PATIENT_ID_1));
   }
 
   @Test
@@ -119,7 +122,7 @@ public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
     clinicalEventData.setClinicalEventId(CLINICAL_EVENT_ID);
     expectedClinicalEventDataList.add(clinicalEventData);
 
-    when(clinicalEventRepository.getDataOfClinicalEvents(Arrays.asList(CLINICAL_EVENT_ID)))
+    when(clinicalEventRepository.getDataOfClinicalEvents(List.of(CLINICAL_EVENT_ID)))
         .thenReturn(expectedClinicalEventDataList);
 
     List<ClinicalEvent> result =
@@ -127,9 +130,9 @@ public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
             STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
     assertEquals(1, result.size());
-    assertEquals(clinicalEvent, result.get(0));
-    assertEquals(1, result.get(0).getAttributes().size());
-    assertEquals(clinicalEventData, result.get(0).getAttributes().get(0));
+    assertEquals(clinicalEvent, result.getFirst());
+    assertEquals(1, result.getFirst().getAttributes().size());
+    assertEquals(clinicalEventData, result.getFirst().getAttributes().getFirst());
   }
 
   @Test
@@ -144,8 +147,8 @@ public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
 
   @Test
   public void getPatientsSamplesPerClinicalEventType() {
-    List<String> studyIds = Arrays.asList(STUDY_ID);
-    List<String> sampleIds = Arrays.asList(SAMPLE_ID1);
+    List<String> studyIds = List.of(STUDY_ID);
+    List<String> sampleIds = List.of(SAMPLE_ID1);
 
     Map<String, Set<String>> patientsSamplesPerEventType = new HashMap<>();
     patientsSamplesPerEventType.put(TEST_CLINICAL_EVENT_TYPE_1, new HashSet<>(sampleIds));
@@ -160,8 +163,8 @@ public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
 
   @Test
   public void getClinicalEventTypeCounts() {
-    List<String> studyIds = Arrays.asList(STUDY_ID);
-    List<String> sampleIds = Arrays.asList(SAMPLE_ID1);
+    List<String> studyIds = List.of(STUDY_ID);
+    List<String> sampleIds = List.of(SAMPLE_ID1);
 
     Patient p = new Patient();
     p.setCancerStudyIdentifier(STUDY_ID);
@@ -170,14 +173,14 @@ public class ClinicalEventServiceImplTest extends BaseServiceImplTest {
     ClinicalEvent ce = new ClinicalEvent();
     ce.setEventType(TEST_CLINICAL_EVENT_TYPE_1);
 
-    when(patientService.getPatientsOfSamples(anyList(), anyList())).thenReturn(Arrays.asList(p));
+    when(patientService.getPatientsOfSamples(anyList(), anyList())).thenReturn(List.of(p));
     when(clinicalEventRepository.getPatientsDistinctClinicalEventInStudies(anyList(), anyList()))
-        .thenReturn(Arrays.asList(ce));
+        .thenReturn(List.of(ce));
 
     List<ClinicalEventTypeCount> eventTypeCounts =
         clinicalEventService.getClinicalEventTypeCounts(studyIds, sampleIds);
     assertEquals(1, eventTypeCounts.size());
-    int eventTypeCount = eventTypeCounts.get(0).getCount();
+    int eventTypeCount = eventTypeCounts.getFirst().getCount();
     assertEquals(1, eventTypeCount);
   }
 

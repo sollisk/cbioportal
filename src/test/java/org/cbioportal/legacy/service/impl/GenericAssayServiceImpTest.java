@@ -19,6 +19,7 @@ import org.cbioportal.legacy.service.SampleService;
 import org.cbioportal.legacy.service.exception.GenericAssayNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -67,7 +68,7 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
    * @throws Exception
    * @throws DaoException
    */
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
 
     MolecularProfileSamples molecularProfileSamples1 = new MolecularProfileSamples();
@@ -108,7 +109,7 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
     sample.setStableId(SAMPLE_ID1);
     sampleList1.add(sample);
     Mockito.when(
-            sampleService.fetchSamples(Arrays.asList(STUDY_ID), Arrays.asList(SAMPLE_ID1), "ID"))
+            sampleService.fetchSamples(List.of(STUDY_ID), List.of(SAMPLE_ID1), "ID"))
         .thenReturn(sampleList1);
     List<Sample> sampleListAll = new ArrayList<>(sampleList1);
     sample = new Sample();
@@ -118,7 +119,7 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
     sampleListAll.add(sample);
     Mockito.when(
             sampleService.fetchSamples(
-                Arrays.asList(STUDY_ID), Arrays.asList(SAMPLE_ID1, SAMPLE_ID2), "ID"))
+                List.of(STUDY_ID), Arrays.asList(SAMPLE_ID1, SAMPLE_ID2), "ID"))
         .thenReturn(sampleListAll);
     Mockito.when(
             sampleService.fetchSamples(
@@ -134,7 +135,7 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
     geneticProfile2.setCancerStudyIdentifier(STUDY_ID);
     geneticProfile2.setStableId(MOLECULAR_PROFILE_ID_2);
     geneticProfile2.setMolecularAlterationType(MolecularAlterationType.GENERIC_ASSAY);
-    List<MolecularProfile> geneticProfiles = new ArrayList<MolecularProfile>();
+    List<MolecularProfile> geneticProfiles = new ArrayList<>();
     geneticProfiles.add(geneticProfile1);
     geneticProfiles.add(geneticProfile2);
 
@@ -143,7 +144,7 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
     Mockito.when(
             geneticProfileService.getMolecularProfiles(
                 Collections.singleton(MOLECULAR_PROFILE_ID_1), "SUMMARY"))
-        .thenReturn(Arrays.asList(geneticProfile1));
+        .thenReturn(List.of(geneticProfile1));
     Mockito.when(
             geneticProfileService.getMolecularProfiles(
                 Stream.of(MOLECULAR_PROFILE_ID_1, MOLECULAR_PROFILE_ID_2)
@@ -183,9 +184,7 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
 
     genericAssayMolecularAlterationList2.add(genericAssayMolecularAlteration1);
     genericAssayMolecularAlterationList2.add(genericAssayMolecularAlteration2);
-
-    List<Integer> entrezGeneIds = new ArrayList<>();
-    entrezGeneIds.add(ENTREZ_GENE_ID_1);
+    
     Mockito.when(
             geneticDataRepository.getGenericAssayMolecularAlterations(
                 MOLECULAR_PROFILE_ID_1, Arrays.asList(STABLE_ID_1, STABLE_ID_2), "SUMMARY"))
@@ -223,26 +222,26 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
     //         generic assay1 value: 0.499
     //         generic assay2 value: -0.509
     Assertions.assertEquals(8, result.size());
-    GenericAssayData item1 = result.get(0);
-    Assertions.assertEquals(item1.getSampleId(), SAMPLE_ID1);
-    Assertions.assertEquals(item1.getStableId(), STABLE_ID_1);
-    Assertions.assertEquals(item1.getValue(), "0.2");
-    Assert.assertEquals(item1.getMolecularProfileId(), MOLECULAR_PROFILE_ID_1);
+    GenericAssayData item1 = result.getFirst();
+    Assertions.assertEquals(SAMPLE_ID1, item1.getSampleId());
+    Assertions.assertEquals(STABLE_ID_1, item1.getStableId());
+    Assertions.assertEquals("0.2", item1.getValue());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID_1, item1.getMolecularProfileId());
     GenericAssayData item2 = result.get(1);
-    Assert.assertEquals(item2.getSampleId(), SAMPLE_ID1);
-    Assert.assertEquals(item2.getStableId(), STABLE_ID_2);
-    Assert.assertEquals(item2.getValue(), "0.89");
-    Assert.assertEquals(item2.getMolecularProfileId(), MOLECULAR_PROFILE_ID_1);
+    Assertions.assertEquals(SAMPLE_ID1, item2.getSampleId());
+    Assertions.assertEquals(STABLE_ID_2, item2.getStableId());
+    Assertions.assertEquals("0.89", item2.getValue());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID_1, item2.getMolecularProfileId());
     GenericAssayData item7 = result.get(6);
-    Assert.assertEquals(item7.getSampleId(), SAMPLE_ID2);
-    Assert.assertEquals(item7.getStableId(), STABLE_ID_1);
-    Assert.assertEquals(item7.getValue(), "0.499");
-    Assert.assertEquals(item7.getMolecularProfileId(), MOLECULAR_PROFILE_ID_2);
+    Assertions.assertEquals(SAMPLE_ID2, item7.getSampleId());
+    Assertions.assertEquals(STABLE_ID_1, item7.getStableId());
+    Assertions.assertEquals("0.499", item7.getValue());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID_2, item7.getMolecularProfileId());
     GenericAssayData item8 = result.get(7);
-    Assert.assertEquals(item8.getSampleId(), SAMPLE_ID2);
-    Assert.assertEquals(item8.getStableId(), STABLE_ID_2);
-    Assert.assertEquals(item8.getValue(), "-0.509");
-    Assert.assertEquals(item8.getMolecularProfileId(), MOLECULAR_PROFILE_ID_2);
+    Assertions.assertEquals(SAMPLE_ID2, item8.getSampleId());
+    Assertions.assertEquals(STABLE_ID_2, item8.getStableId());
+    Assertions.assertEquals("-0.509", item8.getValue());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID_2, item8.getMolecularProfileId());
   }
 
   @Test
@@ -262,36 +261,36 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
     // SAMPLE_2:
     //   generic assay1 value: 0.499
     //   generic assay2 value: -0.509
-    Assert.assertEquals(4, result.size());
-    GenericAssayData item1 = result.get(0);
-    Assert.assertEquals(item1.getSampleId(), SAMPLE_ID1);
-    Assert.assertEquals(item1.getStableId(), STABLE_ID_1);
-    Assert.assertEquals(item1.getValue(), "0.2");
-    Assert.assertEquals(item1.getMolecularProfileId(), MOLECULAR_PROFILE_ID_1);
+    Assertions.assertEquals(4, result.size());
+    GenericAssayData item1 = result.getFirst();
+    Assertions.assertEquals(SAMPLE_ID1, item1.getSampleId());
+    Assertions.assertEquals(STABLE_ID_1, item1.getStableId());
+    Assertions.assertEquals("0.2", item1.getValue());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID_1, item1.getMolecularProfileId());
     GenericAssayData item2 = result.get(1);
-    Assert.assertEquals(item2.getSampleId(), SAMPLE_ID1);
-    Assert.assertEquals(item2.getStableId(), STABLE_ID_2);
-    Assert.assertEquals(item2.getValue(), "0.89");
-    Assert.assertEquals(item2.getMolecularProfileId(), MOLECULAR_PROFILE_ID_1);
+    Assertions.assertEquals(SAMPLE_ID1, item2.getSampleId());
+    Assertions.assertEquals(STABLE_ID_2, item2.getStableId());
+    Assertions.assertEquals("0.89", item2.getValue());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID_1, item2.getMolecularProfileId());
     GenericAssayData item4 = result.get(3);
-    Assert.assertEquals(item4.getSampleId(), SAMPLE_ID2);
-    Assert.assertEquals(item4.getStableId(), STABLE_ID_2);
-    Assert.assertEquals(item4.getValue(), "-0.509");
-    Assert.assertEquals(item4.getMolecularProfileId(), MOLECULAR_PROFILE_ID_1);
+    Assertions.assertEquals(SAMPLE_ID2, item4.getSampleId());
+    Assertions.assertEquals(STABLE_ID_2, item4.getStableId());
+    Assertions.assertEquals("-0.509", item4.getValue());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID_1, item4.getMolecularProfileId());
 
     // check when selecting only 1 sample:
     result =
         genericAssayService.fetchGenericAssayData(
             MOLECULAR_PROFILE_ID_1,
-            Arrays.asList(SAMPLE_ID1),
+            List.of(SAMPLE_ID1),
             Arrays.asList(STABLE_ID_1, STABLE_ID_2),
             PersistenceConstants.SUMMARY_PROJECTION);
-    Assert.assertEquals(2, result.size());
-    item1 = result.get(0);
-    Assert.assertEquals(item1.getSampleId(), SAMPLE_ID1);
-    Assert.assertEquals(item1.getStableId(), STABLE_ID_1);
-    Assert.assertEquals(item1.getValue(), "0.2");
-    Assert.assertEquals(item1.getMolecularProfileId(), MOLECULAR_PROFILE_ID_1);
+    Assertions.assertEquals(2, result.size());
+    item1 = result.getFirst();
+    Assertions.assertEquals(SAMPLE_ID1, item1.getSampleId());
+    Assertions.assertEquals(STABLE_ID_1, item1.getStableId());
+    Assertions.assertEquals("0.2", item1.getValue());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID_1, item1.getMolecularProfileId());
   }
 
   @Test
@@ -310,15 +309,15 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
             idList, PROFILE_ID_LIST, PersistenceConstants.SUMMARY_PROJECTION);
     GenericAssayMeta meta1 = result.get(0);
     GenericAssayMeta meta2 = result.get(1);
-    Assert.assertEquals(mockGenericAssayMetaList.get(0).getEntityType(), meta1.getEntityType());
-    Assert.assertEquals(mockGenericAssayMetaList.get(0).getStableId(), meta1.getStableId());
-    Assert.assertEquals(
+    Assertions.assertEquals(mockGenericAssayMetaList.getFirst().getEntityType(), meta1.getEntityType());
+    Assertions.assertEquals(mockGenericAssayMetaList.get(0).getStableId(), meta1.getStableId());
+    Assertions.assertEquals(
         mockGenericAssayMetaList.get(0).getGenericEntityMetaProperties(),
         meta1.getGenericEntityMetaProperties());
 
-    Assert.assertEquals(mockGenericAssayMetaList.get(1).getEntityType(), meta2.getEntityType());
-    Assert.assertEquals(mockGenericAssayMetaList.get(1).getStableId(), meta2.getStableId());
-    Assert.assertEquals(
+    Assertions.assertEquals(mockGenericAssayMetaList.get(1).getEntityType(), meta2.getEntityType());
+    Assertions.assertEquals(mockGenericAssayMetaList.get(1).getStableId(), meta2.getStableId());
+    Assertions.assertEquals(
         mockGenericAssayMetaList.get(1).getGenericEntityMetaProperties(),
         meta2.getGenericEntityMetaProperties());
   }
@@ -328,13 +327,13 @@ public class GenericAssayServiceImpTest extends BaseServiceImplTest {
     List<GenericAssayMeta> genericAssayMetaList = new ArrayList<>();
 
     GenericAssayMeta meta1 = new GenericAssayMeta(GENERIC_ASSAY_ID_1, ENTITY_TYPE);
-    HashMap<String, String> map1 = new HashMap<String, String>();
+    HashMap<String, String> map1 = new HashMap<>();
     map1.put(PROPERTY_NAME_1, PROPERTY_VALUE_1);
     meta1.setGenericEntityMetaProperties(map1);
     genericAssayMetaList.add(meta1);
 
     GenericAssayMeta meta2 = new GenericAssayMeta(GENERIC_ASSAY_ID_2, ENTITY_TYPE);
-    HashMap<String, String> map2 = new HashMap<String, String>();
+    HashMap<String, String> map2 = new HashMap<>();
     map2.put(PROPERTY_NAME_2, PROPERTY_VALUE_2);
     meta2.setGenericEntityMetaProperties(map2);
     genericAssayMetaList.add(meta2);

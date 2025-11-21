@@ -50,7 +50,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -448,21 +447,21 @@ public class StructuralVariantControllerTest {
             Mockito.anyList(), Mockito.anyList(), Mockito.any(), structVarIdCaptor.capture());
 
     List<StructuralVariantQuery> capturedStructVarIds = structVarIdCaptor.getValue();
-    Assertions.assertEquals(capturedStructVarIds.size(), 2);
+    Assertions.assertEquals(2, capturedStructVarIds.size());
 
     Assertions.assertEquals(
-        capturedStructVarIds.get(0).getGene1().getSpecialValue(),
-        StructuralVariantSpecialValue.ANY_GENE);
-    Assertions.assertNull(capturedStructVarIds.get(0).getGene1().getEntrezId());
-    Assertions.assertEquals(capturedStructVarIds.get(0).getGene2().getEntrezId(), (Integer) 2);
+        StructuralVariantSpecialValue.ANY_GENE,
+        capturedStructVarIds.getFirst().getGene1().getSpecialValue());
+    Assertions.assertNull(capturedStructVarIds.getFirst().getGene1().getEntrezId());
+    Assertions.assertEquals((Integer) 2, capturedStructVarIds.get(0).getGene2().getEntrezId());
     Assertions.assertNull(capturedStructVarIds.get(0).getGene2().getSpecialValue());
 
-    Assert.assertNull(capturedStructVarIds.get(1).getGene1().getSpecialValue());
-    Assert.assertEquals(capturedStructVarIds.get(1).getGene1().getEntrezId(), (Integer) 1);
-    Assert.assertNull(capturedStructVarIds.get(1).getGene2().getEntrezId());
-    Assert.assertEquals(
-        capturedStructVarIds.get(1).getGene2().getSpecialValue(),
-        StructuralVariantSpecialValue.NO_GENE);
+    Assertions.assertNull(capturedStructVarIds.get(1).getGene1().getSpecialValue());
+    Assertions.assertEquals((Integer) 1, capturedStructVarIds.get(1).getGene1().getEntrezId());
+    Assertions.assertNull(capturedStructVarIds.get(1).getGene2().getEntrezId());
+    Assertions.assertEquals(
+        StructuralVariantSpecialValue.NO_GENE,
+        capturedStructVarIds.get(1).getGene2().getSpecialValue());
   }
 
   @Test

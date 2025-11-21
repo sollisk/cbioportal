@@ -31,7 +31,7 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
   @Spy @InjectMocks private MolecularProfileUtil molecularProfileUtil;
 
   @Test
-  public void getAllGenePanelsSummaryProjection() throws Exception {
+  public void getAllGenePanelsSummaryProjection() {
 
     List<GenePanel> expectedGenePanelList = new ArrayList<>();
 
@@ -47,7 +47,7 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
   }
 
   @Test
-  public void getAllGenePanelsDetailedProjection() throws Exception {
+  public void getAllGenePanelsDetailedProjection() {
 
     List<GenePanel> expectedGenePanelList = new ArrayList<>();
     GenePanel genePanel = new GenePanel();
@@ -63,7 +63,7 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
                 "DETAILED", PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION))
         .thenReturn(expectedGenePanelList);
 
-    Mockito.when(genePanelRepository.getGenesOfPanels(Arrays.asList(GENE_PANEL_ID)))
+    Mockito.when(genePanelRepository.getGenesOfPanels(List.of(GENE_PANEL_ID)))
         .thenReturn(expectedGenePanelToGeneList);
 
     List<GenePanel> result =
@@ -71,13 +71,13 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
 
     Assertions.assertEquals(expectedGenePanelList, result);
     Assertions.assertEquals(1, result.size());
-    Assertions.assertEquals(genePanel, result.get(0));
-    Assertions.assertEquals(1, result.get(0).getGenes().size());
-    Assertions.assertEquals(genePanelToGene, result.get(0).getGenes().get(0));
+    Assertions.assertEquals(genePanel, result.getFirst());
+    Assertions.assertEquals(1, result.getFirst().getGenes().size());
+    Assertions.assertEquals(genePanelToGene, result.getFirst().getGenes().getFirst());
   }
 
   @Test
-  public void getMetaGenePanels() throws Exception {
+  public void getMetaGenePanels() {
 
     BaseMeta expectedBaseMeta = new BaseMeta();
 
@@ -88,12 +88,13 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = GenePanelNotFoundException.class)
-  public void getGenePanelNotFound() throws Exception {
+  @Test
+  public void getGenePanelNotFound() {
 
     Mockito.when(genePanelRepository.getGenePanel(GENE_PANEL_ID)).thenReturn(null);
 
-    genePanelService.getGenePanel(GENE_PANEL_ID);
+    Assertions.assertThrows(GenePanelNotFoundException.class, () -> 
+        genePanelService.getGenePanel(GENE_PANEL_ID));
   }
 
   @Test
@@ -108,14 +109,14 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
 
     Mockito.when(genePanelRepository.getGenePanel(GENE_PANEL_ID)).thenReturn(genePanel);
 
-    Mockito.when(genePanelRepository.getGenesOfPanels(Arrays.asList(GENE_PANEL_ID)))
+    Mockito.when(genePanelRepository.getGenesOfPanels(List.of(GENE_PANEL_ID)))
         .thenReturn(expectedGenePanelToGeneList);
 
     GenePanel result = genePanelService.getGenePanel(GENE_PANEL_ID);
 
-    Assert.assertEquals(genePanel, result);
-    Assert.assertEquals(1, result.getGenes().size());
-    Assert.assertEquals(genePanelToGene, result.getGenes().get(0));
+    Assertions.assertEquals(genePanel, result);
+    Assertions.assertEquals(1, result.getGenes().size());
+    Assertions.assertEquals(genePanelToGene, result.getGenes().getFirst());
   }
 
   @Test
@@ -155,21 +156,21 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
     List<GenePanelData> result =
         genePanelService.getGenePanelData(MOLECULAR_PROFILE_ID, SAMPLE_LIST_ID);
 
-    Assert.assertEquals(2, result.size());
-    GenePanelData resultGenePanelData1 = result.get(0);
-    Assert.assertEquals(SAMPLE_ID1, resultGenePanelData1.getSampleId());
-    Assert.assertEquals(GENE_PANEL_ID, resultGenePanelData1.getGenePanelId());
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData1.getMolecularProfileId());
-    Assert.assertEquals(PATIENT_ID_1, resultGenePanelData1.getPatientId());
-    Assert.assertEquals(STUDY_ID, resultGenePanelData1.getStudyId());
-    Assert.assertEquals(true, resultGenePanelData1.getProfiled());
+    Assertions.assertEquals(2, result.size());
+    GenePanelData resultGenePanelData1 = result.getFirst();
+    Assertions.assertEquals(SAMPLE_ID1, resultGenePanelData1.getSampleId());
+    Assertions.assertEquals(GENE_PANEL_ID, resultGenePanelData1.getGenePanelId());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData1.getMolecularProfileId());
+    Assertions.assertEquals(PATIENT_ID_1, resultGenePanelData1.getPatientId());
+    Assertions.assertEquals(STUDY_ID, resultGenePanelData1.getStudyId());
+    Assertions.assertEquals(true, resultGenePanelData1.getProfiled());
     GenePanelData resultGenePanelData2 = result.get(1);
-    Assert.assertEquals(SAMPLE_ID2, resultGenePanelData2.getSampleId());
-    Assert.assertNull(resultGenePanelData2.getGenePanelId());
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData2.getMolecularProfileId());
-    Assert.assertEquals(PATIENT_ID_2, resultGenePanelData2.getPatientId());
-    Assert.assertEquals(STUDY_ID, resultGenePanelData2.getStudyId());
-    Assert.assertEquals(false, resultGenePanelData2.getProfiled());
+    Assertions.assertEquals(SAMPLE_ID2, resultGenePanelData2.getSampleId());
+    Assertions.assertNull(resultGenePanelData2.getGenePanelId());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData2.getMolecularProfileId());
+    Assertions.assertEquals(PATIENT_ID_2, resultGenePanelData2.getPatientId());
+    Assertions.assertEquals(STUDY_ID, resultGenePanelData2.getStudyId());
+    Assertions.assertEquals(false, resultGenePanelData2.getProfiled());
   }
 
   @Test
@@ -187,7 +188,7 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
     List<GenePanelData> result =
         genePanelService.getGenePanelData(MOLECULAR_PROFILE_ID, SAMPLE_LIST_ID);
 
-    Assert.assertEquals(0, result.size());
+    Assertions.assertEquals(0, result.size());
   }
 
   @Test
@@ -212,7 +213,7 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
     Mockito.when(
             molecularProfileService.getMolecularProfiles(
                 Collections.singleton(MOLECULAR_PROFILE_ID), "SUMMARY"))
-        .thenReturn(Arrays.asList(molecularProfile));
+        .thenReturn(List.of(molecularProfile));
 
     Mockito.when(genePanelRepository.fetchGenePanelDataByMolecularProfileId(MOLECULAR_PROFILE_ID))
         .thenReturn(genePanelDataList);
@@ -221,18 +222,18 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
         genePanelService.fetchGenePanelData(
             MOLECULAR_PROFILE_ID, Arrays.asList(SAMPLE_ID1, SAMPLE_ID2));
 
-    Assert.assertEquals(1, result.size());
-    GenePanelData resultGenePanelData1 = result.get(0);
-    Assert.assertEquals(SAMPLE_ID1, resultGenePanelData1.getSampleId());
-    Assert.assertEquals(GENE_PANEL_ID, resultGenePanelData1.getGenePanelId());
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData1.getMolecularProfileId());
-    Assert.assertEquals(PATIENT_ID_1, resultGenePanelData1.getPatientId());
-    Assert.assertEquals(STUDY_ID, resultGenePanelData1.getStudyId());
-    Assert.assertEquals(true, resultGenePanelData1.getProfiled());
+    Assertions.assertEquals(1, result.size());
+    GenePanelData resultGenePanelData1 = result.getFirst();
+    Assertions.assertEquals(SAMPLE_ID1, resultGenePanelData1.getSampleId());
+    Assertions.assertEquals(GENE_PANEL_ID, resultGenePanelData1.getGenePanelId());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData1.getMolecularProfileId());
+    Assertions.assertEquals(PATIENT_ID_1, resultGenePanelData1.getPatientId());
+    Assertions.assertEquals(STUDY_ID, resultGenePanelData1.getStudyId());
+    Assertions.assertEquals(true, resultGenePanelData1.getProfiled());
   }
 
   @Test
-  public void fetchGenePanelDataInMultipleMolecularProfiles() throws Exception {
+  public void fetchGenePanelDataInMultipleMolecularProfiles() {
 
     List<GenePanelData> genePanelDataList = new ArrayList<>();
     GenePanelData genePanelData = new GenePanelData();
@@ -284,26 +285,26 @@ public class GenePanelServiceImplTest extends BaseServiceImplTest {
     Mockito.when(
             molecularProfileService.getMolecularProfiles(
                 new HashSet<>(molecularProfileIds), "SUMMARY"))
-        .thenReturn(Arrays.asList(molecularProfile));
+        .thenReturn(List.of(molecularProfile));
 
     List<GenePanelData> result =
         genePanelService.fetchGenePanelDataInMultipleMolecularProfiles(
             new ArrayList<>(molecularProfileSampleIdentifiers));
 
-    Assert.assertEquals(2, result.size());
-    GenePanelData resultGenePanelData1 = result.get(0);
-    Assert.assertEquals(SAMPLE_ID1, resultGenePanelData1.getSampleId());
-    Assert.assertEquals(GENE_PANEL_ID, resultGenePanelData1.getGenePanelId());
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData1.getMolecularProfileId());
-    Assert.assertEquals(PATIENT_ID_1, resultGenePanelData1.getPatientId());
-    Assert.assertEquals(STUDY_ID, resultGenePanelData1.getStudyId());
-    Assert.assertEquals(true, resultGenePanelData1.getProfiled());
+    Assertions.assertEquals(2, result.size());
+    GenePanelData resultGenePanelData1 = result.getFirst();
+    Assertions.assertEquals(SAMPLE_ID1, resultGenePanelData1.getSampleId());
+    Assertions.assertEquals(GENE_PANEL_ID, resultGenePanelData1.getGenePanelId());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData1.getMolecularProfileId());
+    Assertions.assertEquals(PATIENT_ID_1, resultGenePanelData1.getPatientId());
+    Assertions.assertEquals(STUDY_ID, resultGenePanelData1.getStudyId());
+    Assertions.assertEquals(true, resultGenePanelData1.getProfiled());
     GenePanelData resultGenePanelData2 = result.get(1);
-    Assert.assertEquals(SAMPLE_ID2, resultGenePanelData2.getSampleId());
-    Assert.assertNull(resultGenePanelData2.getGenePanelId());
-    Assert.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData2.getMolecularProfileId());
-    Assert.assertEquals(PATIENT_ID_2, resultGenePanelData2.getPatientId());
-    Assert.assertEquals(STUDY_ID, resultGenePanelData2.getStudyId());
-    Assert.assertEquals(true, resultGenePanelData2.getProfiled());
+    Assertions.assertEquals(SAMPLE_ID2, resultGenePanelData2.getSampleId());
+    Assertions.assertNull(resultGenePanelData2.getGenePanelId());
+    Assertions.assertEquals(MOLECULAR_PROFILE_ID, resultGenePanelData2.getMolecularProfileId());
+    Assertions.assertEquals(PATIENT_ID_2, resultGenePanelData2.getPatientId());
+    Assertions.assertEquals(STUDY_ID, resultGenePanelData2.getStudyId());
+    Assertions.assertEquals(true, resultGenePanelData2.getProfiled());
   }
 }

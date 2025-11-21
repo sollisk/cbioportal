@@ -16,13 +16,13 @@ import org.cbioportal.legacy.persistence.helper.AlterationFilterHelper;
 import org.cbioportal.legacy.web.parameter.StudyViewFilter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @ExtendWith(MockitoExtension.class)
 @Import(MyBatisConfig.class)
@@ -362,13 +362,13 @@ public class ClickhouseAlterationMapperTest {
             .findFirst()
             .orElse(null);
 
-    assertNotNull("BRCA1 should be present", brca1);
-    assertEquals("BRCA1 total altered cases", Integer.valueOf(4), brca1.getNumberOfAlteredCases());
+    assertNotNull(brca1, "BRCA1 should be present");
+    assertEquals(Integer.valueOf(4), brca1.getNumberOfAlteredCases(), "BRCA1 total altered cases");
     assertEquals(
-        "BRCA1 on-panel altered cases", Integer.valueOf(3), brca1.getNumberOfAlteredCasesOnPanel());
+        Integer.valueOf(3), brca1.getNumberOfAlteredCasesOnPanel(), "BRCA1 on-panel altered cases");
     // totalCount = 5: sample 6 has 2 mutation events, samples 7,12,13 each have 1 (including sample
     // 7's 'na' status which passes mutation_status != 'UNCALLED' filter)
-    assertEquals("BRCA1 total count", Integer.valueOf(5), brca1.getTotalCount());
+    assertEquals(Integer.valueOf(5), brca1.getTotalCount(), "BRCA1 total count");
   }
 
   @Test
@@ -387,11 +387,11 @@ public class ClickhouseAlterationMapperTest {
             .findFirst()
             .orElse(null);
 
-    assertNotNull("AKT2 should be present", akt2);
-    assertEquals("AKT2 total altered cases", Integer.valueOf(1), akt2.getNumberOfAlteredCases());
+    assertNotNull(akt2, "AKT2 should be present");
+    assertEquals(Integer.valueOf(1), akt2.getNumberOfAlteredCases(), "AKT2 total altered cases");
     assertEquals(
-        "AKT2 on-panel altered cases", Integer.valueOf(0), akt2.getNumberOfAlteredCasesOnPanel());
-    assertEquals("AKT2 total count", Integer.valueOf(1), akt2.getTotalCount());
+        Integer.valueOf(0), akt2.getNumberOfAlteredCasesOnPanel(), "AKT2 on-panel altered cases");
+    assertEquals(Integer.valueOf(1), akt2.getTotalCount(), "AKT2 total count");
   }
 
   @Test
@@ -411,10 +411,10 @@ public class ClickhouseAlterationMapperTest {
             .findFirst()
             .orElse(null);
 
-    assertNotNull("ncoa4 should be present", ncoa4);
-    assertEquals("ncoa4 total altered cases", Integer.valueOf(2), ncoa4.getNumberOfAlteredCases());
+    assertNotNull(ncoa4, "ncoa4 should be present");
+    assertEquals(Integer.valueOf(2), ncoa4.getNumberOfAlteredCases(), "ncoa4 total altered cases");
     assertEquals(
-        "ncoa4 on-panel altered cases", Integer.valueOf(2), ncoa4.getNumberOfAlteredCasesOnPanel());
-    assertEquals("ncoa4 total count", Integer.valueOf(3), ncoa4.getTotalCount());
+        Integer.valueOf(2), ncoa4.getNumberOfAlteredCasesOnPanel(), "ncoa4 on-panel altered cases");
+    assertEquals(Integer.valueOf(3), ncoa4.getTotalCount(), "ncoa4 total count");
   }
 }

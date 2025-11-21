@@ -56,12 +56,12 @@ import org.cbioportal.legacy.persistence.DataAccessTokenRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit4.SpringRunner;
 
 @TestPropertySource(
     properties = {
@@ -121,7 +121,7 @@ public class UuidDataAccessTokenServiceImplTestFiveTokenLimit {
     }
     if (deletedDataAccessToken
         != uuidDataAccessTokenServiceImplTestConfiguration.OLDEST_TOKEN_UUID) {
-      Assert.fail(
+      Assertions.fail(
           "Expired token: "
               + deletedDataAccessToken
               + ", expected to expire token:"
@@ -132,19 +132,15 @@ public class UuidDataAccessTokenServiceImplTestFiveTokenLimit {
   private Date getExpectedExpirationDate() {
     Calendar calendar = Calendar.getInstance();
     calendar.add(Calendar.SECOND, datTtlSeconds);
-    Date expectedExpirationDate = calendar.getTime();
-    return expectedExpirationDate;
+      return calendar.getTime();
   }
 
   private boolean createdDataAccessTokenWithWrongInformation(
       DataAccessToken createdDataAccessToken,
       String expectedUsername,
       Date expectedExpirationDate) {
-    boolean createdDataAccessTokenWithWrongInformation = false;
-    if (createdDataAccessToken.getUsername() != expectedUsername) {
-      createdDataAccessTokenWithWrongInformation = true;
-    }
-    if (Math.abs(
+    boolean createdDataAccessTokenWithWrongInformation = !Objects.equals(createdDataAccessToken.getUsername(), expectedUsername);
+      if (Math.abs(
             createdDataAccessToken.getExpiration().getTime() - expectedExpirationDate.getTime())
         > UuidDataAccessTokenServiceImplTestConfiguration
             .MAXIMUM_TIME_DIFFERENCE_BETWEEN_CREATED_AND_EXPECTED_TOKEN) {

@@ -63,13 +63,15 @@ public class GenesetServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(geneset, result);
   }
 
-  @Test(expected = GenesetNotFoundException.class)
-  public void getGeneByEntrezGeneIdNotFound() throws GenesetNotFoundException {
+  @Test
+  public void getGeneByEntrezGeneIdNotFound() {
 
     Geneset geneset = createGenesetList().get(0);
     Mockito.when(genesetRepository.getGeneset(GENESET_ID_1)).thenReturn(geneset);
     // expect GenesetNotFoundException here:
-    genesetService.getGeneset("wrongId");
+    
+    Assertions.assertThrows(GenesetNotFoundException.class, () ->
+        genesetService.getGeneset("wrongId"));
   }
 
   @Test

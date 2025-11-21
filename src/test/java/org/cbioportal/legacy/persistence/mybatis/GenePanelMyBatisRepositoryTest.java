@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {GenePanelMyBatisRepository.class, TestConfig.class})
@@ -23,86 +23,86 @@ public class GenePanelMyBatisRepositoryTest {
   @Autowired private GenePanelMyBatisRepository genePanelMyBatisRepository;
 
   @Test
-  public void getAllGenePanelsIdProjection() throws Exception {
+  public void getAllGenePanelsIdProjection() {
 
     List<GenePanel> result =
         genePanelMyBatisRepository.getAllGenePanels("ID", null, null, null, null);
 
-    Assert.assertEquals(2, result.size());
-    GenePanel genePanel = result.get(0);
-    Assert.assertEquals((Integer) 1, genePanel.getInternalId());
-    Assert.assertEquals("TESTPANEL1", genePanel.getStableId());
+    Assertions.assertEquals(2, result.size());
+    GenePanel genePanel = result.getFirst();
+    Assertions.assertEquals((Integer) 1, genePanel.getInternalId());
+    Assertions.assertEquals("TESTPANEL1", genePanel.getStableId());
   }
 
   @Test
-  public void getAllGenePanelsSummaryProjection() throws Exception {
+  public void getAllGenePanelsSummaryProjection() {
 
     List<GenePanel> result =
         genePanelMyBatisRepository.getAllGenePanels("SUMMARY", null, null, null, null);
 
-    Assert.assertEquals(2, result.size());
-    GenePanel genePanel = result.get(0);
-    Assert.assertEquals((Integer) 1, genePanel.getInternalId());
-    Assert.assertEquals("TESTPANEL1", genePanel.getStableId());
-    Assert.assertEquals("A test panel consisting of a few genes", genePanel.getDescription());
+    Assertions.assertEquals(2, result.size());
+    GenePanel genePanel = result.getFirst();
+    Assertions.assertEquals((Integer) 1, genePanel.getInternalId());
+    Assertions.assertEquals("TESTPANEL1", genePanel.getStableId());
+    Assertions.assertEquals("A test panel consisting of a few genes", genePanel.getDescription());
   }
 
   @Test
-  public void getMetaGenePanels() throws Exception {
+  public void getMetaGenePanels() {
 
     BaseMeta result = genePanelMyBatisRepository.getMetaGenePanels();
 
-    Assert.assertEquals((Integer) 2, result.getTotalCount());
+    Assertions.assertEquals((Integer) 2, result.getTotalCount());
   }
 
   @Test
-  public void getGenePanelNullResult() throws Exception {
+  public void getGenePanelNullResult() {
 
     GenePanel result = genePanelMyBatisRepository.getGenePanel("invalid_gene_panel");
 
-    Assert.assertNull(result);
+    Assertions.assertNull(result);
   }
 
   @Test
-  public void getGenePanel() throws Exception {
+  public void getGenePanel() {
 
     GenePanel result = genePanelMyBatisRepository.getGenePanel("TESTPANEL1");
 
-    Assert.assertEquals((Integer) 1, result.getInternalId());
-    Assert.assertEquals("TESTPANEL1", result.getStableId());
-    Assert.assertEquals("A test panel consisting of a few genes", result.getDescription());
+    Assertions.assertEquals((Integer) 1, result.getInternalId());
+    Assertions.assertEquals("TESTPANEL1", result.getStableId());
+    Assertions.assertEquals("A test panel consisting of a few genes", result.getDescription());
   }
 
   @Test
-  public void getGenePanelData() throws Exception {
+  public void getGenePanelData() {
 
     List<GenePanelData> result =
         genePanelMyBatisRepository.getGenePanelDataBySampleListId(
             "study_tcga_pub_mrna", "study_tcga_pub_all");
 
-    Assert.assertEquals(14, result.size());
-    GenePanelData genePanelData = result.get(0);
-    Assert.assertEquals("study_tcga_pub_mrna", genePanelData.getMolecularProfileId());
-    Assert.assertEquals("TESTPANEL1", genePanelData.getGenePanelId());
-    Assert.assertEquals("TCGA-A1-A0SB-01", genePanelData.getSampleId());
+    Assertions.assertEquals(14, result.size());
+    GenePanelData genePanelData = result.getFirst();
+    Assertions.assertEquals("study_tcga_pub_mrna", genePanelData.getMolecularProfileId());
+    Assertions.assertEquals("TESTPANEL1", genePanelData.getGenePanelId());
+    Assertions.assertEquals("TCGA-A1-A0SB-01", genePanelData.getSampleId());
   }
 
   @Test
-  public void fetchGenePanelData() throws Exception {
+  public void fetchGenePanelData() {
 
     List<GenePanelData> result =
         genePanelMyBatisRepository.fetchGenePanelData(
             "study_tcga_pub_mrna", Arrays.asList("TCGA-A1-A0SB-01", "TCGA-A1-A0SD-01"));
 
-    Assert.assertEquals(2, result.size());
-    GenePanelData genePanelData = result.get(0);
-    Assert.assertEquals("study_tcga_pub_mrna", genePanelData.getMolecularProfileId());
-    Assert.assertEquals("TESTPANEL1", genePanelData.getGenePanelId());
-    Assert.assertEquals("TCGA-A1-A0SB-01", genePanelData.getSampleId());
+    Assertions.assertEquals(2, result.size());
+    GenePanelData genePanelData = result.getFirst();
+    Assertions.assertEquals("study_tcga_pub_mrna", genePanelData.getMolecularProfileId());
+    Assertions.assertEquals("TESTPANEL1", genePanelData.getGenePanelId());
+    Assertions.assertEquals("TCGA-A1-A0SB-01", genePanelData.getSampleId());
   }
 
   @Test
-  public void fetchGenePanelDataInMultipleMolecularProfiles() throws Exception {
+  public void fetchGenePanelDataInMultipleMolecularProfiles() {
 
     List<MolecularProfileCaseIdentifier> molecularProfileSampleIdentifiers = new ArrayList<>();
     MolecularProfileCaseIdentifier profileCaseIdentifier = new MolecularProfileCaseIdentifier();
@@ -119,23 +119,23 @@ public class GenePanelMyBatisRepositoryTest {
         genePanelMyBatisRepository.fetchGenePanelDataInMultipleMolecularProfiles(
             molecularProfileSampleIdentifiers);
 
-    Assert.assertEquals(2, result.size());
-    GenePanelData genePanelData = result.get(0);
-    Assert.assertEquals("study_tcga_pub_mrna", genePanelData.getMolecularProfileId());
-    Assert.assertEquals("TESTPANEL1", genePanelData.getGenePanelId());
-    Assert.assertEquals("TCGA-A1-A0SB-01", genePanelData.getSampleId());
+    Assertions.assertEquals(2, result.size());
+    GenePanelData genePanelData = result.getFirst();
+    Assertions.assertEquals("study_tcga_pub_mrna", genePanelData.getMolecularProfileId());
+    Assertions.assertEquals("TESTPANEL1", genePanelData.getGenePanelId());
+    Assertions.assertEquals("TCGA-A1-A0SB-01", genePanelData.getSampleId());
   }
 
   @Test
-  public void getGenesOfPanels() throws Exception {
+  public void getGenesOfPanels() {
 
     List<GenePanelToGene> result =
-        genePanelMyBatisRepository.getGenesOfPanels(Arrays.asList("TESTPANEL1"));
+        genePanelMyBatisRepository.getGenesOfPanels(List.of("TESTPANEL1"));
 
-    Assert.assertEquals(3, result.size());
-    GenePanelToGene genePanelToGene = result.get(0);
-    Assert.assertEquals("TESTPANEL1", genePanelToGene.getGenePanelId());
-    Assert.assertEquals((Integer) 207, genePanelToGene.getEntrezGeneId());
-    Assert.assertEquals("AKT1", genePanelToGene.getHugoGeneSymbol());
+    Assertions.assertEquals(3, result.size());
+    GenePanelToGene genePanelToGene = result.getFirst();
+    Assertions.assertEquals("TESTPANEL1", genePanelToGene.getGenePanelId());
+    Assertions.assertEquals((Integer) 207, genePanelToGene.getEntrezGeneId());
+    Assertions.assertEquals("AKT1", genePanelToGene.getHugoGeneSymbol());
   }
 }

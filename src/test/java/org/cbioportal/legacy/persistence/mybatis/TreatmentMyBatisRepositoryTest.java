@@ -13,9 +13,9 @@ import org.cbioportal.legacy.persistence.mybatis.config.TestConfig;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(classes = {TreatmentMyBatisRepository.class, TestConfig.class})
@@ -48,7 +48,7 @@ public class TreatmentMyBatisRepositoryTest {
             Collections.singletonList("study_tcga_pub"),
             ClinicalEventKeyCode.Agent);
 
-    Assert.assertEquals(actual, expected);
+    Assertions.assertEquals(actual, expected);
   }
 
   @Test
@@ -90,7 +90,7 @@ public class TreatmentMyBatisRepositoryTest {
             Collections.singletonList("study_tcga_pub"),
             ClinicalEventKeyCode.AgentTarget);
 
-    Assert.assertEquals(actual, expected);
+    Assertions.assertEquals(actual, expected);
   }
 
   @Test
@@ -108,7 +108,7 @@ public class TreatmentMyBatisRepositoryTest {
             Collections.singletonList("TCGA-A1-A0SD-01"),
             Collections.singletonList("study_tcga_pub"));
 
-    Assert.assertEquals(actual, expected);
+    Assertions.assertEquals(actual, expected);
   }
 
   @Test
@@ -127,7 +127,7 @@ public class TreatmentMyBatisRepositoryTest {
             Collections.singletonList("TCGA-A1-A0SB-01"),
             Collections.singletonList("study_tcga_pub"));
 
-    Assert.assertEquals(actual, expected);
+    Assertions.assertEquals(actual, expected);
   }
 
   @Test
@@ -146,18 +146,18 @@ public class TreatmentMyBatisRepositoryTest {
             Collections.singletonList("TCGA-A1-A0SD-01"),
             Collections.singletonList("study_tcga_pub"));
 
-    Assert.assertEquals(actual, expected);
+    Assertions.assertEquals(actual, expected);
   }
 
   @Test
   public void hasTreatmentData() {
 
-    Assert.assertEquals(
+    Assertions.assertEquals(
         true,
         treatmentRepository.hasTreatmentData(
             Collections.singletonList("study_tcga_pub"), ClinicalEventKeyCode.Agent));
 
-    Assert.assertEquals(
+    Assertions.assertEquals(
         false,
         treatmentRepository.hasTreatmentData(
             Collections.singletonList("acc_tcga"), ClinicalEventKeyCode.Agent));
@@ -166,11 +166,11 @@ public class TreatmentMyBatisRepositoryTest {
   @Test
   public void hasSampleTimelineData() {
 
-    Assert.assertEquals(
+    Assertions.assertEquals(
         true,
         treatmentRepository.hasSampleTimelineData(Collections.singletonList("study_tcga_pub")));
 
-    Assert.assertEquals(
+    Assertions.assertEquals(
         false, treatmentRepository.hasSampleTimelineData(Collections.singletonList("acc_tcga")));
   }
 }

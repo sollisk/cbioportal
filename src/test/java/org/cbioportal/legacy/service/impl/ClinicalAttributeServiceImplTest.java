@@ -1,7 +1,6 @@
 package org.cbioportal.legacy.service.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.cbioportal.legacy.model.ClinicalAttribute;
 import org.cbioportal.legacy.model.ClinicalAttributeCount;
@@ -11,7 +10,7 @@ import org.cbioportal.legacy.service.StudyService;
 import org.cbioportal.legacy.service.exception.ClinicalAttributeNotFoundException;
 import org.cbioportal.legacy.service.exception.StudyNotFoundException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,13 +27,13 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
   @Mock private ClinicalAttributeRepository clinicalAttributeRepository;
   @Mock private StudyService studyService;
 
-  @Before
+  @BeforeEach
   public void setup() {
     ReflectionTestUtils.setField(clinicalAttributeService, "AUTHENTICATE", "false");
   }
 
   @Test
-  public void getAllClinicalAttributes() throws Exception {
+  public void getAllClinicalAttributes() {
 
     List<ClinicalAttribute> expectedClinicalAttributeList = new ArrayList<>();
     ClinicalAttribute clinicalAttribute = new ClinicalAttribute();
@@ -53,7 +52,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
   }
 
   @Test
-  public void getMetaClinicalAttributes() throws Exception {
+  public void getMetaClinicalAttributes() {
 
     BaseMeta expectedBaseMeta = new BaseMeta();
     Mockito.when(clinicalAttributeRepository.getMetaClinicalAttributes())
@@ -63,20 +62,22 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = ClinicalAttributeNotFoundException.class)
-  public void getClinicalAttributeNotFound() throws Exception {
+  @Test
+  public void getClinicalAttributeNotFound() {
 
     Mockito.when(
             clinicalAttributeRepository.getClinicalAttribute(STUDY_ID, CLINICAL_ATTRIBUTE_ID_1))
         .thenReturn(null);
-    clinicalAttributeService.getClinicalAttribute(STUDY_ID, CLINICAL_ATTRIBUTE_ID_1);
+    Assertions.assertThrows(ClinicalAttributeNotFoundException.class, () -> 
+        clinicalAttributeService.getClinicalAttribute(STUDY_ID, CLINICAL_ATTRIBUTE_ID_1));
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getClinicalAttributeStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    clinicalAttributeService.getClinicalAttribute(STUDY_ID, CLINICAL_ATTRIBUTE_ID_1);
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        clinicalAttributeService.getClinicalAttribute(STUDY_ID, CLINICAL_ATTRIBUTE_ID_1));
   }
 
   @Test
@@ -113,12 +114,13 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedClinicalAttributeList, result);
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getAllClinicalAttributesInStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    clinicalAttributeService.getAllClinicalAttributesInStudy(
-        STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        clinicalAttributeService.getAllClinicalAttributesInStudy(
+            STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION));
   }
 
   @Test
@@ -132,15 +134,16 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getMetaClinicalAttributesInStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    clinicalAttributeService.getMetaClinicalAttributesInStudy(STUDY_ID);
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        clinicalAttributeService.getMetaClinicalAttributesInStudy(STUDY_ID));
   }
 
   @Test
-  public void fetchClinicalAttributes() throws Exception {
+  public void fetchClinicalAttributes() {
 
     List<ClinicalAttribute> expectedClinicalAttributeList = new ArrayList<>();
     ClinicalAttribute clinicalAttribute = new ClinicalAttribute();
@@ -148,28 +151,28 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
 
     Mockito.when(
             clinicalAttributeRepository.fetchClinicalAttributes(
-                Arrays.asList(STUDY_ID), PROJECTION))
+                List.of(STUDY_ID), PROJECTION))
         .thenReturn(expectedClinicalAttributeList);
 
     List<ClinicalAttribute> result =
-        clinicalAttributeService.fetchClinicalAttributes(Arrays.asList(STUDY_ID), PROJECTION);
+        clinicalAttributeService.fetchClinicalAttributes(List.of(STUDY_ID), PROJECTION);
 
     Assertions.assertEquals(expectedClinicalAttributeList, result);
   }
 
   @Test
-  public void fetchMetaClinicalAttributes() throws Exception {
+  public void fetchMetaClinicalAttributes() {
 
     BaseMeta expectedBaseMeta = new BaseMeta();
-    Mockito.when(clinicalAttributeRepository.fetchMetaClinicalAttributes(Arrays.asList(STUDY_ID)))
+    Mockito.when(clinicalAttributeRepository.fetchMetaClinicalAttributes(List.of(STUDY_ID)))
         .thenReturn(expectedBaseMeta);
-    BaseMeta result = clinicalAttributeService.fetchMetaClinicalAttributes(Arrays.asList(STUDY_ID));
+    BaseMeta result = clinicalAttributeService.fetchMetaClinicalAttributes(List.of(STUDY_ID));
 
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
   @Test
-  public void getClinicalAttributeCountsBySampleIds() throws Exception {
+  public void getClinicalAttributeCountsBySampleIds() {
 
     List<String> sampleIds = new ArrayList<>();
     List<String> studyIds = new ArrayList<>();
@@ -191,7 +194,7 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
   }
 
   @Test
-  public void getClinicalAttributeCountsBySampleListId() throws Exception {
+  public void getClinicalAttributeCountsBySampleListId() {
 
     List<ClinicalAttributeCount> expectedClinicalAttributeList = new ArrayList<>();
     ClinicalAttributeCount clinicalAttributeCount = new ClinicalAttributeCount();
@@ -204,6 +207,6 @@ public class ClinicalAttributeServiceImplTest extends BaseServiceImplTest {
     List<ClinicalAttributeCount> result =
         clinicalAttributeService.getClinicalAttributeCountsBySampleListId(SAMPLE_LIST_ID);
 
-    Assert.assertEquals(expectedClinicalAttributeList, result);
+    Assertions.assertEquals(expectedClinicalAttributeList, result);
   }
 }

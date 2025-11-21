@@ -57,12 +57,14 @@ public class SignificantCopyNumberRegionServiceImplTest extends BaseServiceImplT
     Assertions.assertEquals(gisticToGene, result.get(0).getGenes().get(0));
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getSignificantCopyNumberRegionsStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    significantCopyNumberRegionService.getSignificantCopyNumberRegions(
-        STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
+    
+    Assertions.assertThrows(StudyNotFoundException.class, () ->
+        significantCopyNumberRegionService.getSignificantCopyNumberRegions(
+            STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION));
   }
 
   @Test
@@ -78,10 +80,11 @@ public class SignificantCopyNumberRegionServiceImplTest extends BaseServiceImplT
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getMetaSignificantCopyNumberRegionsStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    significantCopyNumberRegionService.getMetaSignificantCopyNumberRegions(STUDY_ID);
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        significantCopyNumberRegionService.getMetaSignificantCopyNumberRegions(STUDY_ID));
   }
 }

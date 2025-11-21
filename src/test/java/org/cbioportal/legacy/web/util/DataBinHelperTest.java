@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -90,22 +91,22 @@ public class DataBinHelperTest {
     assertNull(boundaries);
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void nullCustomBinsArg() {
-    List<BigDecimal> boundaries =
-        dataBinHelper.generateBins(null, new BigDecimal(10), new BigDecimal(40));
+      Assertions.assertThrows(IllegalArgumentException.class, () -> 
+          dataBinHelper.generateBins(null, new BigDecimal(10), new BigDecimal(40)));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void nullBinSizeArg() {
-    List<BigDecimal> boundaries =
-        dataBinHelper.generateBins(Collections.emptyList(), null, new BigDecimal(40));
+      Assertions.assertThrows(IllegalArgumentException.class, () -> 
+          dataBinHelper.generateBins(Collections.emptyList(), null, new BigDecimal(40)));
   }
 
-  @Test(expected = IllegalArgumentException.class)
+  @Test
   public void nullAnchorPointArg() {
-    List<BigDecimal> boundaries =
-        dataBinHelper.generateBins(Collections.emptyList(), new BigDecimal(10), null);
+      Assertions.assertThrows(IllegalArgumentException.class, () -> 
+          dataBinHelper.generateBins(Collections.emptyList(), new BigDecimal(10), null));
   }
 
   @Test

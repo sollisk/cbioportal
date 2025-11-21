@@ -9,7 +9,8 @@ import org.cbioportal.legacy.persistence.StudyRepository;
 import org.cbioportal.legacy.persistence.cachemaputil.StaticRefCacheMapUtil;
 import org.cbioportal.legacy.persistence.util.CacheUtils;
 import org.cbioportal.legacy.service.exception.CacheOperationException;
-import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,7 +36,7 @@ public class CacheServiceImplTest {
 
   @Mock private StudyRepository studyRepository;
 
-  @Before
+  @BeforeEach
   public void init() {
     when(cacheManager.getCacheNames()).thenReturn(Arrays.asList("name_1", "name_2"));
     CancerStudy cancerStudy1 = mock(CancerStudy.class);
@@ -76,15 +77,15 @@ public class CacheServiceImplTest {
     verify(cacheMapUtil, times(1)).initializeCacheMemory();
   }
 
-  @Test(expected = CacheOperationException.class)
-  public void evictAllCachesThrowsException() throws Exception {
+  @Test
+  public void evictAllCachesThrowsException() {
     doThrow(RuntimeException.class).when(cacheUtils).evictByPattern(anyString(), anyString());
-    cachingService.clearCaches(true);
+    Assertions.assertThrows(CacheOperationException.class, () -> 
+        cachingService.clearCaches(true));
   }
 
   @Test
   public void evictCacheForStudySuccess() throws Exception {
-    List<String> studiesInPortal = Arrays.asList("study1", "study2");
     cachingService.clearCachesForStudy("study3", true);
     verify(cacheUtils, times(2))
         .evictByPattern(anyString(), eq("^(?=.*study3).*|^(?!.*study3)(?!.*study1)(?!.*study2).*"));
@@ -94,7 +95,6 @@ public class CacheServiceImplTest {
   @Test
   public void evictCacheForStudyNullManager() throws Exception {
     ReflectionTestUtils.setField(cachingService, "cacheManager", null);
-    List<String> studiesInPortal = Arrays.asList("study1", "study2");
     cachingService.clearCachesForStudy("study3", true);
     verify(cacheUtils, never()).evictByPattern(anyString(), anyString());
     verify(cacheMapUtil, times(1)).initializeCacheMemory();
@@ -103,16 +103,15 @@ public class CacheServiceImplTest {
 
   @Test
   public void evictCacheForStudySkipSpringManagedCache() throws Exception {
-    List<String> studiesInPortal = Arrays.asList("study1", "study2");
     cachingService.clearCachesForStudy("study3", false);
     verify(cacheUtils, never()).evictByPattern(anyString(), anyString());
     verify(cacheMapUtil, times(1)).initializeCacheMemory();
   }
 
-  @Test(expected = CacheOperationException.class)
-  public void evictCacheForStudyThrowsException() throws Exception {
-    List<String> studiesInPortal = Arrays.asList("study1", "study2");
+  @Test
+  public void evictCacheForStudyThrowsException() {
     doThrow(RuntimeException.class).when(cacheUtils).evictByPattern(anyString(), anyString());
-    cachingService.clearCachesForStudy("study3", true);
+    Assertions.assertThrows(CacheOperationException.class, () -> 
+        cachingService.clearCachesForStudy("study3", true));
   }
 }

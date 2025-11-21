@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.Before;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -126,7 +127,7 @@ public class CustomRedisCacheTest {
     verify(bucket, times(1)).expireAsync(100, TimeUnit.MINUTES);
   }
 
-  @Test(expected = Cache.ValueRetrievalException.class)
+  @Test
   public void shouldPropagateValueLoaderException() {
     String defaultReturn = "this gets returned if the object DNE in cache";
     RBucket bucket = Mockito.mock(RBucket.class);
@@ -134,11 +135,12 @@ public class CustomRedisCacheTest {
     when(client.getBucket("subject:57_onions")).thenReturn(bucket);
 
     CustomRedisCache subject = new CustomRedisCache("subject", client, -1);
-    subject.get(
+    Assertions.assertThrows(Cache.ValueRetrievalException.class, () ->
+        subject.get(
         "57_onions",
         () -> {
           throw new RuntimeException("uh oh");
-        });
+        }));
   }
 
   @Test

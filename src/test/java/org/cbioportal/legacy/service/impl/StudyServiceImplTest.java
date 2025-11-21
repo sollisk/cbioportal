@@ -3,7 +3,6 @@ package org.cbioportal.legacy.service.impl;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.cbioportal.legacy.model.CancerStudy;
@@ -31,7 +30,7 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
   @Mock private CancerTypeService cancerTypeService;
 
   @Test
-  public void getAllStudies() throws Exception {
+  public void getAllStudies() {
 
     List<CancerStudy> expectedCancerStudyList = new ArrayList<>();
     CancerStudy cancerStudy = new CancerStudy();
@@ -47,11 +46,11 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
         studyService.getAllStudies(
             KEYWORD, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION, null, AccessLevel.READ);
 
-    Assertions.assertEquals(expectedCancerStudyList.get(0), result.get(0));
+    Assertions.assertEquals(expectedCancerStudyList.getFirst(), result.getFirst());
   }
 
   @Test
-  public void getMetaStudies() throws Exception {
+  public void getMetaStudies() {
 
     BaseMeta expectedBaseMeta = new BaseMeta();
     when(studyRepository.getMetaStudies(null)).thenReturn(expectedBaseMeta);
@@ -61,12 +60,12 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = StudyNotFoundException.class)
-  public void getStudyNotFound() throws Exception {
+  @Test
+  public void getStudyNotFound() {
 
     when(studyRepository.getStudy(STUDY_ID, "DETAILED")).thenReturn(null);
 
-    studyService.getStudy(STUDY_ID);
+    Assertions.assertThrows(StudyNotFoundException.class, () -> studyService.getStudy(STUDY_ID));
   }
 
   @Test
@@ -82,28 +81,28 @@ public class StudyServiceImplTest extends BaseServiceImplTest {
   }
 
   @Test
-  public void fetchStudies() throws Exception {
+  public void fetchStudies() {
 
     List<CancerStudy> expectedCancerStudyList = new ArrayList<>();
     CancerStudy cancerStudy = new CancerStudy();
     expectedCancerStudyList.add(cancerStudy);
 
-    when(studyRepository.fetchStudies(Arrays.asList(STUDY_ID), PROJECTION))
+    when(studyRepository.fetchStudies(List.of(STUDY_ID), PROJECTION))
         .thenReturn(expectedCancerStudyList);
 
-    List<CancerStudy> result = studyService.fetchStudies(Arrays.asList(STUDY_ID), PROJECTION);
+    List<CancerStudy> result = studyService.fetchStudies(List.of(STUDY_ID), PROJECTION);
 
     Assertions.assertEquals(expectedCancerStudyList, result);
   }
 
   @Test
-  public void fetchMetaStudies() throws Exception {
+  public void fetchMetaStudies() {
 
     BaseMeta expectedBaseMeta = new BaseMeta();
 
-    when(studyRepository.fetchMetaStudies(Arrays.asList(STUDY_ID))).thenReturn(expectedBaseMeta);
+    when(studyRepository.fetchMetaStudies(List.of(STUDY_ID))).thenReturn(expectedBaseMeta);
 
-    BaseMeta result = studyService.fetchMetaStudies(Arrays.asList(STUDY_ID));
+    BaseMeta result = studyService.fetchMetaStudies(List.of(STUDY_ID));
 
     Assertions.assertEquals(expectedBaseMeta, result);
   }

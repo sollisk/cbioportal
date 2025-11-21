@@ -52,7 +52,7 @@ public class GenesetHierarchyServiceImplTest extends BaseServiceImplTest {
         .thenReturn(geneticProfile);
 
     // stub for geneset scores:
-    List<GenesetMolecularData> genesetScoresDataList1 = new ArrayList<GenesetMolecularData>();
+    List<GenesetMolecularData> genesetScoresDataList1 = new ArrayList<>();
     genesetScoresDataList1.add(getSimpleFlatGenesetDataItem(SAMPLE_ID1, GENESET_ID1, "0.2"));
     genesetScoresDataList1.add(getSimpleFlatGenesetDataItem(SAMPLE_ID2, GENESET_ID1, "0.499"));
     genesetScoresDataList1.add(getSimpleFlatGenesetDataItem(SAMPLE_ID3, GENESET_ID1, "0.470"));
@@ -69,7 +69,7 @@ public class GenesetHierarchyServiceImplTest extends BaseServiceImplTest {
     pvalueGeneticProfile.setStableId(PVALUE_GENETIC_PROFILE_ID);
     pvalueGeneticProfile.setDatatype("P-VALUE");
     Mockito.when(geneticProfileService.getMolecularProfilesReferringTo(MOLECULAR_PROFILE_ID))
-        .thenReturn(Arrays.asList(pvalueGeneticProfile));
+        .thenReturn(List.of(pvalueGeneticProfile));
 
     List<GenesetMolecularData> genesetPvaluesDataList1 = new ArrayList<GenesetMolecularData>();
     genesetPvaluesDataList1.add(getSimpleFlatGenesetDataItem(SAMPLE_ID1, GENESET_ID1, "0.016"));
@@ -144,7 +144,7 @@ public class GenesetHierarchyServiceImplTest extends BaseServiceImplTest {
     Mockito.when(genesetHierarchyRepository.getGenesetHierarchyGenesets(parentNode1.getNodeId()))
         .thenReturn(Arrays.asList(geneset1, geneset2)); // genesets 1 and 2 as children
     Mockito.when(genesetHierarchyRepository.getGenesetHierarchyGenesets(parentNode2.getNodeId()))
-        .thenReturn(Arrays.asList(geneset2)); // only geneset 2 as child
+        .thenReturn(List.of(geneset2)); // only geneset 2 as child
   }
 
   private GenesetMolecularData getSimpleFlatGenesetDataItem(
@@ -174,12 +174,12 @@ public class GenesetHierarchyServiceImplTest extends BaseServiceImplTest {
 
     Assertions.assertEquals(3, result.size());
     // 3 nodes, last one with 1 leaf (geneset):
-    Assertions.assertEquals(null, result.get(0).getGenesets());
+      Assertions.assertNull(result.get(0).getGenesets());
     Assertions.assertEquals(1, result.get(2).getGenesets().size());
-    Geneset geneset = result.get(2).getGenesets().get(0);
+    Geneset geneset = result.get(2).getGenesets().getFirst();
     Assertions.assertEquals(GENESET_ID1, geneset.getGenesetId());
     Assertions.assertEquals((Double) 0.470, geneset.getRepresentativeScore());
-    Assert.assertEquals((Double) 0.0219, geneset.getRepresentativePvalue());
+    Assertions.assertEquals((Double) 0.0219, geneset.getRepresentativePvalue());
 
     // 90th percentile, with thresholds abs_score=0.3 and p-value=0.05:
     result =
@@ -195,22 +195,22 @@ public class GenesetHierarchyServiceImplTest extends BaseServiceImplTest {
     // and p-value=0.046
     //   Root node ->  sub node A -> parent node 2 -> GENESET_ID2, with representative score=-0.35
     // and p-value=0.046
-    Assert.assertEquals(4, result.size());
+    Assertions.assertEquals(4, result.size());
     // 4 nodes, last 2 with leaf(s):
-    Assert.assertEquals(null, result.get(0).getGenesets());
-    Assert.assertEquals(null, result.get(1).getGenesets());
-    Assert.assertEquals(2, result.get(2).getGenesets().size());
-    Assert.assertEquals(1, result.get(3).getGenesets().size());
-    geneset = result.get(2).getGenesets().get(0);
-    Assert.assertEquals(GENESET_ID1, geneset.getGenesetId());
-    Assert.assertEquals((Double) 0.499, geneset.getRepresentativeScore());
-    Assert.assertEquals((Double) 0.0359, geneset.getRepresentativePvalue());
+      Assertions.assertNull(result.get(0).getGenesets());
+      Assertions.assertNull(result.get(1).getGenesets());
+    Assertions.assertEquals(2, result.get(2).getGenesets().size());
+    Assertions.assertEquals(1, result.get(3).getGenesets().size());
+    geneset = result.get(2).getGenesets().getFirst();
+    Assertions.assertEquals(GENESET_ID1, geneset.getGenesetId());
+    Assertions.assertEquals((Double) 0.499, geneset.getRepresentativeScore());
+    Assertions.assertEquals((Double) 0.0359, geneset.getRepresentativePvalue());
     geneset = result.get(2).getGenesets().get(1);
-    Assert.assertEquals(GENESET_ID2, geneset.getGenesetId());
-    Assert.assertEquals((Double) (-0.35), geneset.getRepresentativeScore());
-    Assert.assertEquals((Double) 0.046, geneset.getRepresentativePvalue());
+    Assertions.assertEquals(GENESET_ID2, geneset.getGenesetId());
+    Assertions.assertEquals((Double) (-0.35), geneset.getRepresentativeScore());
+    Assertions.assertEquals((Double) 0.046, geneset.getRepresentativePvalue());
     // last one is also GENESET_ID2:
-    Assert.assertEquals(geneset, result.get(3).getGenesets().get(0));
+    Assertions.assertEquals(geneset, result.get(3).getGenesets().getFirst());
 
     // 40th percentile, with thresholds abs_score=0.1 and (stricter) p-value=0.01:
     result =
@@ -224,17 +224,17 @@ public class GenesetHierarchyServiceImplTest extends BaseServiceImplTest {
     // and p-value=0.0019
     //   Root node ->  sub node A -> parent node 2 -> GENESET_ID2, with representative score=0.12
     // and p-value=0.0019
-    Assert.assertEquals(4, result.size());
+    Assertions.assertEquals(4, result.size());
     // 4 nodes, last 2 with one leaf each:
-    Assert.assertEquals(null, result.get(0).getGenesets());
-    Assert.assertEquals(null, result.get(1).getGenesets());
-    Assert.assertEquals(1, result.get(2).getGenesets().size());
-    Assert.assertEquals(1, result.get(3).getGenesets().size());
-    geneset = result.get(2).getGenesets().get(0);
-    Assert.assertEquals(GENESET_ID2, geneset.getGenesetId());
-    Assert.assertEquals((Double) 0.12, geneset.getRepresentativeScore());
-    Assert.assertEquals((Double) 0.0019, geneset.getRepresentativePvalue());
+      Assertions.assertNull(result.get(0).getGenesets());
+      Assertions.assertNull(result.get(1).getGenesets());
+    Assertions.assertEquals(1, result.get(2).getGenesets().size());
+    Assertions.assertEquals(1, result.get(3).getGenesets().size());
+    geneset = result.get(2).getGenesets().getFirst();
+    Assertions.assertEquals(GENESET_ID2, geneset.getGenesetId());
+    Assertions.assertEquals((Double) 0.12, geneset.getRepresentativeScore());
+    Assertions.assertEquals((Double) 0.0019, geneset.getRepresentativePvalue());
     // last one is also GENESET_ID2:
-    Assert.assertEquals(geneset, result.get(3).getGenesets().get(0));
+    Assertions.assertEquals(geneset, result.get(3).getGenesets().getFirst());
   }
 }

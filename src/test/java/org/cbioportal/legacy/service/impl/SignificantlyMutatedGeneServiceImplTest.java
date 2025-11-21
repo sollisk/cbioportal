@@ -39,15 +39,16 @@ public class SignificantlyMutatedGeneServiceImplTest extends BaseServiceImplTest
         significantlyMutatedGeneService.getSignificantlyMutatedGenes(
             STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
 
-    Assert.assertEquals(expectedMutSigList, result);
+    Assertions.assertEquals(expectedMutSigList, result);
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getSignificantlyMutatedGenesStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    significantlyMutatedGeneService.getSignificantlyMutatedGenes(
-        STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        significantlyMutatedGeneService.getSignificantlyMutatedGenes(
+            STUDY_ID, PROJECTION, PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION));
   }
 
   @Test
@@ -58,13 +59,14 @@ public class SignificantlyMutatedGeneServiceImplTest extends BaseServiceImplTest
         .thenReturn(expectedBaseMeta);
     BaseMeta result = significantlyMutatedGeneService.getMetaSignificantlyMutatedGenes(STUDY_ID);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getMetaSignificantlyMutatedGenesStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    significantlyMutatedGeneService.getMetaSignificantlyMutatedGenes(STUDY_ID);
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        significantlyMutatedGeneService.getMetaSignificantlyMutatedGenes(STUDY_ID));
   }
 }

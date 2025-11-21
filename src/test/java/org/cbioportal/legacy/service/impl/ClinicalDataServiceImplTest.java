@@ -21,7 +21,7 @@ import org.cbioportal.legacy.service.exception.SampleNotFoundException;
 import org.cbioportal.legacy.service.exception.StudyNotFoundException;
 import org.cbioportal.legacy.utils.Encoder;
 import org.junit.jupiter.api.Assertions;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -54,7 +54,7 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
   List<Integer> sampleInternalIds = Arrays.asList(0, 1);
   List<Integer> sampleInternalIdsAll = Arrays.asList(0, 1, 2, 3);
 
-  @Before
+  @BeforeEach
   public void init() {
 
     datum1.setSampleId("SampleA");
@@ -95,15 +95,16 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
             SORT,
             DIRECTION);
 
-    Assert.assertEquals(expectedSampleClinicalDataList, result);
+    Assertions.assertEquals(expectedSampleClinicalDataList, result);
   }
 
-  @Test(expected = SampleNotFoundException.class)
+  @Test
   public void getAllClinicalDataOfSampleInStudySampleNotFound() throws Exception {
 
     when(sampleService.getSampleInStudy(STUDY_ID, SAMPLE_ID1))
         .thenThrow(new SampleNotFoundException(STUDY_ID, SAMPLE_ID1));
-    clinicalDataService.getAllClinicalDataOfSampleInStudy(
+    Assertions.assertThrows(SampleNotFoundException.class, () -> 
+        clinicalDataService.getAllClinicalDataOfSampleInStudy(
         STUDY_ID,
         SAMPLE_ID1,
         CLINICAL_ATTRIBUTE_ID_1,
@@ -111,7 +112,7 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
         PAGE_SIZE,
         PAGE_NUMBER,
         SORT,
-        DIRECTION);
+        DIRECTION));
   }
 
   @Test
@@ -127,15 +128,16 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
         clinicalDataService.getMetaSampleClinicalData(
             STUDY_ID, SAMPLE_ID1, CLINICAL_ATTRIBUTE_ID_1);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = SampleNotFoundException.class)
+  @Test
   public void getMetaSampleClinicalDataSampleNotFound() throws Exception {
 
     when(sampleService.getSampleInStudy(STUDY_ID, SAMPLE_ID1))
         .thenThrow(new SampleNotFoundException(STUDY_ID, SAMPLE_ID1));
-    clinicalDataService.getMetaSampleClinicalData(STUDY_ID, SAMPLE_ID1, CLINICAL_ATTRIBUTE_ID_1);
+    Assertions.assertThrows(SampleNotFoundException.class, () -> 
+        clinicalDataService.getMetaSampleClinicalData(STUDY_ID, SAMPLE_ID1, CLINICAL_ATTRIBUTE_ID_1));
   }
 
   @Test
@@ -167,15 +169,16 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
             SORT,
             DIRECTION);
 
-    Assert.assertEquals(expectedPatientClinicalDataList, result);
+    Assertions.assertEquals(expectedPatientClinicalDataList, result);
   }
 
-  @Test(expected = PatientNotFoundException.class)
+  @Test
   public void getAllClinicalDataOfPatientInStudyPatientNotFound() throws Exception {
 
     when(patientService.getPatientInStudy(STUDY_ID, PATIENT_ID_1))
         .thenThrow(new PatientNotFoundException(STUDY_ID, PATIENT_ID_1));
-    clinicalDataService.getAllClinicalDataOfPatientInStudy(
+    Assertions.assertThrows(PatientNotFoundException.class, () -> 
+        clinicalDataService.getAllClinicalDataOfPatientInStudy(
         STUDY_ID,
         PATIENT_ID_1,
         CLINICAL_ATTRIBUTE_ID_1,
@@ -183,7 +186,7 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
         PAGE_SIZE,
         PAGE_NUMBER,
         SORT,
-        DIRECTION);
+        DIRECTION));
   }
 
   @Test
@@ -199,15 +202,16 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
         clinicalDataService.getMetaPatientClinicalData(
             STUDY_ID, PATIENT_ID_1, CLINICAL_ATTRIBUTE_ID_1);
 
-    Assert.assertEquals(expectedBaseMeta, result);
+    Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = PatientNotFoundException.class)
+  @Test
   public void getMetaPatientClinicalDataPatientNotFound() throws Exception {
 
     when(patientService.getPatientInStudy(STUDY_ID, PATIENT_ID_1))
         .thenThrow(new PatientNotFoundException(STUDY_ID, PATIENT_ID_1));
-    clinicalDataService.getMetaPatientClinicalData(STUDY_ID, PATIENT_ID_1, CLINICAL_ATTRIBUTE_ID_1);
+    Assertions.assertThrows(PatientNotFoundException.class, () -> 
+        clinicalDataService.getMetaPatientClinicalData(STUDY_ID, PATIENT_ID_1, CLINICAL_ATTRIBUTE_ID_1));
   }
 
   @Test
@@ -239,14 +243,15 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
             SORT,
             DIRECTION);
 
-    Assert.assertEquals(expectedSampleClinicalDataList, result);
+    Assertions.assertEquals(expectedSampleClinicalDataList, result);
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getAllClinicalDataInStudyNotFound() throws Exception {
 
     when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    clinicalDataService.getAllClinicalDataInStudy(
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        clinicalDataService.getAllClinicalDataInStudy(
         STUDY_ID,
         CLINICAL_ATTRIBUTE_ID_1,
         CLINICAL_DATA_TYPE,
@@ -254,7 +259,7 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
         PAGE_SIZE,
         PAGE_NUMBER,
         SORT,
-        DIRECTION);
+        DIRECTION));
   }
 
   @Test
@@ -271,19 +276,20 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
         clinicalDataService.getMetaAllClinicalData(
             STUDY_ID, CLINICAL_ATTRIBUTE_ID_1, CLINICAL_DATA_TYPE);
 
-    Assert.assertEquals((Integer) 5, result.getTotalCount());
-  }
-
-  @Test(expected = StudyNotFoundException.class)
-  public void getMetaAllClinicalDataStudyNotFound() throws Exception {
-
-    when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    clinicalDataService.getMetaAllClinicalData(
-        STUDY_ID, CLINICAL_ATTRIBUTE_ID_1, CLINICAL_DATA_TYPE);
+    Assertions.assertEquals((Integer) 5, result.getTotalCount());
   }
 
   @Test
-  public void fetchClinicalDataPatientClinicalDataType() throws Exception {
+  public void getMetaAllClinicalDataStudyNotFound() throws Exception {
+
+    when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        clinicalDataService.getMetaAllClinicalData(
+        STUDY_ID, CLINICAL_ATTRIBUTE_ID_1, CLINICAL_DATA_TYPE));
+  }
+
+  @Test
+  public void fetchClinicalDataPatientClinicalDataType() {
 
     List<String> studyIds = new ArrayList<>();
     studyIds.add(STUDY_ID);
@@ -297,7 +303,7 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
     when(clinicalDataRepository.fetchClinicalData(
             studyIds,
             patientIds,
-            Arrays.asList(CLINICAL_ATTRIBUTE_ID_1),
+        List.of(CLINICAL_ATTRIBUTE_ID_1),
             CLINICAL_DATA_TYPE,
             PROJECTION))
         .thenReturn(expectedPatientClinicalDataList);
@@ -306,15 +312,15 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
         clinicalDataService.fetchClinicalData(
             studyIds,
             patientIds,
-            Arrays.asList(CLINICAL_ATTRIBUTE_ID_1),
+            List.of(CLINICAL_ATTRIBUTE_ID_1),
             CLINICAL_DATA_TYPE,
             PROJECTION);
 
-    Assert.assertEquals(expectedPatientClinicalDataList, result);
+    Assertions.assertEquals(expectedPatientClinicalDataList, result);
   }
 
   @Test
-  public void fetchMetaClinicalDataPatientClinicalDataType() throws Exception {
+  public void fetchMetaClinicalDataPatientClinicalDataType() {
 
     List<String> studyIds = new ArrayList<>();
     studyIds.add(STUDY_ID);
@@ -325,18 +331,18 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
     expectedBaseMeta.setTotalCount(5);
 
     when(clinicalDataRepository.fetchMetaClinicalData(
-            studyIds, patientIds, Arrays.asList(CLINICAL_ATTRIBUTE_ID_1), CLINICAL_DATA_TYPE))
+            studyIds, patientIds, List.of(CLINICAL_ATTRIBUTE_ID_1), CLINICAL_DATA_TYPE))
         .thenReturn(expectedBaseMeta);
 
     BaseMeta result =
         clinicalDataService.fetchMetaClinicalData(
-            studyIds, patientIds, Arrays.asList(CLINICAL_ATTRIBUTE_ID_1), CLINICAL_DATA_TYPE);
+            studyIds, patientIds, List.of(CLINICAL_ATTRIBUTE_ID_1), CLINICAL_DATA_TYPE);
 
-    Assert.assertEquals((Integer) 5, result.getTotalCount());
+    Assertions.assertEquals((Integer) 5, result.getTotalCount());
   }
 
   @Test
-  public void fetchClinicalDataCounts() throws Exception {
+  public void fetchClinicalDataCounts() {
 
     ClinicalAttribute clinicalAttribute1 = new ClinicalAttribute();
     clinicalAttribute1.setAttrId(CLINICAL_ATTRIBUTE_ID_1);
@@ -391,9 +397,9 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
     clinicalDataCount4.setCount(1);
 
     when(clinicalDataRepository.fetchClinicalDataCounts(
-            Arrays.asList(STUDY_ID, STUDY_ID, STUDY_ID),
-            Arrays.asList(SAMPLE_ID1, SAMPLE_ID2, SAMPLE_ID3),
-            Arrays.asList(CLINICAL_ATTRIBUTE_ID_2),
+            List.of(STUDY_ID, STUDY_ID, STUDY_ID),
+            List.of(SAMPLE_ID1, SAMPLE_ID2, SAMPLE_ID3),
+            List.of(CLINICAL_ATTRIBUTE_ID_2),
             "PATIENT",
             "SUMMARY"))
         .thenReturn(Arrays.asList(clinicalDataCount3, clinicalDataCount4));
@@ -404,12 +410,12 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
     clinicalDataCount1.setCount(2);
 
     when(clinicalDataRepository.fetchClinicalDataCounts(
-            Arrays.asList(STUDY_ID, STUDY_ID, STUDY_ID),
-            Arrays.asList(SAMPLE_ID1, SAMPLE_ID2, SAMPLE_ID3),
-            Arrays.asList(CLINICAL_ATTRIBUTE_ID_1),
+            List.of(STUDY_ID, STUDY_ID, STUDY_ID),
+            List.of(SAMPLE_ID1, SAMPLE_ID2, SAMPLE_ID3),
+            List.of(CLINICAL_ATTRIBUTE_ID_1),
             "PATIENT",
             "DETAILED"))
-        .thenReturn(Arrays.asList(clinicalDataCount1));
+        .thenReturn(List.of(clinicalDataCount1));
 
     List<Patient> patients = new ArrayList<>();
     Patient patient1 = new Patient();
@@ -437,38 +443,38 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
             Arrays.asList(
                 CLINICAL_ATTRIBUTE_ID_1, CLINICAL_ATTRIBUTE_ID_2, CLINICAL_ATTRIBUTE_ID_3));
 
-    Assert.assertEquals(3, result.size());
+    Assertions.assertEquals(3, result.size());
 
-    ClinicalDataCountItem counts3 = result.get(0);
-    Assert.assertEquals(CLINICAL_ATTRIBUTE_ID_3, counts3.getAttributeId());
+    ClinicalDataCountItem counts3 = result.getFirst();
+    Assertions.assertEquals(CLINICAL_ATTRIBUTE_ID_3, counts3.getAttributeId());
     List<ClinicalDataCount> clinicalDataCounts3 = counts3.getCounts();
-    Assert.assertEquals(1, clinicalDataCounts3.size());
-    ClinicalDataCount count5 = clinicalDataCounts3.get(0);
-    Assert.assertEquals(CLINICAL_ATTRIBUTE_ID_3, count5.getAttributeId());
-    Assert.assertEquals("NA", count5.getValue());
-    Assert.assertEquals((Integer) 3, count5.getCount());
+    Assertions.assertEquals(1, clinicalDataCounts3.size());
+    ClinicalDataCount count5 = clinicalDataCounts3.getFirst();
+    Assertions.assertEquals(CLINICAL_ATTRIBUTE_ID_3, count5.getAttributeId());
+    Assertions.assertEquals("NA", count5.getValue());
+    Assertions.assertEquals((Integer) 3, count5.getCount());
 
     ClinicalDataCountItem counts2 = result.get(1);
-    Assert.assertEquals(CLINICAL_ATTRIBUTE_ID_2, counts2.getAttributeId());
+    Assertions.assertEquals(CLINICAL_ATTRIBUTE_ID_2, counts2.getAttributeId());
     List<ClinicalDataCount> clinicalDataCounts2 = counts2.getCounts();
-    Assert.assertEquals(3, clinicalDataCounts2.size());
+    Assertions.assertEquals(3, clinicalDataCounts2.size());
     ClinicalDataCount count3 = clinicalDataCounts2.get(0);
-    Assert.assertEquals(CLINICAL_ATTRIBUTE_ID_2, count3.getAttributeId());
-    Assert.assertEquals("value2", count3.getValue());
-    Assert.assertEquals((Integer) 1, count3.getCount());
+    Assertions.assertEquals(CLINICAL_ATTRIBUTE_ID_2, count3.getAttributeId());
+    Assertions.assertEquals("value2", count3.getValue());
+    Assertions.assertEquals((Integer) 1, count3.getCount());
     ClinicalDataCount count4 = clinicalDataCounts2.get(1);
-    Assert.assertEquals(CLINICAL_ATTRIBUTE_ID_2, count4.getAttributeId());
-    Assert.assertEquals("value3", count4.getValue());
-    Assert.assertEquals((Integer) 1, count4.getCount());
+    Assertions.assertEquals(CLINICAL_ATTRIBUTE_ID_2, count4.getAttributeId());
+    Assertions.assertEquals("value3", count4.getValue());
+    Assertions.assertEquals((Integer) 1, count4.getCount());
 
     ClinicalDataCountItem counts1 = result.get(2);
-    Assert.assertEquals(CLINICAL_ATTRIBUTE_ID_1, counts1.getAttributeId());
+    Assertions.assertEquals(CLINICAL_ATTRIBUTE_ID_1, counts1.getAttributeId());
     List<ClinicalDataCount> clinicalDataCounts1 = counts1.getCounts();
-    Assert.assertEquals(1, clinicalDataCounts1.size());
-    ClinicalDataCount count1 = clinicalDataCounts1.get(0);
-    Assert.assertEquals(CLINICAL_ATTRIBUTE_ID_1, count1.getAttributeId());
-    Assert.assertEquals("value1", count1.getValue());
-    Assert.assertEquals((Integer) 4, count1.getCount());
+    Assertions.assertEquals(1, clinicalDataCounts1.size());
+    ClinicalDataCount count1 = clinicalDataCounts1.getFirst();
+    Assertions.assertEquals(CLINICAL_ATTRIBUTE_ID_1, count1.getAttributeId());
+    Assertions.assertEquals("value1", count1.getValue());
+    Assertions.assertEquals((Integer) 4, count1.getCount());
   }
 
   @Test
@@ -489,31 +495,31 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
     SampleClinicalDataCollection clinicalDataCollection = result.getLeft();
     Integer itemCount = result.getRight();
 
-    Assert.assertEquals(4, (int) itemCount);
-    Assert.assertEquals(2, clinicalDataCollection.getByUniqueSampleKey().size());
-    Assert.assertTrue(clinicalDataCollection.getByUniqueSampleKey().containsKey(uniqueKeySample1));
-    Assert.assertTrue(clinicalDataCollection.getByUniqueSampleKey().containsKey(uniqueKeySample2));
-    Assert.assertEquals(
+    Assertions.assertEquals(4, (int) itemCount);
+    Assertions.assertEquals(2, clinicalDataCollection.getByUniqueSampleKey().size());
+    Assertions.assertTrue(clinicalDataCollection.getByUniqueSampleKey().containsKey(uniqueKeySample1));
+    Assertions.assertTrue(clinicalDataCollection.getByUniqueSampleKey().containsKey(uniqueKeySample2));
+    Assertions.assertEquals(
         2, clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample1).size());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         2, clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample2).size());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         "SampleA",
-        clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample1).get(0).getSampleId());
-    Assert.assertEquals(
+        clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample1).getFirst().getSampleId());
+    Assertions.assertEquals(
         "Study1",
-        clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample1).get(0).getStudyId());
-    Assert.assertEquals(
+        clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample1).getFirst().getStudyId());
+    Assertions.assertEquals(
         "SampleA",
-        clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample2).get(0).getSampleId());
-    Assert.assertEquals(
+        clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample2).getFirst().getSampleId());
+    Assertions.assertEquals(
         "Study2",
-        clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample2).get(0).getStudyId());
+        clinicalDataCollection.getByUniqueSampleKey().get(uniqueKeySample2).getFirst().getStudyId());
   }
 
   @Test
   public void fetchSampleClinicalTableEmptyIdLists() {
-    Assert.assertEquals(
+    Assertions.assertEquals(
         0,
         clinicalDataService
             .fetchSampleClinicalTable(
@@ -521,7 +527,7 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
             .getLeft()
             .getByUniqueSampleKey()
             .size());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         0,
         clinicalDataService
             .fetchSampleClinicalTable(
@@ -529,7 +535,7 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
             .getLeft()
             .getByUniqueSampleKey()
             .size());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         0,
         clinicalDataService
             .fetchSampleClinicalTable(
@@ -537,7 +543,7 @@ public class ClinicalDataServiceImplTest extends BaseServiceImplTest {
             .getLeft()
             .getByUniqueSampleKey()
             .size());
-    Assert.assertEquals(
+    Assertions.assertEquals(
         0,
         clinicalDataService
             .fetchSampleClinicalTable(

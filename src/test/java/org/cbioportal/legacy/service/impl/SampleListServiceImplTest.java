@@ -74,12 +74,12 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = SampleListNotFoundException.class)
-  public void getSampleListNotFound() throws Exception {
+  @Test
+  public void getSampleListNotFound() {
 
     Mockito.when(sampleListRepository.getSampleList(SAMPLE_LIST_ID)).thenReturn(null);
-
-    sampleListService.getSampleList(SAMPLE_LIST_ID);
+    
+    Assertions.assertThrows(SampleListNotFoundException.class, () -> sampleListService.getSampleList(SAMPLE_LIST_ID));
   }
 
   @Test
@@ -135,12 +135,13 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals((Integer) 1, expectedSampleLists.get(0).getSampleCount());
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getAllSampleListsInStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    sampleListService.getAllSampleListsInStudy(
-        STUDY_ID, "DETAILED", PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION);
+    
+    Assertions.assertThrows(StudyNotFoundException.class, () -> sampleListService.getAllSampleListsInStudy(
+        STUDY_ID, "DETAILED", PAGE_SIZE, PAGE_NUMBER, SORT, DIRECTION));
   }
 
   @Test
@@ -156,11 +157,13 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedBaseMeta, result);
   }
 
-  @Test(expected = StudyNotFoundException.class)
+  @Test
   public void getMetaSampleListsInStudyNotFound() throws Exception {
 
     Mockito.when(studyService.getStudy(STUDY_ID)).thenThrow(new StudyNotFoundException(STUDY_ID));
-    sampleListService.getMetaSampleListsInStudy(STUDY_ID);
+    
+    Assertions.assertThrows(StudyNotFoundException.class, () ->
+        sampleListService.getMetaSampleListsInStudy(STUDY_ID));
   }
 
   @Test
@@ -189,11 +192,13 @@ public class SampleListServiceImplTest extends BaseServiceImplTest {
     Assertions.assertEquals(expectedSampleIds, result);
   }
 
-  @Test(expected = SampleListNotFoundException.class)
-  public void getAllSampleIdsInSampleListNotFound() throws Exception {
+  @Test
+  public void getAllSampleIdsInSampleListNotFound() {
 
     Mockito.when(sampleListRepository.getSampleList(SAMPLE_LIST_ID)).thenReturn(null);
-    sampleListService.getAllSampleIdsInSampleList(SAMPLE_LIST_ID);
+
+    Assertions.assertThrows(StudyNotFoundException.class, () -> 
+        sampleListService.getAllSampleIdsInSampleList(SAMPLE_LIST_ID));
   }
 
   @Test
